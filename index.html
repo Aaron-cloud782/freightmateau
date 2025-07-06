@@ -4,11 +4,747 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreightMate AU Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-role {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .controls {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #3b82f6;
+        }
+
+        .filter-btn {
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .main-content {
+            display: flex;
+            height: calc(100vh - 140px);
+            gap: 1rem;
+            padding: 1rem 2rem;
+        }
+
+        .map-container {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-header {
+            background: #f8fafc;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600;
+        }
+
+        .map-view {
+            height: calc(100% - 60px);
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shipment-marker {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .shipment-marker:hover {
+            transform: scale(1.3);
+            z-index: 10;
+        }
+
+        .shipment-marker.on-time { background: #10b981; }
+        .shipment-marker.delayed { background: #f59e0b; }
+        .shipment-marker.critical { background: #ef4444; }
+        .shipment-marker.delivered { background: #6b7280; }
+
+        .route-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            opacity: 0.6;
+            transform-origin: left;
+        }
+
+        .table-container {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #f8fafc;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-weight: 600;
+        }
+
+        .table-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .table-wrapper {
+            overflow-y: auto;
+            height: calc(100% - 80px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8fafc;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.875rem;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+            cursor: pointer;
+        }
+
+        tr.selected {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .status-on-time {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-delayed {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-delivered {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .carrier-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #64748b;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #1f2937;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            pointer-events: none;
+            z-index: 20;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.2s;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+                height: auto;
+                min-height: calc(100vh - 140px);
+            }
+            
+            .map-container, .table-container {
+                min-height: 400px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- HTML content from the artifact -->
-    <script src="carrier-adapters.js"></script>
-    <script src="dashboard.js"></script>
-</body>
-</html>
+    <div class="header">
+        <div class="logo">FreightMate AU</div>
+        <div class="user-info">
+            <div class="user-role">Logistics Coordinator</div>
+            <div>Emma Thompson</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" placeholder="Search shipments by ID, customer, or destination...">
+        </div>
+        <button class="filter-btn active" data-filter="all">All Shipments</button>
+        <button class="filter-btn" data-filter="in-transit">In Transit</button>
+        <button class="filter-btn" data-filter="delayed">Delayed</button>
+        <button class="filter-btn" data-filter="critical">Critical</button>
+        <div style="border-left: 1px solid #e2e8f0; margin: 0 0.5rem; height: 2rem;"></div>
+        <button class="filter-btn" data-filter="nsw">NSW</button>
+        <button class="filter-btn" data-filter="vic">VIC</button>
+        <button class="filter-btn" data-filter="qld">QLD</button>
+        <button class="filter-btn" data-filter="wa">WA</button>
+        <button class="filter-btn" data-filter="sa">SA</button>
+        <button class="filter-btn" data-filter="tas">TAS</button>
+        <button class="filter-btn" data-filter="nt">NT</button>
+    </div>
+
+    <div class="main-content">
+        <div class="map-container">
+            <div class="map-header">
+                Shipment Locations
+            </div>
+            <div class="map-view" id="mapView">
+                <!-- Route lines -->
+                <div class="route-line" style="top: 120px; left: 80px; width: 200px; transform: rotate(15deg);"></div>
+                <div class="route-line" style="top: 180px; left: 150px; width: 180px; transform: rotate(-10deg);"></div>
+                <div class="route-line" style="top: 250px; left: 100px; width: 220px; transform: rotate(25deg);"></div>
+                
+                <!-- Shipment markers -->
+                <div class="shipment-marker on-time" style="top: 130px; left: 90px;" data-shipment="SH001"></div>
+                <div class="shipment-marker delayed" style="top: 185px; left: 160px;" data-shipment="SH002"></div>
+                <div class="shipment-marker critical" style="top: 260px; left: 110px;" data-shipment="SH003"></div>
+                <div class="shipment-marker on-time" style="top: 200px; left: 280px;" data-shipment="SH004"></div>
+                <div class="shipment-marker delivered" style="top: 150px; left: 320px;" data-shipment="SH005"></div>
+                <div class="shipment-marker on-time" style="top: 300px; left: 200px;" data-shipment="SH006"></div>
+                <div class="shipment-marker delayed" style="top: 100px; left: 250px;" data-shipment="SH007"></div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">Active Shipments</div>
+                <div class="table-stats">
+                    <div class="stat">
+                        <div class="stat-dot" style="background: #10b981;"></div>
+                        <span>On Time (67)</span>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-dot" style="background: #f59e0b;"></div>
+                        <span>Delayed (15)</span>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-dot" style="background: #ef4444;"></div>
+                        <span>Critical (3)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shipment ID</th>
+                            <th>Customer</th>
+                            <th>Origin → Destination</th>
+                            <th>Carrier</th>
+                            <th>Status</th>
+                            <th>ETA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shipmentTable">
+                        <tr data-shipment="SH001" data-origin="nsw" data-destination="vic" data-status="on-time">
+                            <td><strong>FM001</strong></td>
+                            <td>Woolworths Group</td>
+                            <td>Sydney → Melbourne</td>
+                            <td><div class="carrier-logo">TNT</div></td>
+                            <td><span class="status-badge status-on-time">On Time</span></td>
+                            <td>16 Dec, 2:30 PM</td>
+                        </tr>
+                        <tr data-shipment="SH002" data-origin="wa" data-destination="sa" data-status="delayed">
+                            <td><strong>FM002</strong></td>
+                            <td>Bunnings Warehouse</td>
+                            <td>Perth → Adelaide</td>
+                            <td><div class="carrier-logo">STX</div></td>
+                            <td><span class="status-badge status-delayed">Delayed</span></td>
+                            <td>17 Dec, 11:00 AM</td>
+                        </tr>
+                        <tr data-shipment="SH003" data-origin="nt" data-destination="qld" data-status="critical">
+                            <td><strong>FM003</strong></td>
+                            <td>BHP Billiton</td>
+                            <td>Darwin → Brisbane</td>
+                            <td><div class="carrier-logo">LNF</div></td>
+                            <td><span class="status-badge status-critical">Critical</span></td>
+                            <td>18 Dec, 9:45 AM</td>
+                        </tr>
+                        <tr data-shipment="SH004" data-origin="vic" data-destination="tas" data-status="on-time">
+                            <td><strong>FM004</strong></td>
+                            <td>Coles Supermarkets</td>
+                            <td>Melbourne → Hobart</td>
+                            <td><div class="carrier-logo">TNT</div></td>
+                            <td><span class="status-badge status-on-time">On Time</span></td>
+                            <td>16 Dec, 6:15 PM</td>
+                        </tr>
+                        <tr data-shipment="SH005" data-origin="qld" data-destination="qld" data-status="delivered">
+                            <td><strong>FM005</strong></td>
+                            <td>Harvey Norman</td>
+                            <td>Brisbane → Gold Coast</td>
+                            <td><div class="carrier-logo">APX</div></td>
+                            <td><span class="status-badge status-delivered">Delivered</span></td>
+                            <td>15 Dec, 3:20 PM</td>
+                        </tr>
+                        <tr data-shipment="SH006" data-origin="sa" data-destination="act" data-status="on-time">
+                            <td><strong>FM006</strong></td>
+                            <td>Wesfarmers</td>
+                            <td>Adelaide → Canberra</td>
+                            <td><div class="carrier-logo">STX</div></td>
+                            <td><span class="status-badge status-on-time">On Time</span></td>
+                            <td>17 Dec, 4:30 PM</td>
+                        </tr>
+                        <tr data-shipment="SH007" data-origin="nsw" data-destination="nsw" data-status="delayed">
+                            <td><strong>FM007</strong></td>
+                            <td>Telstra Corporation</td>
+                            <td>Sydney → Newcastle</td>
+                            <td><div class="carrier-logo">LNF</div></td>
+                            <td><span class="status-badge status-delayed">Delayed</span></td>
+                            <td>18 Dec, 1:15 PM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // =============================================================================
+        // CARRIER ADAPTER INTEGRATION WITH DASHBOARD
+        // =============================================================================
+
+        // Mock carrier adapters for demo (in production, these would be real API calls)
+        class MockCarrierManager {
+            constructor() {
+                this.shipmentData = {
+                    'FM001': {
+                        shipmentId: 'FM001',
+                        carrier: 'startrack',
+                        status: 'in_transit',
+                        currentLocation: 'Goulburn, NSW',
+                        estimatedDelivery: '2024-12-16T14:30:00Z',
+                        events: [
+                            { timestamp: '2024-12-15T08:00:00Z', location: 'Sydney, NSW', description: 'Shipment picked up' },
+                            { timestamp: '2024-12-15T12:30:00Z', location: 'Goulburn, NSW', description: 'In transit' }
+                        ],
+                        lastUpdated: '2024-12-15T10:30:00Z'
+                    },
+                    'FM002': {
+                        shipmentId: 'FM002',
+                        carrier: 'startrack',
+                        status: 'delayed',
+                        currentLocation: 'Kalgoorlie, WA',
+                        estimatedDelivery: '2024-12-17T11:00:00Z',
+                        events: [
+                            { timestamp: '2024-12-14T09:00:00Z', location: 'Perth, WA', description: 'Shipment picked up' },
+                            { timestamp: '2024-12-15T15:45:00Z', location: 'Kalgoorlie, WA', description: 'Delayed due to vehicle breakdown' }
+                        ],
+                        lastUpdated: '2024-12-15T15:45:00Z'
+                    },
+                    'FM003': {
+                        shipmentId: 'FM003',
+                        carrier: 'tnt_fedex',
+                        status: 'critical_delay',
+                        currentLocation: 'Katherine, NT',
+                        estimatedDelivery: '2024-12-18T09:45:00Z',
+                        events: [
+                            { timestamp: '2024-12-13T10:00:00Z', location: 'Darwin, NT', description: 'Shipment collected' },
+                            { timestamp: '2024-12-15T08:00:00Z', location: 'Katherine, NT', description: 'Critical delay - road closure due to weather' }
+                        ],
+                        lastUpdated: '2024-12-15T08:00:00Z'
+                    }
+                };
+            }
+
+            async getTrackingInfo(shipmentId) {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 500));
+                return this.shipmentData[shipmentId] || null;
+            }
+
+            async getBulkTrackingInfo(shipmentIds) {
+                const promises = shipmentIds.map(id => this.getTrackingInfo(id));
+                return await Promise.all(promises);
+            }
+        }
+
+        // Initialize carrier manager
+        const carrierManager = new MockCarrierManager();
+
+        // Dashboard state
+        let allShipments = [];
+        let currentFilter = 'all';
+
+        // Interactive functionality
+        const tooltip = document.getElementById('tooltip');
+        const shipmentRows = document.querySelectorAll('tr[data-shipment]');
+        const shipmentMarkers = document.querySelectorAll('.shipment-marker');
+
+        // Enhanced shipment data with real-time info
+        const enhancedShipmentData = {
+            'SH001': { id: 'FM001', customer: 'Woolworths Group', route: 'Sydney → Melbourne', carrier: 'TNT', status: 'On Time', eta: '16 Dec, 2:30 PM' },
+            'SH002': { id: 'FM002', customer: 'Bunnings Warehouse', route: 'Perth → Adelaide', carrier: 'StarTrack', status: 'Delayed', eta: '17 Dec, 11:00 AM' },
+            'SH003': { id: 'FM003', customer: 'BHP Billiton', route: 'Darwin → Brisbane', carrier: 'TNT/FedEx', status: 'Critical Delay', eta: '18 Dec, 9:45 AM' }
+        };
+
+        // Real-time data refresh
+        async function refreshShipmentData() {
+            console.log('🔄 Refreshing shipment data from carriers...');
+            
+            try {
+                const shipmentIds = ['FM001', 'FM002', 'FM003'];
+                const trackingResults = await carrierManager.getBulkTrackingInfo(shipmentIds);
+                
+                // Update shipment data with real carrier information
+                trackingResults.forEach(result => {
+                    if (result) {
+                        updateShipmentInUI(result);
+                    }
+                });
+                
+                console.log('✅ Shipment data refreshed successfully');
+                updateLastRefreshTime();
+                
+            } catch (error) {
+                console.error('❌ Failed to refresh shipment data:', error);
+                showNotification('Failed to refresh data from carriers', 'error');
+            }
+        }
+
+        // Update individual shipment in the UI
+        function updateShipmentInUI(carrierData) {
+            const row = document.querySelector(`tr[data-shipment="SH00${carrierData.shipmentId.slice(-1)}"]`);
+            if (!row) return;
+
+            // Update status based on carrier data
+            const statusCell = row.querySelector('.status-badge');
+            const locationInfo = row.cells[2]; // Origin → Destination column
+            
+            // Update status badge
+            statusCell.className = 'status-badge';
+            switch (carrierData.status) {
+                case 'in_transit':
+                    statusCell.classList.add('status-on-time');
+                    statusCell.textContent = 'In Transit';
+                    break;
+                case 'delayed':
+                    statusCell.classList.add('status-delayed');
+                    statusCell.textContent = 'Delayed';
+                    break;
+                case 'critical_delay':
+                    statusCell.classList.add('status-critical');
+                    statusCell.textContent = 'Critical';
+                    break;
+                case 'delivered':
+                    statusCell.classList.add('status-delivered');
+                    statusCell.textContent = 'Delivered';
+                    break;
+                default:
+                    statusCell.textContent = 'Unknown';
+            }
+
+            // Update ETA if changed
+            const etaCell = row.cells[5];
+            if (carrierData.estimatedDelivery) {
+                const etaDate = new Date(carrierData.estimatedDelivery);
+                etaCell.textContent = etaDate.toLocaleDateString('en-AU', { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+            }
+
+            // Add visual indicator for recent updates
+            row.style.backgroundColor = '#f0f9ff';
+            setTimeout(() => {
+                row.style.backgroundColor = '';
+            }, 2000);
+
+            // Store carrier data for tooltip
+            const shipmentKey = row.dataset.shipment;
+            if (enhancedShipmentData[shipmentKey]) {
+                enhancedShipmentData[shipmentKey].carrierData = carrierData;
+            }
+        }
+
+        // Show notification to user
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#ef4444' : '#10b981'};
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                z-index: 1000;
+                transition: all 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Update last refresh time indicator
+        function updateLastRefreshTime() {
+            let refreshIndicator = document.getElementById('refreshIndicator');
+            if (!refreshIndicator) {
+                refreshIndicator = document.createElement('div');
+                refreshIndicator.id = 'refreshIndicator';
+                refreshIndicator.style.cssText = `
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    font-size: 0.75rem;
+                    color: #64748b;
+                    background: rgba(255,255,255,0.9);
+                    padding: 0.5rem;
+                    border-radius: 4px;
+                `;
+                document.querySelector('.map-container').appendChild(refreshIndicator);
+            }
+            
+            const now = new Date();
+            refreshIndicator.textContent = `Last updated: ${now.toLocaleTimeString('en-AU')}`;
+        }
+
+        // Enhanced tooltip with carrier data
+        function showEnhancedTooltip(e, shipmentKey) {
+            const baseData = enhancedShipmentData[shipmentKey];
+            const carrierData = baseData?.carrierData;
+            
+            let tooltipContent = `
+                <div style="font-weight: bold; margin-bottom: 0.5rem;">${baseData?.id || shipmentKey}</div>
+                <div style="margin-bottom: 0.25rem;"><strong>Customer:</strong> ${baseData?.customer || 'Unknown'}</div>
+                <div style="margin-bottom: 0.25rem;"><strong>Route:</strong> ${baseData?.route || 'Unknown'}</div>
+                <div style="margin-bottom: 0.25rem;"><strong>Carrier:</strong> ${baseData?.carrier || 'Unknown'}</div>
+                <div style="margin-bottom: 0.25rem;"><strong>Status:</strong> ${baseData?.status || 'Unknown'}</div>
+            `;
+            
+            if (carrierData) {
+                tooltipContent += `
+                    <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #374151;">
+                    <div style="margin-bottom: 0.25rem;"><strong>Current Location:</strong> ${carrierData.currentLocation}</div>
+                    <div style="margin-bottom: 0.25rem;"><strong>Last Event:</strong> ${carrierData.events[carrierData.events.length - 1]?.description || 'No events'}</div>
+                    <div><strong>Last Updated:</strong> ${new Date(carrierData.lastUpdated).toLocaleString('en-AU')}</div>
+                    </div>
+                `;
+            }
+            
+            tooltip.innerHTML = tooltipContent;
+            tooltip.style.left = e.pageX + 15 + 'px';
+            tooltip.style.top = e.pageY - 10 + 'px';
+            tooltip.classList.add('show');
+        }
+
+        // Handle row clicks
+        shipmentRows.forEach(row => {
+            row.addEventListener('click', function() {
+                shipmentRows.forEach(r => r.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const shipmentId = this.dataset.shipment;
+                shipmentMarkers.forEach(marker => {
+                    marker.style.transform = marker.dataset.shipment === shipmentId ? 'scale(1.5)' : 'scale(1)';
+                    marker.style.zIndex = marker.dataset.shipment === shipmentId ? '15' : '5';
+                });
+            });
+        });
+
+        // Enhanced marker hover with carrier data
+        shipmentMarkers.forEach(marker => {
+            marker.addEventListener('mouseenter', function(e) {
+                const shipmentKey = this.dataset.shipment;
+                showEnhancedTooltip(e, shipmentKey);
+            });
+            
+            marker.addEventListener('mouseleave', function() {
+                tooltip.classList.remove('show');
+            });
+            
+            marker.addEventListener('click', function() {
+                const shipmentId = this.dataset.shipment;
+                shipmentRows.forEach(row => {
+                    row.classList.remove('selected');
+                    if (row.dataset.shipment === shipmentId) {
+                        row.classList.add('selected');
+                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            });
+        });
+
+        // Filter functionality with carrier integration
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filterType = this.dataset.filter;
+                currentFilter = filterType;
+                applyFilter(filterType);
+            });
+        });
+
+        function applyFilter(filterType) {
+            shipmentRows.forEach(row => {
+                let shouldShow = true;
+                
+                if (filterType === 'all') {
+                    shouldShow = true;
+                } else if (filterType === 'in-transit') {
+                    shouldShow = row.dataset.status === 'on-time';
+                } else if (filterType === 'delayed') {
+                    shouldShow = row.dataset.status === 'delayed';
+                } else if (filterType === 'critical') {
