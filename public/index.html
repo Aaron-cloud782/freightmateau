@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RouteOptimizerAI - Smart Logistics Platform</title>
-    <!-- Leaflet (Open Source Map) - More reliable alternative -->
+    <title>RouteOptimizerAI - Complete Logistics Platform</title>
+    <!-- Leaflet for maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -48,6 +48,53 @@
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.875rem;
+        }
+
+        .nav-tabs {
+            background: white;
+            padding: 0 2rem;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            padding: 1rem 0;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: #3b82f6;
+        }
+
+        .nav-tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .nav-tab .badge {
+            background: #ef4444;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .nav-tab .badge.green {
+            background: #10b981;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .controls {
@@ -102,7 +149,7 @@
 
         .main-content {
             display: flex;
-            height: calc(100vh - 140px);
+            height: calc(100vh - 200px);
             gap: 1rem;
             padding: 1rem 2rem;
         }
@@ -244,6 +291,35 @@
             color: #374151;
         }
 
+        .container-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .status-at-sea {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-at-port {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-customs {
+            background: #fde68a;
+            color: #d97706;
+        }
+
+        .status-in-transit {
+            background: #dcfce7;
+            color: #166534;
+        }
+
         .carrier-logo {
             width: 24px;
             height: 24px;
@@ -255,6 +331,83 @@
             font-size: 0.75rem;
             font-weight: bold;
             color: #64748b;
+        }
+
+        .shipping-line-logo {
+            width: 32px;
+            height: 24px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #64748b;
+        }
+
+        .container-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .eta-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .eta-date {
+            font-weight: 500;
+        }
+
+        .eta-time {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .journey-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            transition: width 0.3s ease;
+        }
+
+        .progress-percent {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .priority-tag {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.125rem 0.375rem;
+            border-radius: 6px;
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .priority-urgent {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
         .map-legend {
@@ -286,21 +439,17 @@
             border-radius: 50%;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.6; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
+        .legend-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
         }
 
         @media (max-width: 1024px) {
             .main-content {
                 flex-direction: column;
                 height: auto;
-                min-height: calc(100vh - 140px);
+                min-height: calc(100vh - 200px);
             }
             
             .map-container, .table-container {
@@ -313,154 +462,301 @@
     <div class="header">
         <div class="logo">RouteOptimizerAI</div>
         <div class="user-info">
-            <div class="user-role">Logistics Coordinator</div>
+            <div class="user-role">Logistics Manager</div>
             <div>Emma Thompson</div>
         </div>
     </div>
 
-    <div class="controls">
-        <div class="search-box">
-            <input type="text" placeholder="Search shipments by ID, customer, or destination...">
-        </div>
-        <button class="filter-btn active" data-filter="all">All Shipments</button>
-        <button class="filter-btn" data-filter="in-transit">In Transit</button>
-        <button class="filter-btn" data-filter="delayed">Delayed</button>
-        <button class="filter-btn" data-filter="critical">Critical</button>
-        <div style="border-left: 1px solid #e2e8f0; margin: 0 0.5rem; height: 2rem;"></div>
-        <button class="filter-btn" data-filter="nsw">NSW</button>
-        <button class="filter-btn" data-filter="vic">VIC</button>
-        <button class="filter-btn" data-filter="qld">QLD</button>
-        <button class="filter-btn" data-filter="wa">WA</button>
-        <button class="filter-btn" data-filter="sa">SA</button>
-        <button class="filter-btn" data-filter="tas">TAS</button>
-        <button class="filter-btn" data-filter="nt">NT</button>
+    <div class="nav-tabs">
+        <div class="nav-tab" data-tab="parcels">Parcels & Freight <span class="badge green">67</span></div>
+        <div class="nav-tab active" data-tab="containers">Sea Containers <span class="badge">12</span></div>
+        <div class="nav-tab" data-tab="analytics">Analytics</div>
+        <div class="nav-tab" data-tab="settings">Settings</div>
     </div>
 
-    <div class="main-content">
-        <div class="map-container">
-            <div class="map-header">
-                <div>AI-Powered Route Optimization</div>
-                <div style="font-size: 0.75rem; color: #64748b;">Smart logistics for Australia</div>
+    <!-- PARCELS & FREIGHT TAB -->
+    <div class="tab-content" id="parcels-tab">
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" placeholder="Search shipments by ID, customer, or destination...">
             </div>
-            <div class="map-view">
-                <div id="map"></div>
-                <div class="map-legend">
-                    <div class="legend-item">
-                        <div class="legend-dot" style="background: #10b981;"></div>
-                        <span>On Time</span>
+            <button class="filter-btn active" data-filter="all">All Shipments</button>
+            <button class="filter-btn" data-filter="in-transit">In Transit</button>
+            <button class="filter-btn" data-filter="delayed">Delayed</button>
+            <button class="filter-btn" data-filter="critical">Critical</button>
+            <div style="border-left: 1px solid #e2e8f0; margin: 0 0.5rem; height: 2rem;"></div>
+            <button class="filter-btn" data-filter="nsw">NSW</button>
+            <button class="filter-btn" data-filter="vic">VIC</button>
+            <button class="filter-btn" data-filter="qld">QLD</button>
+            <button class="filter-btn" data-filter="wa">WA</button>
+            <button class="filter-btn" data-filter="sa">SA</button>
+            <button class="filter-btn" data-filter="tas">TAS</button>
+            <button class="filter-btn" data-filter="nt">NT</button>
+        </div>
+
+        <div class="main-content">
+            <div class="map-container">
+                <div class="map-header">
+                    <div>AI-Powered Route Optimization</div>
+                    <div style="font-size: 0.75rem; color: #64748b;">Smart logistics for Australia</div>
+                </div>
+                <div class="map-view">
+                    <div id="parcels-map"></div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #10b981;"></div>
+                            <span>On Time</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #f59e0b;"></div>
+                            <span>Delayed</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #ef4444;"></div>
+                            <span>Critical</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #6b7280;"></div>
+                            <span>Delivered</span>
+                        </div>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-dot" style="background: #f59e0b;"></div>
-                        <span>Delayed</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">Active Shipments</div>
+                    <div class="table-stats">
+                        <div class="stat">
+                            <div class="stat-dot" style="background: #10b981;"></div>
+                            <span>On Time (4)</span>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-dot" style="background: #f59e0b;"></div>
+                            <span>Delayed (2)</span>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-dot" style="background: #ef4444;"></div>
+                            <span>Critical (1)</span>
+                        </div>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-dot" style="background: #ef4444;"></div>
-                        <span>Critical</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-dot" style="background: #6b7280;"></div>
-                        <span>Delivered</span>
-                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Shipment ID</th>
+                                <th>Customer</th>
+                                <th>Origin → Destination</th>
+                                <th>Carrier</th>
+                                <th>Status</th>
+                                <th>ETA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="parcels-table">
+                            <tr data-shipment="FM001" data-origin="nsw" data-destination="vic" data-status="on-time">
+                                <td><strong>FM001</strong></td>
+                                <td>Woolworths Group</td>
+                                <td>Sydney → Melbourne</td>
+                                <td><div class="carrier-logo">TNT</div></td>
+                                <td><span class="status-badge status-on-time">On Time</span></td>
+                                <td>16 Dec, 2:30 PM</td>
+                            </tr>
+                            <tr data-shipment="FM002" data-origin="wa" data-destination="sa" data-status="delayed">
+                                <td><strong>FM002</strong></td>
+                                <td>Bunnings Warehouse</td>
+                                <td>Perth → Adelaide</td>
+                                <td><div class="carrier-logo">STX</div></td>
+                                <td><span class="status-badge status-delayed">Delayed</span></td>
+                                <td>17 Dec, 11:00 AM</td>
+                            </tr>
+                            <tr data-shipment="FM003" data-origin="nt" data-destination="qld" data-status="critical">
+                                <td><strong>FM003</strong></td>
+                                <td>BHP Billiton</td>
+                                <td>Darwin → Brisbane</td>
+                                <td><div class="carrier-logo">LNF</div></td>
+                                <td><span class="status-badge status-critical">Critical</span></td>
+                                <td>18 Dec, 9:45 AM</td>
+                            </tr>
+                            <tr data-shipment="FM004" data-origin="vic" data-destination="tas" data-status="on-time">
+                                <td><strong>FM004</strong></td>
+                                <td>Coles Supermarkets</td>
+                                <td>Melbourne → Hobart</td>
+                                <td><div class="carrier-logo">TNT</div></td>
+                                <td><span class="status-badge status-on-time">On Time</span></td>
+                                <td>16 Dec, 6:15 PM</td>
+                            </tr>
+                            <tr data-shipment="FM005" data-origin="qld" data-destination="qld" data-status="delivered">
+                                <td><strong>FM005</strong></td>
+                                <td>Harvey Norman</td>
+                                <td>Brisbane → Gold Coast</td>
+                                <td><div class="carrier-logo">APX</div></td>
+                                <td><span class="status-badge status-delivered">Delivered</span></td>
+                                <td>15 Dec, 3:20 PM</td>
+                            </tr>
+                            <tr data-shipment="FM006" data-origin="sa" data-destination="act" data-status="on-time">
+                                <td><strong>FM006</strong></td>
+                                <td>Wesfarmers</td>
+                                <td>Adelaide → Canberra</td>
+                                <td><div class="carrier-logo">STX</div></td>
+                                <td><span class="status-badge status-on-time">On Time</span></td>
+                                <td>17 Dec, 4:30 PM</td>
+                            </tr>
+                            <tr data-shipment="FM007" data-origin="nsw" data-destination="nsw" data-status="delayed">
+                                <td><strong>FM007</strong></td>
+                                <td>Telstra Corporation</td>
+                                <td>Sydney → Newcastle</td>
+                                <td><div class="carrier-logo">LNF</div></td>
+                                <td><span class="status-badge status-delayed">Delayed</span></td>
+                                <td>18 Dec, 1:15 PM</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="table-container">
-            <div class="table-header">
-                <div class="table-title">Active Shipments</div>
-                <div class="table-stats">
-                    <div class="stat">
-                        <div class="stat-dot" style="background: #10b981;"></div>
-                        <span>On Time (4)</span>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-dot" style="background: #f59e0b;"></div>
-                        <span>Delayed (2)</span>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-dot" style="background: #ef4444;"></div>
-                        <span>Critical (1)</span>
+    <!-- SEA CONTAINERS TAB -->
+    <div class="tab-content active" id="containers-tab">
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" placeholder="Search by container number, ship name, or customer...">
+            </div>
+            <button class="filter-btn active" data-filter="all">All Containers</button>
+            <button class="filter-btn" data-filter="at-sea">At Sea</button>
+            <button class="filter-btn" data-filter="at-port">At Port</button>
+            <button class="filter-btn" data-filter="in-transit">In Transit</button>
+            <div style="border-left: 1px solid #e2e8f0; margin: 0 0.5rem; height: 2rem;"></div>
+            <button class="filter-btn" data-filter="sydney">Sydney</button>
+            <button class="filter-btn" data-filter="melbourne">Melbourne</button>
+            <button class="filter-btn" data-filter="brisbane">Brisbane</button>
+            <button class="filter-btn" data-filter="fremantle">Fremantle</button>
+        </div>
+
+        <div class="main-content">
+            <div class="map-container">
+                <div class="map-header">
+                    <div>Global Container Tracking</div>
+                    <div style="font-size: 0.75rem; color: #64748b;">Live vessel and container positions</div>
+                </div>
+                <div class="map-view">
+                    <div id="containers-map"></div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: #3b82f6;"></div>
+                            <span>Ships at Sea</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: #f59e0b;"></div>
+                            <span>Australian Ports</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: #10b981;"></div>
+                            <span>Trucks in Transit</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Shipment ID</th>
-                            <th>Customer</th>
-                            <th>Origin → Destination</th>
-                            <th>Carrier</th>
-                            <th>Status</th>
-                            <th>ETA</th>
-                        </tr>
-                    </thead>
-                    <tbody id="shipmentTable">
-                        <tr data-shipment="FM001" data-origin="nsw" data-destination="vic" data-status="on-time">
-                            <td><strong>FM001</strong></td>
-                            <td>Woolworths Group</td>
-                            <td>Sydney → Melbourne</td>
-                            <td><div class="carrier-logo">TNT</div></td>
-                            <td><span class="status-badge status-on-time">On Time</span></td>
-                            <td>16 Dec, 2:30 PM</td>
-                        </tr>
-                        <tr data-shipment="FM002" data-origin="wa" data-destination="sa" data-status="delayed">
-                            <td><strong>FM002</strong></td>
-                            <td>Bunnings Warehouse</td>
-                            <td>Perth → Adelaide</td>
-                            <td><div class="carrier-logo">STX</div></td>
-                            <td><span class="status-badge status-delayed">Delayed</span></td>
-                            <td>17 Dec, 11:00 AM</td>
-                        </tr>
-                        <tr data-shipment="FM003" data-origin="nt" data-destination="qld" data-status="critical">
-                            <td><strong>FM003</strong></td>
-                            <td>BHP Billiton</td>
-                            <td>Darwin → Brisbane</td>
-                            <td><div class="carrier-logo">LNF</div></td>
-                            <td><span class="status-badge status-critical">Critical</span></td>
-                            <td>18 Dec, 9:45 AM</td>
-                        </tr>
-                        <tr data-shipment="FM004" data-origin="vic" data-destination="tas" data-status="on-time">
-                            <td><strong>FM004</strong></td>
-                            <td>Coles Supermarkets</td>
-                            <td>Melbourne → Hobart</td>
-                            <td><div class="carrier-logo">TNT</div></td>
-                            <td><span class="status-badge status-on-time">On Time</span></td>
-                            <td>16 Dec, 6:15 PM</td>
-                        </tr>
-                        <tr data-shipment="FM005" data-origin="qld" data-destination="qld" data-status="delivered">
-                            <td><strong>FM005</strong></td>
-                            <td>Harvey Norman</td>
-                            <td>Brisbane → Gold Coast</td>
-                            <td><div class="carrier-logo">APX</div></td>
-                            <td><span class="status-badge status-delivered">Delivered</span></td>
-                            <td>15 Dec, 3:20 PM</td>
-                        </tr>
-                        <tr data-shipment="FM006" data-origin="sa" data-destination="act" data-status="on-time">
-                            <td><strong>FM006</strong></td>
-                            <td>Wesfarmers</td>
-                            <td>Adelaide → Canberra</td>
-                            <td><div class="carrier-logo">STX</div></td>
-                            <td><span class="status-badge status-on-time">On Time</span></td>
-                            <td>17 Dec, 4:30 PM</td>
-                        </tr>
-                        <tr data-shipment="FM007" data-origin="nsw" data-destination="nsw" data-status="delayed">
-                            <td><strong>FM007</strong></td>
-                            <td>Telstra Corporation</td>
-                            <td>Sydney → Newcastle</td>
-                            <td><div class="carrier-logo">LNF</div></td>
-                            <td><span class="status-badge status-delayed">Delayed</span></td>
-                            <td>18 Dec, 1:15 PM</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">Active Sea Containers</div>
+                    <div class="table-stats">
+                        <div class="stat">
+                            <div class="stat-dot" style="background: #3b82f6;"></div>
+                            <span>At Sea (5)</span>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-dot" style="background: #f59e0b;"></div>
+                            <span>At Port (4)</span>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-dot" style="background: #10b981;"></div>
+                            <span>In Transit (3)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Container</th>
+                                <th>Customer</th>
+                                <th>Ship/Truck</th>
+                                <th>Route</th>
+                                <th>Status</th>
+                                <th>ETA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="containers-table">
+                            <tr data-container="MSKU7654321" data-status="at-sea">
+                                <td>
+                                    <div class="container-icon">
+                                        🚢 <strong>MSKU7654321</strong>
+                                        <span class="priority-tag">High Priority</span>
+                                    </div>
+                                    <div class="journey-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 85%;"></div>
+                                        </div>
+                                        <span class="progress-percent">85%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div><strong>BHP Billiton</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Mining Equipment - 20ft</div>
+                                </td>
+                                <td>
+                                    <div class="shipping-line-logo" style="background: #7c3aed; color: white;">HMM</div>
+                                    <div style="font-size: 0.75rem; margin-top: 0.25rem;">HMM Shanghai</div>
+                                </td>
+                                <td>
+                                    <div><strong>Busan → Brisbane</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Port of Brisbane</div>
+                                </td>
+                                <td><span class="container-status status-at-port">At Port</span></td>
+                                <td>
+                                    <div class="eta-cell">
+                                        <div class="eta-date">Dec 17</div>
+                                        <div class="eta-time">09:00 AM</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANALYTICS TAB -->
+    <div class="tab-content" id="analytics-tab">
+        <div class="main-content" style="justify-content: center; align-items: center;">
+            <div style="text-align: center; color: #64748b;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                <h2 style="margin-bottom: 0.5rem;">Analytics Dashboard</h2>
+                <p>Advanced analytics and reporting features coming soon.</p>
+                <p style="margin-top: 1rem; font-size: 0.875rem;">Track performance metrics, cost optimization, and delivery insights.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="tab-content" id="settings-tab">
+        <div class="main-content" style="justify-content: center; align-items: center;">
+            <div style="text-align: center; color: #64748b;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⚙️</div>
+                <h2 style="margin-bottom: 0.5rem;">Platform Settings</h2>
+                <p>User management, carrier integrations, and system configuration.</p>
+                <p style="margin-top: 1rem; font-size: 0.875rem;">Customize your RouteOptimizerAI experience.</p>
             </div>
         </div>
     </div>
 
     <script>
         // =============================================================================
-        // FREIGHT MATE AU - LEAFLET MAP INTEGRATION (More Reliable)
+        // ROUTE OPTIMIZER AI - COMPLETE LOGISTICS PLATFORM
         // =============================================================================
 
         // Australian city coordinates (latitude, longitude for Leaflet)
@@ -477,8 +773,8 @@
             'Canberra': [-35.2809, 149.1300]
         };
 
-        // Shipment data with real Australian routes
-        const shipmentData = {
+        // Parcel shipment data
+        const parcelData = {
             'FM001': {
                 origin: 'Sydney',
                 destination: 'Melbourne',
@@ -502,191 +798,265 @@
                 progress: 0.20,
                 customer: 'BHP Billiton',
                 carrier: 'LineFox'
-            },
-            'FM004': {
-                origin: 'Melbourne',
-                destination: 'Hobart',
-                status: 'on-time',
-                progress: 0.80,
-                customer: 'Coles Supermarkets',
-                carrier: 'TNT'
-            },
-            'FM005': {
-                origin: 'Brisbane',
-                destination: 'Gold Coast',
-                status: 'delivered',
-                progress: 1.0,
-                customer: 'Harvey Norman',
-                carrier: 'Australia Post'
-            },
-            'FM006': {
-                origin: 'Adelaide',
-                destination: 'Canberra',
-                status: 'on-time',
-                progress: 0.50,
-                customer: 'Wesfarmers',
-                carrier: 'StarTrack'
-            },
-            'FM007': {
-                origin: 'Sydney',
-                destination: 'Newcastle',
-                status: 'delayed',
-                progress: 0.40,
-                customer: 'Telstra Corporation',
-                carrier: 'LineFox'
             }
         };
 
-        let map;
-        let routeLines = [];
-        let markers = [];
+        // Container tracking data
+        const containerData = {
+            'MSKU7654321': {
+                container: 'MSKU7654321',
+                customer: 'Woolworths Group',
+                route: 'Shanghai → Sydney',
+                status: 'at-sea',
+                ship: 'Maersk Seoul',
+                currentPosition: [-25.0, 145.0],
+                origin: [31.2304, 121.4737],
+                destination: [-33.8688, 151.2093],
+                progress: 0.75
+            },
+            'COSCO9876543': {
+                container: 'COSCO9876543',
+                customer: 'Bunnings Warehouse',
+                route: 'Ningbo → Melbourne',
+                status: 'at-port',
+                ship: 'COSCO Pacific',
+                currentPosition: [-37.8136, 144.9631],
+                origin: [29.8683, 121.5440],
+                destination: [-37.8136, 144.9631],
+                progress: 0.90
+            },
+            'OOLU1234567': {
+                container: 'OOLU1234567',
+                customer: 'Harvey Norman',
+                route: 'Port Botany → Parramatta',
+                status: 'in-transit',
+                truck: 'BT-4792',
+                currentPosition: [-33.8200, 151.1500],
+                origin: [-33.9500, 151.2200],
+                destination: [-33.8150, 150.9900],
+                progress: 0.95
+            }
+        };
 
-        // Initialize Leaflet map
-        function initializeMap() {
+        // Australian ports
+        const australianPorts = {
+            'Sydney': [-33.8500, 151.2100],
+            'Melbourne': [-37.8400, 144.9500],
+            'Brisbane': [-27.3900, 153.1200],
+            'Fremantle': [-32.0500, 115.7400],
+            'Adelaide': [-34.8000, 138.5200]
+        };
+
+        let parcelsMap, containersMap;
+        let currentTab = 'containers';
+
+        // Tab switching functionality
+        function initializeTabs() {
+            const tabButtons = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    
+                    // Update active tab button
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active tab content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(`${targetTab}-tab`).classList.add('active');
+                    
+                    // Initialize maps when tabs are activated
+                    currentTab = targetTab;
+                    if (targetTab === 'parcels') {
+                        setTimeout(() => initializeParcelsMap(), 100);
+                    } else if (targetTab === 'containers') {
+                        setTimeout(() => initializeContainersMap(), 100);
+                    }
+                });
+            });
+        }
+
+        // Initialize Parcels Map
+        function initializeParcelsMap() {
+            if (parcelsMap) return; // Already initialized
+            
             try {
-                console.log('🗺️ Initializing map...');
+                parcelsMap = L.map('parcels-map').setView([-25.2744, 133.7751], 5);
                 
-                // Create map centered on Australia
-                map = L.map('map').setView([-25.2744, 133.7751], 5);
-
-                // Add OpenStreetMap tiles (free, no API key required)
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors',
                     maxZoom: 18
-                }).addTo(map);
+                }).addTo(parcelsMap);
 
-                console.log('✅ Map initialized successfully');
-                
-                // Add shipments to map
-                addShipmentRoutes();
-                
+                addParcelRoutes();
+                console.log('✅ Parcels map initialized');
             } catch (error) {
-                console.error('❌ Map initialization failed:', error);
-                showMapFallback();
+                console.error('❌ Parcels map initialization failed:', error);
             }
         }
 
-        // Add shipment routes and markers
-        function addShipmentRoutes() {
-            Object.keys(shipmentData).forEach(shipmentId => {
-                const shipment = shipmentData[shipmentId];
+        // Initialize Containers Map
+        function initializeContainersMap() {
+            if (containersMap) return; // Already initialized
+            
+            try {
+                containersMap = L.map('containers-map').setView([-15.0, 125.0], 3);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 18
+                }).addTo(containersMap);
+
+                addAustralianPorts();
+                addContainerRoutes();
+                console.log('✅ Containers map initialized');
+            } catch (error) {
+                console.error('❌ Containers map initialization failed:', error);
+            }
+        }
+
+        // Add parcel routes to map
+        function addParcelRoutes() {
+            Object.keys(parcelData).forEach(shipmentId => {
+                const shipment = parcelData[shipmentId];
                 const originCoords = australianCities[shipment.origin];
                 const destCoords = australianCities[shipment.destination];
                 
                 if (originCoords && destCoords) {
-                    // Add route line
-                    addRouteLine(shipmentId, shipment, originCoords, destCoords);
+                    const routeColor = getParcelStatusColor(shipment.status);
                     
-                    // Add markers
-                    addShipmentMarkers(shipmentId, shipment, originCoords, destCoords);
+                    const routeLine = L.polyline([originCoords, destCoords], {
+                        color: routeColor,
+                        weight: 4,
+                        opacity: 0.8
+                    }).addTo(parcelsMap);
+                    
+                    // Add current position marker
+                    const currentLat = originCoords[0] + (destCoords[0] - originCoords[0]) * shipment.progress;
+                    const currentLng = originCoords[1] + (destCoords[1] - originCoords[1]) * shipment.progress;
+                    
+                    const markerIcon = createParcelIcon(shipment.status);
+                    L.marker([currentLat, currentLng], { icon: markerIcon })
+                        .addTo(parcelsMap)
+                        .bindPopup(`
+                            <div style="padding: 8px;">
+                                <strong>${shipmentId}</strong><br>
+                                <strong>Customer:</strong> ${shipment.customer}<br>
+                                <strong>Route:</strong> ${shipment.origin} → ${shipment.destination}<br>
+                                <strong>Progress:</strong> ${Math.round(shipment.progress * 100)}%
+                            </div>
+                        `);
                 }
             });
-            
-            console.log(`📍 Added ${Object.keys(shipmentData).length} shipment routes`);
         }
 
-        // Add route line between cities
-        function addRouteLine(shipmentId, shipment, originCoords, destCoords) {
-            const routeColor = getStatusColor(shipment.status);
-            
-            const routeLine = L.polyline([originCoords, destCoords], {
-                color: routeColor,
-                weight: 4,
-                opacity: 0.8,
-                smoothFactor: 1
-            }).addTo(map);
-            
-            routeLine.bindPopup(`
-                <div style="padding: 8px;">
-                    <strong>${shipmentId}</strong><br>
-                    <strong>Route:</strong> ${shipment.origin} → ${shipment.destination}<br>
-                    <strong>Customer:</strong> ${shipment.customer}<br>
-                    <strong>Status:</strong> ${shipment.status.replace('-', ' ').toUpperCase()}
-                </div>
-            `);
-            
-            routeLines.push(routeLine);
-        }
-
-        // Add markers for origin, destination, and current position
-        function addShipmentMarkers(shipmentId, shipment, originCoords, destCoords) {
-            // Origin marker
-            const originIcon = createCustomIcon('origin', shipment.status);
-            const originMarker = L.marker(originCoords, { icon: originIcon })
-                .addTo(map)
-                .bindPopup(`
-                    <div style="padding: 8px;">
-                        <strong>${shipmentId} - Origin</strong><br>
-                        <strong>From:</strong> ${shipment.origin}<br>
-                        <strong>Customer:</strong> ${shipment.customer}<br>
-                        <strong>Carrier:</strong> ${shipment.carrier}
-                    </div>
-                `);
-
-            // Destination marker
-            const destIcon = createCustomIcon('destination', shipment.status);
-            const destMarker = L.marker(destCoords, { icon: destIcon })
-                .addTo(map)
-                .bindPopup(`
-                    <div style="padding: 8px;">
-                        <strong>${shipmentId} - Destination</strong><br>
-                        <strong>To:</strong> ${shipment.destination}<br>
-                        <strong>Customer:</strong> ${shipment.customer}<br>
-                        <strong>Status:</strong> ${shipment.status.replace('-', ' ').toUpperCase()}
-                    </div>
-                `);
-
-            // Current position marker (if in transit)
-            if (shipment.progress < 1.0) {
-                const currentLat = originCoords[0] + (destCoords[0] - originCoords[0]) * shipment.progress;
-                const currentLng = originCoords[1] + (destCoords[1] - originCoords[1]) * shipment.progress;
+        // Add Australian ports
+        function addAustralianPorts() {
+            Object.keys(australianPorts).forEach(portName => {
+                const coords = australianPorts[portName];
                 
-                const currentIcon = createCustomIcon('current', shipment.status);
-                const currentMarker = L.marker([currentLat, currentLng], { icon: currentIcon })
-                    .addTo(map)
+                const portIcon = L.divIcon({
+                    html: `<div style="
+                        width: 16px;
+                        height: 16px;
+                        background: #f59e0b;
+                        border: 2px solid white;
+                        border-radius: 50%;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    "></div>`,
+                    className: 'custom-port-marker',
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                });
+                
+                L.marker(coords, { icon: portIcon })
+                    .addTo(containersMap)
                     .bindPopup(`
                         <div style="padding: 8px;">
-                            <strong>${shipmentId} - Current Location</strong><br>
-                            <strong>Route:</strong> ${shipment.origin} → ${shipment.destination}<br>
-                            <strong>Progress:</strong> ${Math.round(shipment.progress * 100)}%<br>
-                            <strong>Status:</strong> ${shipment.status.replace('-', ' ').toUpperCase()}<br>
-                            <strong>Customer:</strong> ${shipment.customer}
+                            <strong>Port of ${portName}</strong><br>
+                            <span style="font-size: 0.875rem;">Major Australian Container Port</span>
                         </div>
                     `);
-                
-                markers.push(currentMarker);
-            }
-            
-            markers.push(originMarker, destMarker);
+            });
         }
 
-        // Create custom icons for different marker types
-        function createCustomIcon(type, status) {
-            const color = getStatusColor(status);
-            const size = type === 'current' ? 16 : 12;
+        // Add container routes
+        function addContainerRoutes() {
+            Object.keys(containerData).forEach(containerId => {
+                const container = containerData[containerId];
+                
+                if (container.origin && container.destination) {
+                    const routeColor = getContainerStatusColor(container.status);
+                    
+                    const routeLine = L.polyline([container.origin, container.destination], {
+                        color: routeColor,
+                        weight: 3,
+                        opacity: 0.7,
+                        dashArray: container.status === 'at-sea' ? '10, 5' : null
+                    }).addTo(containersMap);
+                }
+                
+                if (container.currentPosition) {
+                    const markerIcon = createContainerIcon(container.status);
+                    L.marker(container.currentPosition, { icon: markerIcon })
+                        .addTo(containersMap)
+                        .bindPopup(`
+                            <div style="padding: 8px;">
+                                <strong>${containerId}</strong><br>
+                                <strong>Customer:</strong> ${container.customer}<br>
+                                <strong>Status:</strong> ${container.status.replace('-', ' ').toUpperCase()}<br>
+                                <strong>Progress:</strong> ${Math.round(container.progress * 100)}%
+                            </div>
+                        `);
+                }
+            });
+        }
+
+        // Create parcel icons
+        function createParcelIcon(status) {
+            const color = getParcelStatusColor(status);
             
-            const iconHtml = `
-                <div style="
-                    width: ${size}px;
-                    height: ${size}px;
+            return L.divIcon({
+                html: `<div style="
+                    width: 12px;
+                    height: 12px;
                     background: ${color};
                     border: 2px solid white;
                     border-radius: 50%;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                    ${type === 'current' ? 'animation: pulse 2s infinite;' : ''}
-                "></div>
-            `;
-            
-            return L.divIcon({
-                html: iconHtml,
-                className: 'custom-marker',
-                iconSize: [size + 4, size + 4],
-                iconAnchor: [(size + 4) / 2, (size + 4) / 2]
+                "></div>`,
+                className: 'custom-parcel-marker',
+                iconSize: [16, 16],
+                iconAnchor: [8, 8]
             });
         }
 
-        // Get color based on status
-        function getStatusColor(status) {
+        // Create container icons
+        function createContainerIcon(status) {
+            let icon = '🚢';
+            
+            switch(status) {
+                case 'at-sea': icon = '🚢'; break;
+                case 'at-port': icon = '⚓'; break;
+                case 'in-transit': icon = '🚛'; break;
+                case 'customs': icon = '📋'; break;
+                default: icon = '📦';
+            }
+            
+            return L.divIcon({
+                html: `<div style="font-size: 16px; text-shadow: 0 0 3px white;">${icon}</div>`,
+                className: 'custom-container-marker',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+        }
+
+        // Get colors based on status
+        function getParcelStatusColor(status) {
             switch(status) {
                 case 'on-time': return '#10b981';
                 case 'delayed': return '#f59e0b';
@@ -696,167 +1066,76 @@
             }
         }
 
-        // Focus map on specific shipment route
-        function focusOnShipment(shipmentId) {
-            const shipment = shipmentData[shipmentId];
-            if (shipment && map) {
-                const originCoords = australianCities[shipment.origin];
-                const destCoords = australianCities[shipment.destination];
-                
-                if (originCoords && destCoords) {
-                    // Create bounds that include both cities
-                    const group = new L.featureGroup([
-                        L.marker(originCoords),
-                        L.marker(destCoords)
-                    ]);
-                    
-                    map.fitBounds(group.getBounds().pad(0.1), {
-                        duration: 1
-                    });
-                }
+        function getContainerStatusColor(status) {
+            switch(status) {
+                case 'at-sea': return '#3b82f6';
+                case 'at-port': return '#f59e0b';
+                case 'customs': return '#d97706';
+                case 'in-transit': return '#10b981';
+                case 'delivered': return '#6b7280';
+                default: return '#64748b';
             }
         }
 
-        // Fallback if map fails to load
-        function showMapFallback() {
-            const mapContainer = document.getElementById('map');
-            mapContainer.innerHTML = `
-                <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%); color: #64748b; text-align: center; padding: 2rem; border-radius: 0 0 12px 12px;">
-                    <div>
-                        <div style="font-size: 2rem; margin-bottom: 1rem;">🗺️</div>
-                        <h3 style="margin-bottom: 0.5rem;">Map Loading...</h3>
-                        <p>Interactive Australian freight routes will appear here</p>
-                        <p style="margin-top: 1rem; font-size: 0.875rem; opacity: 0.7;">Showing real-time shipment tracking across Australia</p>
-                    </div>
-                </div>
-            `;
+        // Table interactions
+        function initializeTableInteractions() {
+            // Parcel table interactions
+            const parcelRows = document.querySelectorAll('#parcels-table tr[data-shipment]');
+            parcelRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    parcelRows.forEach(r => r.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Container table interactions
+            const containerRows = document.querySelectorAll('#containers-table tr[data-container]');
+            containerRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    containerRows.forEach(r => r.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
         }
 
-        // =============================================================================
-        // TABLE INTERACTIONS
-        // =============================================================================
-
-        const shipmentRows = document.querySelectorAll('tr[data-shipment]');
-
-        // Handle table row clicks
-        shipmentRows.forEach(row => {
-            row.addEventListener('click', function() {
-                // Remove previous selection
-                shipmentRows.forEach(r => r.classList.remove('selected'));
+        // Add refresh functionality
+        function addRefreshButtons() {
+            // Add refresh to each tab's controls
+            const controlSections = document.querySelectorAll('.controls');
+            
+            controlSections.forEach((controls, index) => {
+                const refreshBtn = document.createElement('button');
+                refreshBtn.className = 'filter-btn';
+                refreshBtn.style.marginLeft = 'auto';
                 
-                // Add selection to current row
-                this.classList.add('selected');
-                
-                // Get shipment ID and focus map
-                const shipmentId = this.dataset.shipment;
-                focusOnShipment(shipmentId);
-                
-                console.log(`Selected shipment: ${shipmentId}`);
-            });
-        });
-
-        // =============================================================================
-        // FILTER FUNCTIONALITY
-        // =============================================================================
-
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Update active button
-                filterButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filterType = this.dataset.filter;
-                applyFilter(filterType);
-            });
-        });
-
-        function applyFilter(filterType) {
-            shipmentRows.forEach(row => {
-                let shouldShow = true;
-                
-                if (filterType === 'all') {
-                    shouldShow = true;
-                } else if (filterType === 'in-transit') {
-                    shouldShow = row.dataset.status === 'on-time';
-                } else if (filterType === 'delayed') {
-                    shouldShow = row.dataset.status === 'delayed';
-                } else if (filterType === 'critical') {
-                    shouldShow = row.dataset.status === 'critical';
-                } else if (['nsw', 'vic', 'qld', 'wa', 'sa', 'tas', 'nt', 'act'].includes(filterType)) {
-                    shouldShow = row.dataset.origin === filterType || row.dataset.destination === filterType;
+                if (index === 0) {
+                    // Parcels tab
+                    refreshBtn.innerHTML = '🔄 Optimize Routes';
+                    refreshBtn.addEventListener('click', function() {
+                        this.innerHTML = '🤖 Optimizing...';
+                        this.disabled = true;
+                        setTimeout(() => {
+                            this.innerHTML = '🔄 Optimize Routes';
+                            this.disabled = false;
+                            showNotification('AI optimization complete - Routes updated for maximum efficiency');
+                        }, 2000);
+                    });
+                } else if (index === 1) {
+                    // Containers tab
+                    refreshBtn.innerHTML = '🔄 Update Positions';
+                    refreshBtn.addEventListener('click', function() {
+                        this.innerHTML = '📡 Updating...';
+                        this.disabled = true;
+                        setTimeout(() => {
+                            this.innerHTML = '🔄 Update Positions';
+                            this.disabled = false;
+                            showNotification('Container positions updated from global tracking systems');
+                        }, 2000);
+                    });
                 }
                 
-                row.style.display = shouldShow ? '' : 'none';
+                controls.appendChild(refreshBtn);
             });
-            
-            updateStats();
-        }
-
-        function updateStats() {
-            const visibleRows = Array.from(shipmentRows).filter(row => row.style.display !== 'none');
-            const onTime = visibleRows.filter(row => row.dataset.status === 'on-time').length;
-            const delayed = visibleRows.filter(row => row.dataset.status === 'delayed').length;
-            const critical = visibleRows.filter(row => row.dataset.status === 'critical').length;
-            
-            document.querySelector('.table-stats').innerHTML = `
-                <div class="stat">
-                    <div class="stat-dot" style="background: #10b981;"></div>
-                    <span>On Time (${onTime})</span>
-                </div>
-                <div class="stat">
-                    <div class="stat-dot" style="background: #f59e0b;"></div>
-                    <span>Delayed (${delayed})</span>
-                </div>
-                <div class="stat">
-                    <div class="stat-dot" style="background: #ef4444;"></div>
-                    <span>Critical (${critical})</span>
-                </div>
-            `;
-        }
-
-        // =============================================================================
-        // SEARCH FUNCTIONALITY
-        // =============================================================================
-
-        const searchInput = document.querySelector('.search-box input');
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            shipmentRows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
-            updateStats();
-        });
-
-        // =============================================================================
-        // REFRESH FUNCTIONALITY
-        // =============================================================================
-
-        function addRefreshButton() {
-            const refreshBtn = document.createElement('button');
-            refreshBtn.className = 'filter-btn';
-            refreshBtn.innerHTML = '🔄 Optimize Routes';
-            refreshBtn.style.marginLeft = 'auto';
-            refreshBtn.addEventListener('click', function() {
-                console.log('🤖 Running AI optimization...');
-                
-                // Simulate AI optimization
-                this.innerHTML = '🤖 Optimizing...';
-                this.disabled = true;
-                
-                setTimeout(() => {
-                    this.innerHTML = '🔄 Optimize Routes';
-                    this.disabled = false;
-                    console.log('✅ Routes optimized');
-                    
-                    // Show notification
-                    showNotification('AI optimization complete - Routes updated for maximum efficiency');
-                }, 2000);
-            });
-            
-            document.querySelector('.controls').appendChild(refreshBtn);
         }
 
         function showNotification(message) {
@@ -865,64 +1144,147 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: #10b981;
+                background: #0ea5e9;
                 color: white;
                 padding: 1rem 1.5rem;
                 border-radius: 8px;
                 font-size: 0.875rem;
                 z-index: 10000;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                animation: slideIn 0.3s ease;
             `;
             notification.textContent = message;
-            
-            // Add slide-in animation
-            const styleSheet = document.createElement('style');
-            styleSheet.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-            `;
-            document.head.appendChild(styleSheet);
             
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
+                notification.remove();
             }, 3000);
         }
 
-        // =============================================================================
-        // INITIALIZE DASHBOARD
-        // =============================================================================
-
-        function initializeDashboard() {
-                            console.log('🚀 RouteOptimizerAI Dashboard initializing...');
+        // Initialize the complete platform
+        function initializePlatform() {
+            console.log('🚀 RouteOptimizerAI Complete Platform initializing...');
             
-            // Initialize map
-            initializeMap();
+            // Initialize tab system
+            initializeTabs();
             
-            // Add refresh button
-            addRefreshButton();
+            // Initialize containers map (active tab)
+            initializeContainersMap();
             
-            // Set update time
-            const mapHeader = document.querySelector('.map-header div:last-child');
-            mapHeader.textContent = `Last updated: ${new Date().toLocaleTimeString('en-AU')}`;
+            // Initialize table interactions
+            initializeTableInteractions();
             
-            console.log('✅ Dashboard ready');
+            // Add refresh buttons
+            addRefreshButtons();
+            
+            console.log('✅ Complete logistics platform ready');
         }
 
         // Start when page loads
-        document.addEventListener('DOMContentLoaded', initializeDashboard);
+        document.addEventListener('DOMContentLoaded', initializePlatform);
 
         // Handle window resize
         window.addEventListener('resize', function() {
-            if (map) {
-                map.resize();
-            }
+            if (parcelsMap) parcelsMap.invalidateSize();
+            if (containersMap) containersMap.invalidateSize();
         });
     </script>
 </body>
-</html>
+</html>bar">
+                                            <div class="progress-fill" style="width: 75%;"></div>
+                                        </div>
+                                        <span class="progress-percent">75%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div><strong>Woolworths Group</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics - 20ft</div>
+                                </td>
+                                <td>
+                                    <div class="shipping-line-logo" style="background: #1e40af; color: white;">MSK</div>
+                                    <div style="font-size: 0.75rem; margin-top: 0.25rem;">Maersk Seoul</div>
+                                </td>
+                                <td>
+                                    <div><strong>Shanghai → Sydney</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Port Botany</div>
+                                </td>
+                                <td><span class="container-status status-at-sea">At Sea</span></td>
+                                <td>
+                                    <div class="eta-cell">
+                                        <div class="eta-date">Dec 18</div>
+                                        <div class="eta-time">06:30 AM</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-container="COSCO9876543" data-status="at-port">
+                                <td>
+                                    <div class="container-icon">
+                                        ⚓ <strong>COSCO9876543</strong>
+                                        <span class="priority-tag priority-urgent">Urgent</span>
+                                    </div>
+                                    <div class="journey-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 90%;"></div>
+                                        </div>
+                                        <span class="progress-percent">90%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div><strong>Bunnings Warehouse</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Hardware - 40ft</div>
+                                </td>
+                                <td>
+                                    <div class="shipping-line-logo" style="background: #dc2626; color: white;">CSC</div>
+                                    <div style="font-size: 0.75rem; margin-top: 0.25rem;">COSCO Pacific</div>
+                                </td>
+                                <td>
+                                    <div><strong>Ningbo → Melbourne</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Port of Melbourne</div>
+                                </td>
+                                <td><span class="container-status status-customs">Customs</span></td>
+                                <td>
+                                    <div class="eta-cell">
+                                        <div class="eta-date">Dec 19</div>
+                                        <div class="eta-time">02:00 PM</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-container="OOLU1234567" data-status="in-transit">
+                                <td>
+                                    <div class="container-icon">
+                                        🚛 <strong>OOLU1234567</strong>
+                                    </div>
+                                    <div class="journey-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 95%;"></div>
+                                        </div>
+                                        <span class="progress-percent">95%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div><strong>Harvey Norman</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Furniture - 40ft</div>
+                                </td>
+                                <td>
+                                    <div class="shipping-line-logo" style="background: #059669; color: white;">ONE</div>
+                                    <div style="font-size: 0.75rem; margin-top: 0.25rem;">Truck BT-4792</div>
+                                </td>
+                                <td>
+                                    <div><strong>Port Botany → Parramatta</strong></div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">On M4 Motorway</div>
+                                </td>
+                                <td><span class="container-status status-in-transit">In Transit</span></td>
+                                <td>
+                                    <div class="eta-cell">
+                                        <div class="eta-date">Dec 16</div>
+                                        <div class="eta-time">04:30 PM</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-container="HLBU5678901" data-status="at-port">
+                                <td>
+                                    <div class="container-icon">
+                                        ⚓ <strong>HLBU5678901</strong>
+                                    </div>
+                                    <div class="journey-progress">
+                                        <div class="progress-
