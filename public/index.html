@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreightMate AU Dashboard</title>
+    <title>RouteOptimizerAI - Smart Logistics Platform</title>
     <!-- Leaflet (Open Source Map) - More reliable alternative -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -311,7 +311,7 @@
 </head>
 <body>
     <div class="header">
-        <div class="logo">FreightMate AU</div>
+        <div class="logo">RouteOptimizerAI</div>
         <div class="user-info">
             <div class="user-role">Logistics Coordinator</div>
             <div>Emma Thompson</div>
@@ -339,8 +339,8 @@
     <div class="main-content">
         <div class="map-container">
             <div class="map-header">
-                <div>Australian Freight Routes</div>
-                <div style="font-size: 0.75rem; color: #64748b;">Real-time tracking</div>
+                <div>AI-Powered Route Optimization</div>
+                <div style="font-size: 0.75rem; color: #64748b;">Smart logistics for Australia</div>
             </div>
             <div class="map-view">
                 <div id="map"></div>
@@ -837,23 +837,23 @@
         function addRefreshButton() {
             const refreshBtn = document.createElement('button');
             refreshBtn.className = 'filter-btn';
-            refreshBtn.innerHTML = '🔄 Refresh Data';
+            refreshBtn.innerHTML = '🔄 Optimize Routes';
             refreshBtn.style.marginLeft = 'auto';
             refreshBtn.addEventListener('click', function() {
-                console.log('🔄 Refreshing shipment data...');
+                console.log('🤖 Running AI optimization...');
                 
-                // Simulate data refresh
-                this.innerHTML = '⏳ Refreshing...';
+                // Simulate AI optimization
+                this.innerHTML = '🤖 Optimizing...';
                 this.disabled = true;
                 
                 setTimeout(() => {
-                    this.innerHTML = '🔄 Refresh Data';
+                    this.innerHTML = '🔄 Optimize Routes';
                     this.disabled = false;
-                    console.log('✅ Data refreshed');
+                    console.log('✅ Routes optimized');
                     
                     // Show notification
-                    showNotification('Shipment data updated from carriers');
-                }, 1500);
+                    showNotification('AI optimization complete - Routes updated for maximum efficiency');
+                }, 2000);
             });
             
             document.querySelector('.controls').appendChild(refreshBtn);
@@ -899,7 +899,7 @@
         // =============================================================================
 
         function initializeDashboard() {
-            console.log('🚀 FreightMate AU Dashboard initializing...');
+                            console.log('🚀 RouteOptimizerAI Dashboard initializing...');
             
             // Initialize map
             initializeMap();
