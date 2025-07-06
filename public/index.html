@@ -747,4 +747,83 @@
                     shouldShow = row.dataset.status === 'on-time';
                 } else if (filterType === 'delayed') {
                     shouldShow = row.dataset.status === 'delayed';
-                } else if (filterType === 'critical') {
+               } else if (filterType === 'critical') {
+                    shouldShow = row.dataset.status === 'critical';
+                } else if (['nsw', 'vic', 'qld', 'wa', 'sa', 'tas', 'nt', 'act'].includes(filterType)) {
+                    shouldShow = row.dataset.origin === filterType || row.dataset.destination === filterType;
+                }
+                
+                row.style.display = shouldShow ? '' : 'none';
+                
+                const shipmentId = row.dataset.shipment;
+                const marker = document.querySelector(`[data-shipment="${shipmentId}"]`);
+                if (marker && marker.classList.contains('shipment-marker')) {
+                    marker.style.display = shouldShow ? '' : 'none';
+                }
+            });
+            
+            updateStats();
+        }
+
+        function updateStats() {
+            const visibleRows = Array.from(shipmentRows).filter(row => row.style.display !== 'none');
+            const onTime = visibleRows.filter(row => row.dataset.status === 'on-time').length;
+            const delayed = visibleRows.filter(row => row.dataset.status === 'delayed').length;
+            const critical = visibleRows.filter(row => row.dataset.status === 'critical').length;
+            
+            document.querySelector('.table-stats').innerHTML = `
+                <div class="stat">
+                    <div class="stat-dot" style="background: #10b981;"></div>
+                    <span>On Time (${onTime})</span>
+                </div>
+                <div class="stat">
+                    <div class="stat-dot" style="background: #f59e0b;"></div>
+                    <span>Delayed (${delayed})</span>
+                </div>
+                <div class="stat">
+                    <div class="stat-dot" style="background: #ef4444;"></div>
+                    <span>Critical (${critical})</span>
+                </div>
+            `;
+        }
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-box input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            shipmentRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Add refresh button to controls
+        function addRefreshButton() {
+            const refreshBtn = document.createElement('button');
+            refreshBtn.className = 'filter-btn';
+            refreshBtn.innerHTML = '🔄 Refresh';
+            refreshBtn.style.marginLeft = '1rem';
+            refreshBtn.addEventListener('click', refreshShipmentData);
+            
+            document.querySelector('.controls').appendChild(refreshBtn);
+        }
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            console.log('🚀 FreightMate AU Dashboard initialized');
+            addRefreshButton();
+            
+            // Initial data load
+            refreshShipmentData();
+            
+            // Set up auto-refresh every 5 minutes
+            setInterval(refreshShipmentData, 5 * 60 * 1000);
+            
+            console.log('⏰ Auto-refresh set for every 5 minutes');
+        }
+
+        // Start the dashboard when page loads
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+    </script>
+</body>
+</html>
