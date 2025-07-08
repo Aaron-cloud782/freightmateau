@@ -81,15 +81,23 @@
             background: #059669;
         }
 
+        /* FIXED: Remove fixed positioning that was breaking scroll */
         .dashboard {
             display: none;
             background: #f8fafc;
             min-height: 100vh;
-            width: 100vw;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
+        }
+
+        .route-optimizer {
+            display: none;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .aggregated-tracker {
+            display: none;
+            background: #f8fafc;
+            min-height: 100vh;
         }
 
         .header {
@@ -99,6 +107,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header h1 {
@@ -114,7 +125,7 @@
             cursor: pointer;
         }
 
-        .dashboard-content {
+        .dashboard-content, .optimizer-content {
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -184,23 +195,6 @@
             line-height: 1.6;
         }
 
-        .route-optimizer {
-            display: none;
-            background: #f8fafc;
-            min-height: 100vh;
-            width: 100vw;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .optimizer-content {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         .controls {
             background: white;
             padding: 2rem;
@@ -249,6 +243,7 @@
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .map-section {
@@ -386,6 +381,11 @@
             100% { transform: rotate(360deg); }
         }
 
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 1rem;
@@ -398,6 +398,10 @@
             
             .controls-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .dashboard-content, .optimizer-content {
+                padding: 1rem;
             }
         }
     </style>
@@ -427,6 +431,9 @@
             <h3>Core Features</h3>
             <button class="demo-btn green" onclick="showRouteOptimizerDirect()">
                 🗺️ Route Optimizer Demo
+            </button>
+            <button class="demo-btn green" onclick="showAggregatedTrackerDirect()">
+                📡 Aggregated Tracker Demo
             </button>
         </div>
     </div>
@@ -474,12 +481,6 @@
                     <div class="action-desc">One dashboard for all carriers - Live data from APIs, AIS, and terminals</div>
                 </div>
 
-                <div class="action-card" onclick="showNotification('Container Tracker', 'Real-time tracking system would open here')">
-                    <div class="action-icon">🚢</div>
-                    <div class="action-title">Container Tracker</div>
-                    <div class="action-desc">Real-time tracking of all your containers and vessels worldwide</div>
-                </div>
-
                 <div class="action-card" onclick="showNotification('Booking System', 'Direct booking with major carriers would open here')">
                     <div class="action-icon">📋</div>
                     <div class="action-title">Container Booking</div>
@@ -490,265 +491,6 @@
                     <div class="action-icon">📦</div>
                     <div class="action-title">Equipment Rental</div>
                     <div class="action-desc">Access global container inventory from leading leasing companies</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Aggregated Tracker -->
-    <div class="route-optimizer" id="aggregatedTracker" style="display: none;">
-        <div class="header">
-            <h1>📡 Aggregated Tracking Platform</h1>
-            <div>
-                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
-            </div>
-        </div>
-
-        <div class="optimizer-content">
-            <!-- API Status Panel -->
-            <div class="controls">
-                <h2 style="margin-bottom: 1.5rem;">Live Data Sources - One Source of Truth</h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Carrier APIs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">MSC, Maersk, COSCO, CMA CGM, ONE - Live</div>
-                    </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>AIS Vessel Data</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Real-time vessel positions via satellite</div>
-                    </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Terminal APIs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Port operators & terminal systems</div>
-                    </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Customs & Docs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Customs clearance & documentation</div>
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <button class="optimize-btn" onclick="refreshAllData()">🔄 Refresh All Data Sources</button>
-                    <div style="color: #64748b; font-size: 0.875rem;">
-                        Last updated: <span id="lastUpdated">2 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search and Filters -->
-            <div class="controls" style="margin-bottom: 2rem;">
-                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                    <input type="text" placeholder="Search containers, vessels, or booking refs..." style="flex: 1; min-width: 300px; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
-                    
-                    <select style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px;">
-                        <option>All Carriers</option>
-                        <option>Maersk Line</option>
-                        <option>MSC</option>
-                        <option>COSCO Shipping</option>
-                        <option>CMA CGM</option>
-                        <option>ONE</option>
-                    </select>
-                    
-                    <select style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px;">
-                        <option>All Status</option>
-                        <option>At Sea</option>
-                        <option>At Port</option>
-                        <option>In Transit</option>
-                        <option>Customs</option>
-                        <option>Delivered</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Unified Tracking Dashboard -->
-            <div class="results-section">
-                <div style="flex: 1; background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                    <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
-                        <h3>Unified Tracking Dashboard</h3>
-                        <div style="display: flex; gap: 1rem; font-size: 0.875rem;">
-                            <span style="color: #10b981;">●</span> <span>178 Active</span>
-                            <span style="color: #f59e0b;">●</span> <span>23 Delayed</span>
-                            <span style="color: #ef4444;">●</span> <span>5 Critical</span>
-                        </div>
-                    </div>
-                    
-                    <div id="trackingTable">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; background: #f8fafc; border-radius: 8px; font-weight: 600; font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem;">
-                            <div>Container/Vessel</div>
-                            <div>Customer</div>
-                            <div>Route</div>
-                            <div>Current Location</div>
-                            <div>Status</div>
-                            <div>ETA</div>
-                        </div>
-                        
-                        <!-- Sample tracking entries -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 0.25rem;">MSKU7654321</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">🚢 Maersk Shanghai</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Apple Inc</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
-                            </div>
-                            <div>
-                                <div>Shanghai → Los Angeles</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Direct service</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Pacific Ocean</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">📡 AIS: 34.2°N, 140.1°W</div>
-                            </div>
-                            <div>
-                                <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Sea</span>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Dec 18</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">09:00 AM</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 0.25rem;">COSCO9876543</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">🚢 COSCO Pacific</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Tesla Inc</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Auto Parts</div>
-                            </div>
-                            <div>
-                                <div>Ningbo → Rotterdam</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Via Singapore</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Rotterdam Port</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">🏗️ Terminal: ECT Delta</div>
-                            </div>
-                            <div>
-                                <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Port</span>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Dec 16</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">14:30 PM</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 0.25rem;">OOLU1234567</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">🚛 Truck BT-4792</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">IKEA</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Furniture</div>
-                            </div>
-                            <div>
-                                <div>Port Botany → Parramatta</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Last mile delivery</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">M4 Motorway</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">📍 GPS: 33.8°S, 151.0°E</div>
-                            </div>
-                            <div>
-                                <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">In Transit</span>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Dec 16</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">16:30 PM</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 0.25rem;">HLBU5678901</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">🚢 HMM Seoul</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Samsung</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
-                            </div>
-                            <div>
-                                <div>Busan → Sydney</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">Direct service</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">Sydney Customs</div>
-                                <div style="font-size: 0.75rem; color: #64748b;">📋 Doc review pending</div>
-                            </div>
-                            <div>
-                                <span style="background: #fde68a; color: #d97706; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Customs</span>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600; color: #ef4444;">Delayed</div>
-                                <div style="font-size: 0.75rem; color: #ef4444;">+2 days</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Data Sources Panel -->
-                <div style="flex: 0 0 300px; background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                    <h3 style="margin-bottom: 1rem;">Data Source Details</h3>
-                    
-                    <div style="margin-bottom: 1.5rem;">
-                        <h4 style="margin-bottom: 0.75rem; color: #374151;">API Integrations</h4>
-                        <div style="space-y: 0.5rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
-                                <span style="font-size: 0.875rem;">Maersk API</span>
-                                <span style="color: #10b981; font-size: 0.75rem;">✓ Live</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
-                                <span style="font-size: 0.875rem;">MSC API</span>
-                                <span style="color: #10b981; font-size: 0.75rem;">✓ Live</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
-                                <span style="font-size: 0.875rem;">COSCO API</span>
-                                <span style="color: #10b981; font-size: 0.75rem;">✓ Live</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
-                                <span style="font-size: 0.875rem;">CMA CGM API</span>
-                                <span style="color: #f59e0b; font-size: 0.75rem;">⚠ Delayed</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-bottom: 1.5rem;">
-                        <h4 style="margin-bottom: 0.75rem; color: #374151;">AIS & Satellite</h4>
-                        <div style="background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: 8px; padding: 0.75rem;">
-                            <div style="font-size: 0.875rem; margin-bottom: 0.5rem;"><strong>Real-time vessel positions</strong></div>
-                            <div style="font-size: 0.75rem; color: #166534;">📡 1,247 vessels tracked globally</div>
-                            <div style="font-size: 0.75rem; color: #166534;">🛰️ Updated every 2 minutes</div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h4 style="margin-bottom: 0.75rem; color: #374151;">Terminal Systems</h4>
-                        <div style="space-y: 0.25rem;">
-                            <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.25rem;">🏗️ Port of Los Angeles</div>
-                            <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.25rem;">🏗️ Port of Rotterdam</div>
-                            <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.25rem;">🏗️ Singapore Port</div>
-                            <div style="font-size: 0.875rem; color: #64748b;">🏗️ Port of Hamburg</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -831,6 +573,172 @@
         </div>
     </div>
 
+    <!-- Aggregated Tracker -->
+    <div class="aggregated-tracker" id="aggregatedTracker">
+        <div class="header">
+            <h1>📡 Aggregated Tracking Platform</h1>
+            <div>
+                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <div class="optimizer-content">
+            <div class="controls">
+                <h2 style="margin-bottom: 1.5rem;">Live Data Sources - One Source of Truth</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Carrier APIs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">MSC, Maersk, COSCO, CMA CGM, ONE - Live</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>AIS Vessel Data</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Real-time vessel positions via satellite</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Terminal APIs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Port operators & terminal systems</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Customs & Docs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Customs clearance & documentation</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button class="optimize-btn" onclick="refreshAllData()">🔄 Refresh All Data Sources</button>
+                    <div style="color: #64748b; font-size: 0.875rem;">
+                        Last updated: <span id="lastUpdated">2 minutes ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Unified Tracking Dashboard</h3>
+                
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc;">
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Container/Vessel</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Customer</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Route</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Current Location</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Status</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">ETA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">MSKU7654321</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 Maersk Shanghai</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Apple Inc</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
+                                </td>
+                                <td style="padding: 1rem;">Shanghai → Los Angeles</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Pacific Ocean</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">📡 AIS: 34.2°N, 140.1°W</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Sea</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Dec 18</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">09:00 AM</div>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">COSCO9876543</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 COSCO Pacific</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Tesla Inc</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Auto Parts</div>
+                                </td>
+                                <td style="padding: 1rem;">Ningbo → Rotterdam</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Rotterdam Port</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🏗️ Terminal: ECT Delta</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Port</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Dec 16</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">14:30 PM</div>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">OOLU1234567</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚛 Truck BT-4792</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">IKEA</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Furniture</div>
+                                </td>
+                                <td style="padding: 1rem;">Port Botany → Parramatta</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">M4 Motorway</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">📍 GPS: 33.8°S, 151.0°E</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">In Transit</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Dec 16</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">16:30 PM</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">HLBU5678901</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 HMM Seoul</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Samsung</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
+                                </td>
+                                <td style="padding: 1rem;">Busan → Sydney</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Sydney Customs</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">📋 Doc review pending</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #fde68a; color: #d97706; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Customs</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600; color: #ef4444;">Delayed</div>
+                                    <div style="font-size: 0.75rem; color: #ef4444;">+2 days</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification -->
     <div class="notification" id="notification"></div>
 
@@ -841,16 +749,28 @@
             currentCompany = companyName;
             document.getElementById('companyName').textContent = companyName;
             
+            // Hide login screen
             document.getElementById('loginScreen').style.display = 'none';
+            document.body.style.background = 'none';
+            
+            // Show dashboard
             document.getElementById('dashboard').style.display = 'block';
             
             showNotification('Welcome!', `Logged in as ${companyName}`);
         }
 
         function logout() {
+            // Hide all screens
             document.getElementById('dashboard').style.display = 'none';
             document.getElementById('routeOptimizer').style.display = 'none';
+            document.getElementById('aggregatedTracker').style.display = 'none';
+            
+            // Show login screen
             document.getElementById('loginScreen').style.display = 'flex';
+            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            document.body.style.display = 'flex';
+            document.body.style.alignItems = 'center';
+            document.body.style.justifyContent = 'center';
         }
 
         function showRouteOptimizer() {
@@ -862,6 +782,8 @@
         function showRouteOptimizerDirect() {
             currentCompany = 'Demo User';
             document.getElementById('loginScreen').style.display = 'none';
+            document.body.style.background = 'none';
+            document.body.style.display = 'block';
             document.getElementById('routeOptimizer').style.display = 'block';
             showNotification('Route Optimizer Demo', 'Direct access to AI route optimization');
         }
@@ -872,14 +794,13 @@
             showNotification('Aggregated Tracker', 'One source of truth - All carriers, AIS, and terminals');
         }
 
-        function refreshAllData() {
-            showNotification('Refreshing Data', 'Pulling latest data from all carriers, AIS, and terminal APIs');
-            
-            // Update timestamp
-            setTimeout(() => {
-                document.getElementById('lastUpdated').textContent = 'Just now';
-                showNotification('Data Updated', 'All tracking data refreshed from live sources');
-            }, 2000);
+        function showAggregatedTrackerDirect() {
+            currentCompany = 'Demo User';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.body.style.background = 'none';
+            document.body.style.display = 'block';
+            document.getElementById('aggregatedTracker').style.display = 'block';
+            showNotification('Aggregated Tracker Demo', 'Direct access to unified tracking platform');
         }
 
         function backToDashboard() {
@@ -966,6 +887,32 @@
                     </div>
                     <button class="select-btn" onclick="selectRoute('direct')">Select Route</button>
                 </div>
+                
+                <div class="route-option">
+                    <div class="route-header">
+                        <div class="route-name">Shanghai → Singapore → Los Angeles</div>
+                        <div class="badge alternative">Alternative</div>
+                    </div>
+                    <div class="route-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Cost per Container</div>
+                            <div class="detail-value">$2,200</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Transit Time</div>
+                            <div class="detail-value">19 days</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Carrier</div>
+                            <div class="detail-value">CMA CGM</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Savings</div>
+                            <div class="detail-value" style="color: #10b981;">$250 saved</div>
+                        </div>
+                    </div>
+                    <button class="select-btn" onclick="selectRoute('singapore')">Select Route</button>
+                </div>
             `;
             
             showNotification('Optimization Complete', 'Found cost-saving routes with AI analysis');
@@ -974,9 +921,21 @@
         function selectRoute(type) {
             if (type === 'optimal') {
                 showNotification('Route Selected!', 'Optimal route selected - $450 savings per container');
+            } else if (type === 'singapore') {
+                showNotification('Route Selected!', 'Singapore route selected - $250 savings per container');
             } else {
                 showNotification('Route Selected!', 'Direct route selected');
             }
+        }
+
+        function refreshAllData() {
+            showNotification('Refreshing Data', 'Pulling latest data from all carriers, AIS, and terminal APIs');
+            
+            // Update timestamp
+            setTimeout(() => {
+                document.getElementById('lastUpdated').textContent = 'Just now';
+                showNotification('Data Updated', 'All tracking data refreshed from live sources');
+            }, 2000);
         }
 
         function showNotification(title, message) {
