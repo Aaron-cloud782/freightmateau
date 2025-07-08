@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Container Link - Sign In</title>
+    <title>Global Container Link - Working Platform</title>
     <style>
         * {
             margin: 0;
@@ -12,24 +12,21 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #333;
         }
 
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        .container {
+            background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             padding: 3rem;
             width: 100%;
-            max-width: 450px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .logo {
@@ -39,218 +36,339 @@
 
         .logo h1 {
             font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #667eea;
             margin-bottom: 0.5rem;
         }
 
         .logo p {
             color: #64748b;
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-size: 1rem;
         }
 
-        .login-form {
-            display: block;
+        .demo-section {
+            margin-bottom: 2rem;
         }
 
-        .register-form {
-            display: none;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+        .demo-section h3 {
             color: #374151;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-            background: #fff;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
             margin-bottom: 1rem;
+            font-size: 1rem;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .form-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .form-footer a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .form-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .demo-companies {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid #e2e8f0;
-        }
-
-        .demo-companies h3 {
-            font-size: 0.875rem;
-            color: #64748b;
-            margin-bottom: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-        }
-
-        .demo-company {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid #e5e7eb;
-        }
-
-        .demo-company:hover {
-            border-color: #667eea;
-            transform: translateX(4px);
-        }
-
-        .demo-company:last-child {
-            margin-bottom: 0;
-        }
-
-        .company-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .company-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-            font-size: 0.75rem;
-        }
-
-        .company-name {
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-
-        .company-type {
-            font-size: 0.75rem;
-            color: #64748b;
-        }
-
-        .login-btn {
+        .demo-btn {
+            width: 100%;
             background: #667eea;
             color: white;
             border: none;
-            padding: 0.25rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .success-message {
-            background: #d1fae5;
-            color: #065f46;
             padding: 1rem;
             border-radius: 12px;
-            margin-bottom: 1rem;
-            border: 1px solid #a7f3d0;
-            display: none;
-        }
-
-        .features-preview {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .features-preview h4 {
-            color: #374151;
-            margin-bottom: 1rem;
             font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+            transition: background 0.2s;
         }
 
-        .feature-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
+        .demo-btn:hover {
+            background: #5a67d8;
         }
 
-        .feature-tag {
+        .demo-btn.green {
+            background: #10b981;
+        }
+
+        .demo-btn.green:hover {
+            background: #059669;
+        }
+
+        .dashboard {
+            display: none;
+            background: #f8fafc;
+            min-height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #64748b;
             font-weight: 500;
         }
 
-        .loading {
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-desc {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .route-optimizer {
             display: none;
+            background: #f8fafc;
+            min-height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .optimizer-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group select {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .optimize-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .results-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .map-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-placeholder {
+            background: #f1f5f9;
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #6b7280;
+        }
+
+        .results-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .route-option {
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .route-option.optimal {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .route-name {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge.optimal {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge.alternative {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .route-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            font-size: 0.875rem;
+        }
+
+        .detail-label {
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .select-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            z-index: 10000;
+            display: none;
+        }
+
+        .loading {
             text-align: center;
             padding: 2rem;
+            color: #64748b;
         }
 
         .spinner {
@@ -268,338 +386,62 @@
             100% { transform: rotate(360deg); }
         }
 
-        .dashboard-container {
-            display: none;
-            background: #f8fafc;
-            min-height: 100vh;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .dashboard-header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .dashboard-content {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .welcome-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            border: 1px solid #e5e7eb;
-        }
-
-        .welcome-card h2 {
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        .welcome-card p {
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e5e7eb;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .action-btn {
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            color: #374151;
-        }
-
-        .action-btn:hover {
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
-        }
-
-        .action-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .action-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .action-desc {
-            font-size: 0.875rem;
-            color: #64748b;
-        }
-
-        .coming-soon {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            display: inline-block;
-        }
-
         @media (max-width: 768px) {
-            .login-container {
+            .container {
                 margin: 1rem;
                 padding: 2rem;
             }
-
-            .dashboard-content {
-                padding: 1rem;
-            }
-
-            .stats-grid {
+            
+            .results-section {
                 grid-template-columns: 1fr;
             }
-
-            .quick-actions {
+            
+            .controls-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login/Register Container -->
-    <div class="login-container" id="authContainer">
+    <!-- Login Screen -->
+    <div class="container" id="loginScreen">
         <div class="logo">
             <h1>Global Container Link</h1>
             <p>Enterprise Container Management Platform</p>
         </div>
 
-        <div class="success-message" id="successMessage">
-            <strong>Registration Successful!</strong> Your account has been created. Please sign in below.
+        <div class="demo-section">
+            <h3>Quick Demo Access</h3>
+            <button class="demo-btn" onclick="loginDemo('Maersk Logistics', 'shipping-line')">
+                🚢 Maersk Logistics (Shipping Line)
+            </button>
+            <button class="demo-btn" onclick="loginDemo('Global Freight Inc', 'freight-forwarder')">
+                🚛 Global Freight Inc (Freight Forwarder)
+            </button>
+            <button class="demo-btn" onclick="loginDemo('Apple Inc', 'shipper')">
+                📦 Apple Inc (Shipper)
+            </button>
         </div>
 
-        <!-- Demo Companies -->
-        <div class="demo-companies">
-            <h3>Demo Companies - Quick Login</h3>
-            <div class="demo-company" onclick="quickLogin('Maersk Logistics', 'admin@maersk.com')">
-                <div class="company-info">
-                    <div class="company-logo" style="background: #1e40af;">MSK</div>
-                    <div>
-                        <div class="company-name">Maersk Logistics</div>
-                        <div class="company-type">Global Shipping Line</div>
-                    </div>
-                </div>
-                <button class="login-btn">Demo Login</button>
-            </div>
-
-            <div class="demo-company" onclick="quickLogin('COSCO Freight', 'manager@cosco.com')">
-                <div class="company-info">
-                    <div class="company-logo" style="background: #dc2626;">CSC</div>
-                    <div>
-                        <div class="company-name">COSCO Freight</div>
-                        <div class="company-type">Container Line</div>
-                    </div>
-                </div>
-                <button class="login-btn">Demo Login</button>
-            </div>
-
-            <div class="demo-company" onclick="quickLogin('Global Logistics Inc', 'user@globallogistics.com')">
-                <div class="company-info">
-                    <div class="company-logo" style="background: #059669;">GLI</div>
-                    <div>
-                        <div class="company-name">Global Logistics Inc</div>
-                        <div class="company-type">Freight Forwarder</div>
-                    </div>
-                </div>
-                <button class="login-btn">Demo Login</button>
-            </div>
+        <div class="demo-section">
+            <h3>Core Features</h3>
+            <button class="demo-btn green" onclick="showRouteOptimizerDirect()">
+                🗺️ Route Optimizer Demo
+            </button>
         </div>
-
-        <!-- Login Form -->
-        <form class="login-form" id="loginForm">
-            <div class="form-group">
-                <label for="loginEmail">Email Address</label>
-                <input type="email" id="loginEmail" required placeholder="Enter your company email">
-            </div>
-
-            <div class="form-group">
-                <label for="loginPassword">Password</label>
-                <input type="password" id="loginPassword" required placeholder="Enter your password">
-            </div>
-
-            <button type="submit" class="btn">Sign In to Platform</button>
-
-            <div class="form-footer">
-                <p>Don't have an account? <a href="#" onclick="showRegister()">Register your company</a></p>
-            </div>
-        </form>
-
-        <!-- Register Form -->
-        <form class="register-form" id="registerForm">
-            <div class="form-group">
-                <label for="companyName">Company Name</label>
-                <input type="text" id="companyName" required placeholder="Your company name">
-            </div>
-
-            <div class="form-group">
-                <label for="companyType">Company Type</label>
-                <select id="companyType" required>
-                    <option value="">Select company type</option>
-                    <option value="shipping-line">Shipping Line / Carrier</option>
-                    <option value="freight-forwarder">Freight Forwarder</option>
-                    <option value="logistics-provider">Logistics Provider</option>
-                    <option value="shipper">Shipper / Importer-Exporter</option>
-                    <option value="port-operator">Port / Terminal Operator</option>
-                    <option value="container-leasing">Container Leasing Company</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="contactName">Contact Person</label>
-                <input type="text" id="contactName" required placeholder="Your full name">
-            </div>
-
-            <div class="form-group">
-                <label for="registerEmail">Email Address</label>
-                <input type="email" id="registerEmail" required placeholder="Company email address">
-            </div>
-
-            <div class="form-group">
-                <label for="registerPassword">Password</label>
-                <input type="password" id="registerPassword" required placeholder="Create a secure password">
-            </div>
-
-            <div class="form-group">
-                <label for="country">Country</label>
-                <select id="country" required>
-                    <option value="">Select country</option>
-                    <option value="AU">Australia</option>
-                    <option value="US">United States</option>
-                    <option value="GB">United Kingdom</option>
-                    <option value="DE">Germany</option>
-                    <option value="NL">Netherlands</option>
-                    <option value="SG">Singapore</option>
-                    <option value="HK">Hong Kong</option>
-                    <option value="CN">China</option>
-                    <option value="JP">Japan</option>
-                    <option value="KR">South Korea</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn">Create Company Account</button>
-
-            <div class="form-footer">
-                <p>Already have an account? <a href="#" onclick="showLogin()">Sign in here</a></p>
-            </div>
-        </form>
-
-        <div class="features-preview">
-            <h4>Platform Features</h4>
-            <div class="feature-tags">
-                <span class="feature-tag">🚢 Real-time Tracking</span>
-                <span class="feature-tag">📊 Route Optimization</span>
-                <span class="feature-tag">📋 Container Booking</span>
-                <span class="feature-tag">🌍 Global Network</span>
-                <span class="feature-tag">📈 Analytics</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Loading Screen -->
-    <div class="loading" id="loadingScreen">
-        <div class="spinner"></div>
-        <p>Connecting to Global Container Network...</p>
     </div>
 
     <!-- Dashboard -->
-    <div class="dashboard-container" id="dashboardContainer">
-        <div class="dashboard-header">
+    <div class="dashboard" id="dashboard">
+        <div class="header">
             <h1>Global Container Link</h1>
-            <div class="user-info">
-                <span id="companyNameDisplay">Company Name</span>
+            <div>
+                <span id="companyName">Company Name</span>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
 
         <div class="dashboard-content">
-            <div class="welcome-card">
-                <h2>Welcome to Your Container Management Hub</h2>
-                <p>Your comprehensive platform for global container logistics. Track shipments in real-time, optimize routes with AI, book containers directly with major shipping lines, and access container equipment from leading providers worldwide.</p>
-            </div>
-
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number">247</div>
@@ -619,586 +461,536 @@
                 </div>
             </div>
 
-            <div class="quick-actions">
-                <div class="action-btn" onclick="showContainerTracker()">
+            <div class="actions-grid">
+                <div class="action-card" onclick="showRouteOptimizer()">
+                    <div class="action-icon">🗺️</div>
+                    <div class="action-title">AI Route Optimizer</div>
+                    <div class="action-desc">Find optimal shipping routes with AI-powered cost and time analysis</div>
+                </div>
+
+                <div class="action-card" onclick="showAggregatedTracker()">
+                    <div class="action-icon">📡</div>
+                    <div class="action-title">Aggregated Tracker</div>
+                    <div class="action-desc">One dashboard for all carriers - Live data from APIs, AIS, and terminals</div>
+                </div>
+
+                <div class="action-card" onclick="showNotification('Container Tracker', 'Real-time tracking system would open here')">
                     <div class="action-icon">🚢</div>
                     <div class="action-title">Container Tracker</div>
-                    <div class="action-desc">Real-time tracking of all your containers</div>
+                    <div class="action-desc">Real-time tracking of all your containers and vessels worldwide</div>
                 </div>
 
-                <div class="action-btn" onclick="showRouteOptimizer()">
-                    <div class="action-icon">🗺️</div>
-                    <div class="action-title">Route Optimizer</div>
-                    <div class="action-desc">AI-powered route planning</div>
-                </div>
-
-                <div class="action-btn" onclick="showBookingSystem()">
+                <div class="action-card" onclick="showNotification('Booking System', 'Direct booking with major carriers would open here')">
                     <div class="action-icon">📋</div>
                     <div class="action-title">Container Booking</div>
-                    <div class="action-desc">Book with MSC, Maersk, COSCO & more</div>
+                    <div class="action-desc">Book containers directly with MSC, Maersk, COSCO, and other major lines</div>
                 </div>
 
-                <div class="action-btn" onclick="showEquipmentRental()">
+                <div class="action-card" onclick="showNotification('Equipment Rental', 'Container equipment marketplace would open here')">
                     <div class="action-icon">📦</div>
                     <div class="action-title">Equipment Rental</div>
-                    <div class="action-desc">Access container inventory worldwide</div>
-                </div>
-
-                <div class="action-btn" onclick="showAnalytics()">
-                    <div class="action-icon">📊</div>
-                    <div class="action-title">Analytics Dashboard</div>
-                    <div class="action-desc">Performance insights & reporting</div>
-                    <div class="coming-soon">Coming Soon</div>
-                </div>
-
-                <div class="action-btn" onclick="showMarketplace()">
-                    <div class="action-icon">🌐</div>
-                    <div class="action-title">Container Marketplace</div>
-                    <div class="action-desc">Direct access to global carriers</div>
-                    <div class="coming-soon">Coming Soon</div>
+                    <div class="action-desc">Access global container inventory from leading leasing companies</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Aggregated Tracker -->
+    <div class="route-optimizer" id="aggregatedTracker" style="display: none;">
+        <div class="header">
+            <h1>📡 Aggregated Tracking Platform</h1>
+            <div>
+                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <div class="optimizer-content">
+            <!-- API Status Panel -->
+            <div class="controls">
+                <h2 style="margin-bottom: 1.5rem;">Live Data Sources - One Source of Truth</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Carrier APIs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">MSC, Maersk, COSCO, CMA CGM, ONE - Live</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>AIS Vessel Data</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Real-time vessel positions via satellite</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Terminal APIs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Port operators & terminal systems</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Customs & Docs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Customs clearance & documentation</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button class="optimize-btn" onclick="refreshAllData()">🔄 Refresh All Data Sources</button>
+                    <div style="color: #64748b; font-size: 0.875rem;">
+                        Last updated: <span id="lastUpdated">2 minutes ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="controls" style="margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <input type="text" placeholder="Search containers, vessels, or booking refs..." style="flex: 1; min-width: 300px; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
+                    
+                    <select style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px;">
+                        <option>All Carriers</option>
+                        <option>Maersk Line</option>
+                        <option>MSC</option>
+                        <option>COSCO Shipping</option>
+                        <option>CMA CGM</option>
+                        <option>ONE</option>
+                    </select>
+                    
+                    <select style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px;">
+                        <option>All Status</option>
+                        <option>At Sea</option>
+                        <option>At Port</option>
+                        <option>In Transit</option>
+                        <option>Customs</option>
+                        <option>Delivered</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Unified Tracking Dashboard -->
+            <div class="results-section">
+                <div style="flex: 1; background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3>Unified Tracking Dashboard</h3>
+                        <div style="display: flex; gap: 1rem; font-size: 0.875rem;">
+                            <span style="color: #10b981;">●</span> <span>178 Active</span>
+                            <span style="color: #f59e0b;">●</span> <span>23 Delayed</span>
+                            <span style="color: #ef4444;">●</span> <span>5 Critical</span>
+                        </div>
+                    </div>
+                    
+                    <div id="trackingTable">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; background: #f8fafc; border-radius: 8px; font-weight: 600; font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem;">
+                            <div>Container/Vessel</div>
+                            <div>Customer</div>
+                            <div>Route</div>
+                            <div>Current Location</div>
+                            <div>Status</div>
+                            <div>ETA</div>
+                        </div>
+                        
+                        <!-- Sample tracking entries -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">MSKU7654321</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">🚢 Maersk Shanghai</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Apple Inc</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
+                            </div>
+                            <div>
+                                <div>Shanghai → Los Angeles</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Direct service</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Pacific Ocean</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">📡 AIS: 34.2°N, 140.1°W</div>
+                            </div>
+                            <div>
+                                <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Sea</span>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Dec 18</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">09:00 AM</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">COSCO9876543</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">🚢 COSCO Pacific</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Tesla Inc</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Auto Parts</div>
+                            </div>
+                            <div>
+                                <div>Ningbo → Rotterdam</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Via Singapore</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Rotterdam Port</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">🏗️ Terminal: ECT Delta</div>
+                            </div>
+                            <div>
+                                <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Port</span>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Dec 16</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">14:30 PM</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">OOLU1234567</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">🚛 Truck BT-4792</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">IKEA</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Furniture</div>
+                            </div>
+                            <div>
+                                <div>Port Botany → Parramatta</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Last mile delivery</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">M4 Motorway</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">📍 GPS: 33.8°S, 151.0°E</div>
+                            </div>
+                            <div>
+                                <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">In Transit</span>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Dec 16</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">16:30 PM</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">HLBU5678901</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">🚢 HMM Seoul</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Samsung</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
+                            </div>
+                            <div>
+                                <div>Busan → Sydney</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">Direct service</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Sydney Customs</div>
+                                <div style="font-size: 0.75rem; color: #64748b;">📋 Doc review pending</div>
+                            </div>
+                            <div>
+                                <span style="background: #fde68a; color: #d97706; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Customs</span>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: #ef4444;">Delayed</div>
+                                <div style="font-size: 0.75rem; color: #ef4444;">+2 days</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Sources Panel -->
+                <div style="flex: 0 0 300px; background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <h3 style="margin-bottom: 1rem;">Data Source Details</h3>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 0.75rem; color: #374151;">API Integrations</h4>
+                        <div style="space-y: 0.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
+                                <span style="font-size: 0.875rem;">Maersk API</span>
+                                <span style="color: #10b981; font-size: 0.75rem;">✓ Live</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
+                                <span style="font-size: 0.875rem;">MSC API</span>
+                                <span style="color: #10b981; font-size: 0.75rem;">✓ Live</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
+                                <span style="font-size: 0.875rem;">COSCO API</span>
+                                <span style="color: #10b981; font-size: 0.75rem;">✓ Live</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 6px; margin-bottom: 0.25rem;">
+                                <span style="font-size: 0.875rem;">CMA CGM API</span>
+                                <span style="color: #f59e0b; font-size: 0.75rem;">⚠ Delayed</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 0.75rem; color: #374151;">AIS & Satellite</h4>
+                        <div style="background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: 8px; padding: 0.75rem;">
+                            <div style="font-size: 0.875rem; margin-bottom: 0.5rem;"><strong>Real-time vessel positions</strong></div>
+                            <div style="font-size: 0.75rem; color: #166534;">📡 1,247 vessels tracked globally</div>
+                            <div style="font-size: 0.75rem; color: #166534;">🛰️ Updated every 2 minutes</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="margin-bottom: 0.75rem; color: #374151;">Terminal Systems</h4>
+                        <div style="space-y: 0.25rem;">
+                            <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.25rem;">🏗️ Port of Los Angeles</div>
+                            <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.25rem;">🏗️ Port of Rotterdam</div>
+                            <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 0.25rem;">🏗️ Singapore Port</div>
+                            <div style="font-size: 0.875rem; color: #64748b;">🏗️ Port of Hamburg</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Route Optimizer -->
+    <div class="route-optimizer" id="routeOptimizer">
+        <div class="header">
+            <h1>🗺️ AI Route Optimizer</h1>
+            <div>
+                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <div class="optimizer-content">
+            <div class="controls">
+                <h2 style="margin-bottom: 1.5rem;">Route Optimization Controls</h2>
+                
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label>Origin Port</label>
+                        <select id="originPort">
+                            <option value="shanghai">Shanghai, China</option>
+                            <option value="ningbo">Ningbo, China</option>
+                            <option value="qingdao">Qingdao, China</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Destination Port</label>
+                        <select id="destinationPort">
+                            <option value="losangeles">Los Angeles, USA</option>
+                            <option value="sydney">Sydney, Australia</option>
+                            <option value="rotterdam">Rotterdam, Netherlands</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Container Type</label>
+                        <select>
+                            <option value="40hc">40ft High Cube</option>
+                            <option value="20std">20ft Standard</option>
+                            <option value="40ref">40ft Reefer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select>
+                            <option value="cost">Lowest Cost</option>
+                            <option value="time">Fastest Transit</option>
+                            <option value="balanced">Balanced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="optimize-btn" onclick="runOptimization()">🤖 Run AI Optimization</button>
+            </div>
+
+            <div class="results-section">
+                <div class="map-section">
+                    <h3 style="margin-bottom: 1rem;">Global Shipping Routes</h3>
+                    <div class="map-placeholder">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🗺️</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Interactive Route Map</div>
+                        <div style="font-size: 0.9rem;">Real-time route visualization with AI optimization</div>
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <h3 style="margin-bottom: 1rem;">Optimization Results</h3>
+                    <div id="optimizationResults">
+                        <div class="loading">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                            <p>Click "Run AI Optimization" to analyze routes and find cost-saving opportunities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
     <script>
-        // Global state
-        let currentUser = null;
-        let currentCompany = null;
+        let currentCompany = '';
 
-        // Sample companies for demo
-        const demoCompanies = {
-            'admin@maersk.com': {
-                name: 'Maersk Logistics',
-                type: 'shipping-line',
-                contact: 'John Hansen',
-                country: 'DK'
-            },
-            'manager@cosco.com': {
-                name: 'COSCO Freight',
-                type: 'shipping-line', 
-                contact: 'Li Wei',
-                country: 'CN'
-            },
-            'user@globallogistics.com': {
-                name: 'Global Logistics Inc',
-                type: 'freight-forwarder',
-                contact: 'Sarah Johnson',
-                country: 'AU'
-            }
-        };
-
-        // Authentication functions
-        function showLogin() {
-            document.querySelector('.login-form').style.display = 'block';
-            document.querySelector('.register-form').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-        }
-
-        function showRegister() {
-            document.querySelector('.login-form').style.display = 'none';
-            document.querySelector('.register-form').style.display = 'block';
-        }
-
-        function quickLogin(companyName, email) {
-            document.getElementById('loginEmail').value = email;
-            document.getElementById('loginPassword').value = 'demo123';
+        function loginDemo(companyName, companyType) {
+            currentCompany = companyName;
+            document.getElementById('companyName').textContent = companyName;
             
-            // Simulate login
-            showLoading();
-            setTimeout(() => {
-                currentUser = email;
-                currentCompany = demoCompanies[email];
-                showDashboard();
-            }, 2000);
-        }
-
-        function showLoading() {
-            document.getElementById('authContainer').style.display = 'none';
-            document.getElementById('loadingScreen').style.display = 'block';
-        }
-
-        function showDashboard() {
-            document.getElementById('loadingScreen').style.display = 'none';
-            document.getElementById('dashboardContainer').style.display = 'block';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
             
-            // Update company name in header
-            document.getElementById('companyNameDisplay').textContent = currentCompany.name;
-            
-            // Update stats based on company type
-            updateDashboardStats();
-        }
-
-        function updateDashboardStats() {
-            // Customize stats based on company type
-            const stats = getStatsForCompanyType(currentCompany.type);
-            const statCards = document.querySelectorAll('.stat-card');
-            
-            statCards[0].querySelector('.stat-number').textContent = stats.containers;
-            statCards[1].querySelector('.stat-number').textContent = stats.vessels;
-            statCards[2].querySelector('.stat-number').textContent = stats.routes;
-            statCards[3].querySelector('.stat-number').textContent = stats.savings;
-        }
-
-        function getStatsForCompanyType(type) {
-            const statsMap = {
-                'shipping-line': { containers: '2,847', vessels: '156', routes: '2,340', savings: '$24M' },
-                'freight-forwarder': { containers: '1,247', vessels: '89', routes: '890', savings: '$8.4M' },
-                'logistics-provider': { containers: '647', vessels: '34', routes: '420', savings: '$3.2M' },
-                'shipper': { containers: '247', vessels: '18', routes: '156', savings: '$2.4M' }
-            };
-            return statsMap[type] || statsMap['shipper'];
+            showNotification('Welcome!', `Logged in as ${companyName}`);
         }
 
         function logout() {
-            currentUser = null;
-            currentCompany = null;
-            document.getElementById('dashboardContainer').style.display = 'none';
-            document.getElementById('authContainer').style.display = 'flex';
-            
-            // Reset forms
-            document.getElementById('loginForm').reset();
-            document.getElementById('registerForm').reset();
-            showLogin();
-        }
-
-        // Form handlers
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            // Check demo accounts
-            if (demoCompanies[email] && password === 'demo123') {
-                showLoading();
-                setTimeout(() => {
-                    currentUser = email;
-                    currentCompany = demoCompanies[email];
-                    showDashboard();
-                }, 2000);
-            } else {
-                alert('Demo Account: Use one of the demo companies above or password "demo123"');
-            }
-        });
-
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Simulate registration
-            showLoading();
-            setTimeout(() => {
-                document.getElementById('loadingScreen').style.display = 'none';
-                document.getElementById('authContainer').style.display = 'flex';
-                document.getElementById('successMessage').style.display = 'block';
-                showLogin();
-                
-                // Auto-fill login form
-                document.getElementById('loginEmail').value = document.getElementById('registerEmail').value;
-            }, 2000);
-        });
-
-        // Dashboard navigation functions
-        function showContainerTracker() {
-            showNotification('🚢 Loading Container Tracker...', 'Opening company-specific dashboard');
-            setTimeout(() => {
-                // Route to company-specific dashboard based on company type
-                routeToCompanyDashboard();
-            }, 1000);
-        }
-
-        function routeToCompanyDashboard() {
-            const companyType = currentCompany.type;
-            
-            // Route to appropriate dashboard based on company type
-            switch(companyType) {
-                case 'freight-forwarder':
-                    window.open('data:text/html;charset=utf-8,' + encodeURIComponent(getFreightForwarderDashboard()), '_blank');
-                    break;
-                case 'shipping-line':
-                    window.open('data:text/html;charset=utf-8,' + encodeURIComponent(getShippingLineDashboard()), '_blank');
-                    break;
-                case 'shipper':
-                    window.open('data:text/html;charset=utf-8,' + encodeURIComponent(getShipperDashboard()), '_blank');
-                    break;
-                case 'logistics-provider':
-                    window.open('data:text/html;charset=utf-8,' + encodeURIComponent(getLogisticsProviderDashboard()), '_blank');
-                    break;
-                case 'port-operator':
-                    window.open('data:text/html;charset=utf-8,' + encodeURIComponent(getPortOperatorDashboard()), '_blank');
-                    break;
-                case 'container-leasing':
-                    window.open('data:text/html;charset=utf-8,' + encodeURIComponent(getContainerLeasingDashboard()), '_blank');
-                    break;
-                default:
-                    showGenericDashboard();
-            }
-        }
-
-        function getFreightForwarderDashboard() {
-            return `
-                <!DOCTYPE html>
-                <html><head><title>Freight Forwarder Dashboard - ${currentCompany.name}</title>
-                <style>body{font-family:Arial;padding:2rem;background:#f8fafc;}</style></head>
-                <body>
-                    <h1>🚛 Freight Forwarder Dashboard</h1>
-                    <p><strong>Company:</strong> ${currentCompany.name}</p>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0;">
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">24</h2>
-                            <p>Active Customers</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">67</h2>
-                            <p>Shipments This Month</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">$147K</h2>
-                            <p>Revenue This Month</p>
-                        </div>
-                    </div>
-                    <div style="background:white;padding:2rem;border-radius:12px;margin:1rem 0;">
-                        <h3>🔧 Core Features for Freight Forwarders:</h3>
-                        <ul style="margin:1rem 0;line-height:1.8;">
-                            <li>📋 <strong>Multi-Carrier Quote System</strong> - Get rates from MSC, Maersk, COSCO, CMA CGM, ONE, OOCL instantly</li>
-                            <li>🗺️ <strong>AI Route Optimizer</strong> - Find cost-saving routes for every shipment</li>
-                            <li>👥 <strong>Customer Management</strong> - Handle multiple customer quote requests efficiently</li>
-                            <li>📦 <strong>Container Booking</strong> - Direct booking with major shipping lines</li>
-                            <li>📍 <strong>Real-time Tracking</strong> - Monitor all customer shipments in one dashboard</li>
-                            <li>🌐 <strong>Customer Portal</strong> - Branded portal for your clients to track their shipments</li>
-                            <li>📊 <strong>Profit Analytics</strong> - Track margins, performance, and growth metrics</li>
-                        </ul>
-                    </div>
-                    <p><em>This would be the full freight forwarder workspace with quote management, route optimization, and customer portal integration.</em></p>
-                </body></html>
-            `;
-        }
-
-        function getShippingLineDashboard() {
-            return `
-                <!DOCTYPE html>
-                <html><head><title>Shipping Line Dashboard - ${currentCompany.name}</title>
-                <style>body{font-family:Arial;padding:2rem;background:#f8fafc;}</style></head>
-                <body>
-                    <h1>🚢 Shipping Line Dashboard</h1>
-                    <p><strong>Company:</strong> ${currentCompany.name}</p>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0;">
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">156</h2>
-                            <p>Active Vessels</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">24,847</h2>
-                            <p>Containers in Fleet</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">89%</h2>
-                            <p>Capacity Utilization</p>
-                        </div>
-                    </div>
-                    <div style="background:white;padding:2rem;border-radius:12px;margin:1rem 0;">
-                        <h3>⚓ Core Features for Shipping Lines:</h3>
-                        <ul style="margin:1rem 0;line-height:1.8;">
-                            <li>🚢 <strong>Fleet Management</strong> - Monitor all vessels, routes, and schedules globally</li>
-                            <li>📦 <strong>Container Positioning</strong> - Optimize empty container repositioning</li>
-                            <li>📋 <strong>Booking Management</strong> - Handle customer bookings and allocations</li>
-                            <li>🗺️ <strong>Route Planning</strong> - Network optimization and schedule planning</li>
-                            <li>⚓ <strong>Port Operations</strong> - Coordinate with terminals and port operations</li>
-                            <li>💰 <strong>Yield Management</strong> - Dynamic pricing and capacity optimization</li>
-                            <li>🔗 <strong>API Distribution</strong> - Share rates and capacity with freight forwarders</li>
-                            <li>📊 <strong>Performance Analytics</strong> - On-time performance, utilization, profitability</li>
-                        </ul>
-                    </div>
-                    <p><em>This would be the full shipping line command center for fleet, container, and network management.</em></p>
-                </body></html>
-            `;
-        }
-
-        function getShipperDashboard() {
-            return `
-                <!DOCTYPE html>
-                <html><head><title>Shipper Dashboard - ${currentCompany.name}</title>
-                <style>body{font-family:Arial;padding:2rem;background:#f8fafc;}</style></head>
-                <body>
-                    <h1>📦 Shipper Dashboard</h1>
-                    <p><strong>Company:</strong> ${currentCompany.name}</p>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0;">
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">47</h2>
-                            <p>Active Shipments</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">$2.4M</h2>
-                            <p>Freight Spend YTD</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">96%</h2>
-                            <p>On-Time Delivery</p>
-                        </div>
-                    </div>
-                    <div style="background:white;padding:2rem;border-radius:12px;margin:1rem 0;">
-                        <h3>🏭 Core Features for Shippers:</h3>
-                        <ul style="margin:1rem 0;line-height:1.8;">
-                            <li>🔍 <strong>Rate Shopping</strong> - Compare rates across multiple carriers and forwarders</li>
-                            <li>📋 <strong>Easy Booking</strong> - Book containers directly with preferred carriers</li>
-                            <li>📍 <strong>Shipment Tracking</strong> - Real-time visibility of all your containers</li>
-                            <li>📊 <strong>Supply Chain Analytics</strong> - Performance metrics and cost analysis</li>
-                            <li>📦 <strong>Container Management</strong> - Track container usage and demurrage</li>
-                            <li>🤝 <strong>Vendor Management</strong> - Manage relationships with freight forwarders</li>
-                            <li>📈 <strong>Cost Optimization</strong> - AI recommendations for reducing freight costs</li>
-                            <li>🔔 <strong>Smart Alerts</strong> - Proactive notifications for delays or issues</li>
-                        </ul>
-                    </div>
-                    <p><em>This would be the complete shipper control center for managing global container shipments.</em></p>
-                </body></html>
-            `;
-        }
-
-        function getLogisticsProviderDashboard() {
-            return `
-                <!DOCTYPE html>
-                <html><head><title>Logistics Provider Dashboard - ${currentCompany.name}</title>
-                <style>body{font-family:Arial;padding:2rem;background:#f8fafc;}</style></head>
-                <body>
-                    <h1>🌐 Logistics Provider Dashboard</h1>
-                    <p><strong>Company:</strong> ${currentCompany.name}</p>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0;">
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">89</h2>
-                            <p>Active Projects</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">234</h2>
-                            <p>Containers Managed</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">15</h2>
-                            <p>Global Locations</p>
-                        </div>
-                    </div>
-                    <div style="background:white;padding:2rem;border-radius:12px;margin:1rem 0;">
-                        <h3>🔗 Core Features for Logistics Providers:</h3>
-                        <ul style="margin:1rem 0;line-height:1.8;">
-                            <li>🌍 <strong>Multi-Modal Integration</strong> - Coordinate sea, air, and land transportation</li>
-                            <li>📋 <strong>End-to-End Visibility</strong> - Track shipments across all transport modes</li>
-                            <li>🏭 <strong>Warehouse Integration</strong> - Connect with distribution centers globally</li>
-                            <li>🤝 <strong>Partner Network</strong> - Manage relationships with carriers and agents</li>
-                            <li>📊 <strong>Performance Dashboard</strong> - KPIs across all logistics operations</li>
-                            <li>💰 <strong>Cost Management</strong> - Track and optimize logistics spend</li>
-                            <li>🔔 <strong>Exception Management</strong> - Proactive handling of delays and issues</li>
-                        </ul>
-                    </div>
-                    <p><em>This would be the comprehensive logistics command center for end-to-end supply chain management.</em></p>
-                </body></html>
-            `;
-        }
-
-        function getPortOperatorDashboard() {
-            return `
-                <!DOCTYPE html>
-                <html><head><title>Port Operator Dashboard - ${currentCompany.name}</title>
-                <style>body{font-family:Arial;padding:2rem;background:#f8fafc;}</style></head>
-                <body>
-                    <h1>⚓ Port Operator Dashboard</h1>
-                    <p><strong>Company:</strong> ${currentCompany.name}</p>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0;">
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">12</h2>
-                            <p>Vessels in Port</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">3,456</h2>
-                            <p>Containers Processed</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">94%</h2>
-                            <p>Berth Utilization</p>
-                        </div>
-                    </div>
-                    <div style="background:white;padding:2rem;border-radius:12px;margin:1rem 0;">
-                        <h3>🏗️ Core Features for Port Operators:</h3>
-                        <ul style="margin:1rem 0;line-height:1.8;">
-                            <li>🚢 <strong>Vessel Scheduling</strong> - Optimize berth allocations and vessel turnaround</li>
-                            <li>🏗️ <strong>Terminal Operations</strong> - Container yard management and crane operations</li>
-                            <li>📊 <strong>Performance Metrics</strong> - Track productivity, efficiency, and service levels</li>
-                            <li>🚛 <strong>Gate Operations</strong> - Manage truck appointments and container pickup/delivery</li>
-                            <li>📋 <strong>Customs Integration</strong> - Coordinate with customs and regulatory agencies</li>
-                            <li>💰 <strong>Revenue Management</strong> - Track port fees, demurrage, and service charges</li>
-                            <li>🔔 <strong>Real-Time Updates</strong> - Share vessel and container status with stakeholders</li>
-                        </ul>
-                    </div>
-                    <p><em>This would be the complete port management system for terminal and vessel operations.</em></p>
-                </body></html>
-            `;
-        }
-
-        function getContainerLeasingDashboard() {
-            return `
-                <!DOCTYPE html>
-                <html><head><title>Container Leasing Dashboard - ${currentCompany.name}</title>
-                <style>body{font-family:Arial;padding:2rem;background:#f8fafc;}</style></head>
-                <body>
-                    <h1>📦 Container Leasing Dashboard</h1>
-                    <p><strong>Company:</strong> ${currentCompany.name}</p>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0;">
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">47,892</h2>
-                            <p>Total Fleet Size</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">89%</h2>
-                            <p>Utilization Rate</p>
-                        </div>
-                        <div style="background:white;padding:1.5rem;border-radius:12px;text-align:center;">
-                            <h2 style="color:#667eea;">$12.4M</h2>
-                            <p>Monthly Revenue</p>
-                        </div>
-                    </div>
-                    <div style="background:white;padding:2rem;border-radius:12px;margin:1rem 0;">
-                        <h3>📋 Core Features for Container Leasing:</h3>
-                        <ul style="margin:1rem 0;line-height:1.8;">
-                            <li>📦 <strong>Fleet Management</strong> - Track all containers globally by location and status</li>
-                            <li>💰 <strong>Lease Management</strong> - Handle contracts, rates, and billing for customers</li>
-                            <li>🗺️ <strong>Asset Positioning</strong> - Optimize container positioning for demand</li>
-                            <li>🔄 <strong>Maintenance Tracking</strong> - Schedule repairs and maintenance globally</li>
-                            <li>📊 <strong>Utilization Analytics</strong> - Track usage patterns and optimize fleet size</li>
-                            <li>🤝 <strong>Customer Portal</strong> - Allow lessees to find and book available equipment</li>
-                            <li>📈 <strong>Market Intelligence</strong> - Track demand patterns and pricing trends</li>
-                        </ul>
-                    </div>
-                    <p><em>This would be the complete container leasing management platform for global fleet operations.</em></p>
-                </body></html>
-            `;
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('routeOptimizer').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
         }
 
         function showRouteOptimizer() {
-            showNotification('🗺️ Loading Route Optimizer...', 'AI-powered route optimization engine starting');
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('routeOptimizer').style.display = 'block';
+            showNotification('Route Optimizer', 'AI-powered route optimization system loaded');
+        }
+
+        function showRouteOptimizerDirect() {
+            currentCompany = 'Demo User';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('routeOptimizer').style.display = 'block';
+            showNotification('Route Optimizer Demo', 'Direct access to AI route optimization');
+        }
+
+        function showAggregatedTracker() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('aggregatedTracker').style.display = 'block';
+            showNotification('Aggregated Tracker', 'One source of truth - All carriers, AIS, and terminals');
+        }
+
+        function refreshAllData() {
+            showNotification('Refreshing Data', 'Pulling latest data from all carriers, AIS, and terminal APIs');
+            
+            // Update timestamp
             setTimeout(() => {
-                window.open('data:text/html;charset=utf-8,' + encodeURIComponent(`
-                    <!DOCTYPE html>
-                    <html><head><title>Route Optimizer - Global Container Link</title></head>
-                    <body style="font-family: Arial; padding: 2rem; background: #f8fafc;">
-                        <h1>🗺️ AI Route Optimizer</h1>
-                        <p><strong>Company:</strong> ${currentCompany.name}</p>
-                        <p>Advanced AI engine for optimizing container routes based on cost, transit time, and reliability factors.</p>
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <h3>Route Optimization Results</h3>
-                            <p><strong>Origin:</strong> Shanghai, China</p>
-                            <p><strong>Destination:</strong> Sydney, Australia</p>
-                            <p><strong>Optimal Route:</strong> Direct service via MSC</p>
-                            <p><strong>Cost Savings:</strong> 15% vs standard routing</p>
-                            <p><strong>Transit Time:</strong> 18 days</p>
-                        </div>
-                    </body></html>
-                `), '_blank');
-            }, 1000);
+                document.getElementById('lastUpdated').textContent = 'Just now';
+                showNotification('Data Updated', 'All tracking data refreshed from live sources');
+            }, 2000);
         }
 
-        function showBookingSystem() {
-            showNotification('📋 Loading Booking System...', 'Connecting to global shipping lines');
-            setTimeout(() => {
-                window.open('data:text/html;charset=utf-8,' + encodeURIComponent(`
-                    <!DOCTYPE html>
-                    <html><head><title>Container Booking - Global Container Link</title></head>
-                    <body style="font-family: Arial; padding: 2rem; background: #f8fafc;">
-                        <h1>📋 Container Booking System</h1>
-                        <p><strong>Company:</strong> ${currentCompany.name}</p>
-                        <p>Direct booking interface with major shipping lines: MSC, Maersk, COSCO, CMA CGM, OOCL, ONE</p>
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <h3>Available Capacity</h3>
-                            <p><strong>MSC:</strong> 247 TEU available - Shanghai to Rotterdam</p>
-                            <p><strong>Maersk:</strong> 156 TEU available - Ningbo to Los Angeles</p>
-                            <p><strong>COSCO:</strong> 89 TEU available - Qingdao to Hamburg</p>
-                            <p><strong>Rate:</strong> From $1,245/TEU</p>
-                        </div>
-                        <div style="background: #e0f2fe; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <p><strong>✨ Smart Booking:</strong> AI suggests best carrier based on your preferences for cost, transit time, and reliability.</p>
-                        </div>
-                    </body></html>
-                `), '_blank');
-            }, 1000);
+        function backToDashboard() {
+            if (currentCompany === 'Demo User') {
+                logout();
+            } else {
+                document.getElementById('routeOptimizer').style.display = 'none';
+                document.getElementById('aggregatedTracker').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            }
         }
 
-        function showEquipmentRental() {
-            showNotification('📦 Loading Equipment Rental...', 'Accessing global container inventory');
-            setTimeout(() => {
-                window.open('data:text/html;charset=utf-8,' + encodeURIComponent(`
-                    <!DOCTYPE html>
-                    <html><head><title>Equipment Rental - Global Container Link</title></head>
-                    <body style="font-family: Arial; padding: 2rem; background: #f8fafc;">
-                        <h1>📦 Container Equipment Rental</h1>
-                        <p><strong>Company:</strong> ${currentCompany.name}</p>
-                        <p>Direct access to container inventory from major leasing companies and shipping lines worldwide.</p>
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <h3>Available Equipment</h3>
-                            <p><strong>20ft Dry Container:</strong> 2,847 units available</p>
-                            <p><strong>40ft High Cube:</strong> 1,456 units available</p>
-                            <p><strong>40ft Reefer:</strong> 234 units available</p>
-                            <p><strong>Location:</strong> Shanghai, Ningbo, Qingdao</p>
-                            <p><strong>Rate:</strong> From $85/day</p>
-                        </div>
-                        <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <p><strong>🔗 Direct Integration:</strong> Connected to Textainer, Triton, SeaCube, and major shipping line equipment pools.</p>
-                        </div>
-                    </body></html>
-                `), '_blank');
-            }, 1000);
-        }
-
-        function showAnalytics() {
-            showNotification('📊 Analytics Coming Soon...', 'Advanced analytics dashboard in development');
-        }
-
-        function showMarketplace() {
-            showNotification('🌐 Marketplace Coming Soon...', 'Global container marketplace launching Q2 2025');
-        }
-
-        // Utility functions
-        function showNotification(title, message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
-                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-                z-index: 10000;
-                max-width: 350px;
-                animation: slideIn 0.3s ease;
+        function runOptimization() {
+            const resultsDiv = document.getElementById('optimizationResults');
+            
+            // Show loading
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p><strong>AI Optimization Running...</strong></p>
+                    <p style="font-size: 0.875rem; margin-top: 0.5rem;">Analyzing 247 possible routes</p>
+                </div>
             `;
             
+            // Show results after 3 seconds
+            setTimeout(showOptimizationResults, 3000);
+        }
+
+        function showOptimizationResults() {
+            document.getElementById('optimizationResults').innerHTML = `
+                <div style="background: #eff6ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                    <div style="font-weight: 600; color: #1e40af; margin-bottom: 0.5rem;">🤖 AI Insights</div>
+                    <div style="font-size: 0.875rem;">Route via Busan saves $450 per container with only 1 day additional transit time.</div>
+                </div>
+                
+                <div class="route-option optimal">
+                    <div class="route-header">
+                        <div class="route-name">Shanghai → Busan → Los Angeles</div>
+                        <div class="badge optimal">AI Recommended</div>
+                    </div>
+                    <div class="route-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Cost per Container</div>
+                            <div class="detail-value">$2,000</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Transit Time</div>
+                            <div class="detail-value">17 days</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Carrier</div>
+                            <div class="detail-value">Maersk Line</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Savings</div>
+                            <div class="detail-value" style="color: #10b981;">$450 saved</div>
+                        </div>
+                    </div>
+                    <button class="select-btn" onclick="selectRoute('optimal')">Select Optimal Route</button>
+                </div>
+                
+                <div class="route-option">
+                    <div class="route-header">
+                        <div class="route-name">Shanghai → Los Angeles (Direct)</div>
+                        <div class="badge alternative">Alternative</div>
+                    </div>
+                    <div class="route-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Cost per Container</div>
+                            <div class="detail-value">$2,450</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Transit Time</div>
+                            <div class="detail-value">16 days</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Carrier</div>
+                            <div class="detail-value">COSCO Shipping</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Premium</div>
+                            <div class="detail-value" style="color: #ef4444;">+$450</div>
+                        </div>
+                    </div>
+                    <button class="select-btn" onclick="selectRoute('direct')">Select Route</button>
+                </div>
+            `;
+            
+            showNotification('Optimization Complete', 'Found cost-saving routes with AI analysis');
+        }
+
+        function selectRoute(type) {
+            if (type === 'optimal') {
+                showNotification('Route Selected!', 'Optimal route selected - $450 savings per container');
+            } else {
+                showNotification('Route Selected!', 'Direct route selected');
+            }
+        }
+
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
             notification.innerHTML = `
                 <div style="font-weight: 600; margin-bottom: 0.25rem;">${title}</div>
-                <div style="font-size: 0.875rem; opacity: 0.9;">${message}</div>
+                <div style="font-size: 0.875rem;">${message}</div>
             `;
-            
-            // Add animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            document.body.appendChild(notification);
+            notification.style.display = 'block';
             
             setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
-            }, 4000);
+                notification.style.display = 'none';
+            }, 3000);
         }
-
-        // Initialize
-        console.log('🚢 Global Container Link Platform Initialized');
-        console.log('Demo Companies Available:');
-        Object.keys(demoCompanies).forEach(email => {
-            console.log(`- ${demoCompanies[email].name}: ${email} (password: demo123)`);
-        });
     </script>
 </body>
 </html>
