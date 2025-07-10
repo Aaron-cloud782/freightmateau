@@ -744,7 +744,179 @@
 
     <script>
         let currentCompany = '';
+class RealisticDemoData {
+    constructor() {
+        this.currentDate = new Date();
+        this.realTimeInterval = null;
+        this.demoScenarios = this.initializeDemoScenarios();
+        this.startRealisticUpdates();
+    }
+    
+    initializeDemoScenarios() {
+        return {
+            'apple': {
+                name: 'Apple Inc',
+                containers: ['APPL7654321', 'CUPERTINO567', 'IPHONE12345'],
+                routes: ['Shanghai → Cupertino', 'Shenzhen → Memphis'],
+                monthlyVolume: 1200,
+                savings: '$1.2M annually'
+            },
+            'tesla': {
+                name: 'Tesla Inc', 
+                containers: ['TSLA9876543', 'MODEL3PARTS', 'BATTERY789'],
+                routes: ['Shanghai → Fremont', 'Berlin → Austin'],
+                monthlyVolume: 800,
+                savings: '$800K annually'
+            },
+            'default': {
+                name: 'Demo Customer',
+                containers: ['DEMO7654321', 'CONTAINER567', 'SHIPMENT789'],
+                routes: ['Shanghai → Los Angeles', 'Ningbo → Rotterdam'],
+                monthlyVolume: 500,
+                savings: '$600K annually'
+            }
+        };
+    }
+    
+    generateRouteOptimization(origin, destination) {
+        const routes = [
+            {
+                name: `${origin} → ${destination} (Direct)`,
+                carrier: 'Maersk Line',
+                vessel: 'Maersk Shanghai',
+                cost: 2450 + Math.floor(Math.random() * 100 - 50),
+                transitDays: 16 + Math.floor(Math.random() * 2),
+                reliability: 94,
+                savings: null,
+                optimal: false
+            },
+            {
+                name: `${origin} → Busan → ${destination}`,
+                carrier: 'HMM',
+                vessel: 'HMM Seoul', 
+                cost: 2000 + Math.floor(Math.random() * 100 - 50),
+                transitDays: 17 + Math.floor(Math.random() * 2),
+                reliability: 91,
+                savings: 450,
+                optimal: true
+            },
+            {
+                name: `${origin} → Singapore → ${destination}`,
+                carrier: 'CMA CGM',
+                vessel: 'CMA CGM Marco Polo',
+                cost: 2200 + Math.floor(Math.random() * 100 - 50), 
+                transitDays: 19 + Math.floor(Math.random() * 2),
+                reliability: 88,
+                savings: 250,
+                optimal: false
+            }
+        ];
+        
+        routes.forEach(route => {
+            route.factors = [];
+            if (Math.random() > 0.7) {
+                route.factors.push('Fuel surcharge: +$' + Math.floor(Math.random() * 100));
+                route.cost += Math.floor(Math.random() * 100);
+            }
+            if (Math.random() > 0.9) {
+                route.factors.push('Weather delay: +1 day');
+                route.transitDays += 1;
+            }
+        });
+        
+        return {
+            routes: routes,
+            totalAnalyzed: 247 + Math.floor(Math.random() * 100),
+            processingTime: (1.5 + Math.random() * 2).toFixed(1) + ' seconds',
+            aiInsight: `Route via Busan saves $${routes[1].savings} per container with only ${routes[1].transitDays - routes[0].transitDays} additional day(s).`
+        };
+    }
+    
+    startRealisticUpdates() {
+        this.realTimeInterval = setInterval(() => {
+            this.updateLiveData();
+        }, 30000);
+    }
+    
+    updateLiveData() {
+        this.showUpdateFlash();
+        
+        const trackingRows = document.querySelectorAll('tbody tr');
+        trackingRows.forEach((row, index) => {
+            if (Math.random() > 0.7) {
+                row.style.background = '#f0fdf4';
+                row.style.transition = 'background-color 0.3s';
+                setTimeout(() => {
+                    row.style.background = 'white';
+                }, 2000);
+            }
+        });
+    }
+    
+    showUpdateFlash() {
+        const flash = document.createElement('div');
+        flash.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        `;
+        flash.textContent = '📡 Live data updated';
+        document.body.appendChild(flash);
+        
+        setTimeout(() => {
+            flash.remove();
+        }, 3000);
+    }
+    
+    addDays(date, days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+    
+    addHours(date, hours) {
+        const result = new Date(date);
+        result.setHours(result.getHours() + hours);
+        return result;
+    }
+    
+    addMinutes(date, minutes) {
+        const result = new Date(date);
+        result.setMinutes(result.getMinutes() + minutes);
+        return result;
+    }
+    
+    formatDate(date) {
+        return date.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    getRelativeTime(date) {
+        const diff = Date.now() - date.getTime();
+        const minutes = Math.floor(diff / 60000);
+        
+        if (minutes < 1) return 'Just now';
+        if (minutes < 60) return `${minutes} min ago`;
+        
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return `${hours}h ago`;
+        
+        return `${Math.floor(hours / 24)}d ago`;
+    }
+}
 
+const enhancedDemo = new RealisticDemoData();
         function loginDemo(companyName, companyType) {
             currentCompany = companyName;
             document.getElementById('companyName').textContent = companyName;
@@ -814,20 +986,103 @@
         }
 
         function runOptimization() {
-            const resultsDiv = document.getElementById('optimizationResults');
-            
-            // Show loading
-            resultsDiv.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p><strong>AI Optimization Running...</strong></p>
-                    <p style="font-size: 0.875rem; margin-top: 0.5rem;">Analyzing 247 possible routes</p>
+    const resultsDiv = document.getElementById('optimizationResults');
+    const originPort = document.getElementById('originPort').value;
+    const destinationPort = document.getElementById('destinationPort').value;
+    
+    // Show realistic loading
+    resultsDiv.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p><strong>AI Optimization Running...</strong></p>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem;">
+                Analyzing ${247 + Math.floor(Math.random() * 100)} possible routes across ${8 + Math.floor(Math.random() * 5)} carriers...
+            </p>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem; color: #64748b;">
+                Checking real-time rates, vessel schedules, and port conditions...
+            </p>
+        </div>
+    `;
+    
+    // Simulate realistic processing time
+    setTimeout(() => {
+        showEnhancedOptimizationResults(originPort, destinationPort);
+    }, 2000 + Math.random() * 2000); // 2-4 seconds
+}
+
+function showEnhancedOptimizationResults(origin, destination) {
+    const originNames = {
+        'shanghai': 'Shanghai',
+        'ningbo': 'Ningbo', 
+        'qingdao': 'Qingdao'
+    };
+    
+    const destNames = {
+        'losangeles': 'Los Angeles',
+        'sydney': 'Sydney',
+        'rotterdam': 'Rotterdam'
+    };
+    
+    const originName = originNames[origin] || 'Shanghai';
+    const destName = destNames[destination] || 'Los Angeles';
+    
+    const optimization = enhancedDemo.generateRouteOptimization(originName, destName);
+    
+    let resultsHTML = `
+        <div style="background: #eff6ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+            <div style="font-weight: 600; color: #1e40af; margin-bottom: 0.5rem;">🤖 AI Analysis Complete</div>
+            <div style="font-size: 0.875rem;">${optimization.aiInsight}</div>
+            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">
+                Processed ${optimization.totalAnalyzed} routes in ${optimization.processingTime}
+            </div>
+        </div>
+    `;
+    
+    optimization.routes.forEach((route, index) => {
+        const badgeClass = route.optimal ? 'optimal' : 'alternative';
+        const badgeText = route.optimal ? 'AI Recommended' : 'Alternative';
+        
+        resultsHTML += `
+            <div class="route-option ${route.optimal ? 'optimal' : ''}">
+                <div class="route-header">
+                    <div class="route-name">${route.name}</div>
+                    <div class="badge ${badgeClass}">${badgeText}</div>
                 </div>
-            `;
-            
-            // Show results after 3 seconds
-            setTimeout(showOptimizationResults, 3000);
-        }
+                <div class="route-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Cost per Container</div>
+                        <div class="detail-value">$${route.cost.toLocaleString()}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Transit Time</div>
+                        <div class="detail-value">${route.transitDays} days</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Carrier</div>
+                        <div class="detail-value">${route.carrier}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">${route.savings ? 'Savings' : 'Premium'}</div>
+                        <div class="detail-value" style="color: ${route.savings ? '#10b981' : '#ef4444'};">
+                            ${route.savings ? '$' + route.savings + ' saved' : 'Standard rate'}
+                        </div>
+                    </div>
+                </div>
+                ${route.factors.length > 0 ? `
+                    <div style="margin: 1rem 0; padding: 0.5rem; background: #fef3c7; border-radius: 6px; font-size: 0.875rem;">
+                        <strong>Real-time factors:</strong> ${route.factors.join(', ')}
+                    </div>
+                ` : ''}
+                <button class="select-btn" onclick="selectRoute('${route.optimal ? 'optimal' : 'alternative'}', '${route.savings || 0}')">
+                    Select Route
+                </button>
+            </div>
+        `;
+    });
+    
+    document.getElementById('optimizationResults').innerHTML = resultsHTML;
+    showNotification('Optimization Complete', 'AI analysis found cost-saving opportunities');
+}
 
         function showOptimizationResults() {
             document.getElementById('optimizationResults').innerHTML = `
