@@ -10,7 +10,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -19,7 +18,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .container {
             background: white;
             border-radius: 20px;
@@ -28,33 +26,27 @@
             max-width: 500px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-
         .logo {
             text-align: center;
             margin-bottom: 2rem;
         }
-
         .logo h1 {
             font-size: 2rem;
             color: #667eea;
             margin-bottom: 0.5rem;
         }
-
         .logo p {
             color: #64748b;
             font-size: 1rem;
         }
-
         .demo-section {
             margin-bottom: 2rem;
         }
-
         .demo-section h3 {
             color: #374151;
             margin-bottom: 1rem;
             font-size: 1rem;
         }
-
         .demo-btn {
             width: 100%;
             background: #667eea;
@@ -68,38 +60,31 @@
             margin-bottom: 0.75rem;
             transition: background 0.2s;
         }
-
         .demo-btn:hover {
             background: #5a67d8;
         }
-
         .demo-btn.green {
             background: #10b981;
         }
-
         .demo-btn.green:hover {
             background: #059669;
         }
-
         /* FIXED: Remove fixed positioning that was breaking scroll */
         .dashboard {
             display: none;
             background: #f8fafc;
             min-height: 100vh;
         }
-
         .route-optimizer {
             display: none;
             background: #f8fafc;
             min-height: 100vh;
         }
-
         .aggregated-tracker {
             display: none;
             background: #f8fafc;
             min-height: 100vh;
         }
-
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -111,11 +96,9 @@
             top: 0;
             z-index: 100;
         }
-
         .header h1 {
             font-size: 1.5rem;
         }
-
         .logout-btn {
             background: rgba(255, 255, 255, 0.2);
             color: white;
@@ -124,20 +107,17 @@
             border-radius: 8px;
             cursor: pointer;
         }
-
         .dashboard-content, .optimizer-content {
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-
         .stat-card {
             background: white;
             padding: 2rem;
@@ -145,25 +125,21 @@
             text-align: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-
         .stat-number {
             font-size: 2.5rem;
             font-weight: bold;
             color: #667eea;
             margin-bottom: 0.5rem;
         }
-
         .stat-label {
             color: #64748b;
             font-weight: 500;
         }
-
         .actions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
         }
-
         .action-card {
             background: white;
             padding: 2rem;
@@ -172,29 +148,24 @@
             transition: transform 0.2s;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-
         .action-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
         }
-
         .action-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
-
         .action-title {
             font-size: 1.25rem;
             font-weight: 600;
             color: #374151;
             margin-bottom: 0.5rem;
         }
-
         .action-desc {
             color: #64748b;
             line-height: 1.6;
         }
-
         .controls {
             background: white;
             padding: 2rem;
@@ -202,32 +173,27 @@
             margin-bottom: 2rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-
         .controls-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin-bottom: 2rem;
         }
-
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
-
         .form-group label {
             font-weight: 600;
             color: #374151;
         }
-
         .form-group select {
             padding: 0.75rem;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 1rem;
         }
-
         .optimize-btn {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
@@ -238,21 +204,18 @@
             font-weight: 600;
             cursor: pointer;
         }
-
         .results-section {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
             margin-bottom: 2rem;
         }
-
         .map-section {
             background: white;
             padding: 2rem;
             border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-
         .map-placeholder {
             background: #f1f5f9;
             border: 2px dashed #d1d5db;
@@ -264,14 +227,12 @@
             flex-direction: column;
             color: #6b7280;
         }
-
         .results-panel {
             background: white;
             padding: 2rem;
             border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-
         .route-option {
             background: #f8fafc;
             border: 2px solid #e5e7eb;
@@ -280,62 +241,51 @@
             margin-bottom: 1rem;
             cursor: pointer;
         }
-
         .route-option.optimal {
             border-color: #10b981;
             background: #f0fdf4;
         }
-
         .route-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
-
         .route-name {
             font-weight: 600;
             color: #374151;
         }
-
         .badge {
             padding: 0.25rem 0.75rem;
             border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 600;
         }
-
         .badge.optimal {
             background: #dcfce7;
             color: #166534;
         }
-
         .badge.alternative {
             background: #fef3c7;
             color: #92400e;
         }
-
         .route-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: 1rem;
         }
-
         .detail-item {
             font-size: 0.875rem;
         }
-
         .detail-label {
             color: #64748b;
             margin-bottom: 0.25rem;
         }
-
         .detail-value {
             font-weight: 600;
             color: #374151;
         }
-
         .select-btn {
             width: 100%;
             background: #667eea;
@@ -346,7 +296,6 @@
             font-weight: 600;
             cursor: pointer;
         }
-
         .notification {
             position: fixed;
             top: 20px;
@@ -359,13 +308,11 @@
             z-index: 10000;
             display: none;
         }
-
         .loading {
             text-align: center;
             padding: 2rem;
             color: #64748b;
         }
-
         .spinner {
             width: 40px;
             height: 40px;
@@ -375,15 +322,135 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
+        }
+
+        @keyframes moveVessel {
+            0% { left: 8%; top: 50%; }
+            50% { left: 50%; top: 45%; }
+            100% { left: 85%; top: 40%; }
+        }
+
+        /* Enhanced UI Improvements */
+        .demo-btn, .optimize-btn, .select-btn, .logout-btn {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .demo-btn:hover, .optimize-btn:hover, .select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Loading Animation Enhancement */
+        .loading {
+            position: relative;
+        }
+
+        .loading::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+            animation: loadingBar 3s ease-in-out infinite;
+        }
+
+        @keyframes loadingBar {
+            0% { width: 0; opacity: 0; }
+            50% { width: 100px; opacity: 1; }
+            100% { width: 100px; opacity: 0; }
+        }
+
+        /* Status Badges Enhancement */
+        .badge {
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Route Options Enhancement */
+        .route-option {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .route-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .route-option:hover::before {
+            left: 100%;
+        }
+
+        .route-option.optimal::after {
+            content: '⭐';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Stats Cards Enhancement */
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Form Controls Enhancement */
+        select, input {
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Notification Enhancement */
+        .notification {
+            animation: slideInRight 0.5s ease, slideOutRight 0.5s ease 2.5s;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
         }
 
         @media (max-width: 768px) {
@@ -399,9 +466,21 @@
             .controls-grid {
                 grid-template-columns: 1fr;
             }
-
             .dashboard-content, .optimizer-content {
                 padding: 1rem;
+            }
+
+            .enhanced-map-container {
+                height: 300px;
+            }
+            
+            .route-option {
+                margin-bottom: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
             }
         }
     </style>
@@ -413,7 +492,6 @@
             <h1>Global Container Link</h1>
             <p>Enterprise Container Management Platform</p>
         </div>
-
         <div class="demo-section">
             <h3>Quick Demo Access</h3>
             <button class="demo-btn" onclick="loginDemo('Maersk Logistics', 'shipping-line')">
@@ -426,7 +504,6 @@
                 📦 Apple Inc (Shipper)
             </button>
         </div>
-
         <div class="demo-section">
             <h3>Core Features</h3>
             <button class="demo-btn green" onclick="showRouteOptimizerDirect()">
@@ -437,7 +514,6 @@
             </button>
         </div>
     </div>
-
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
         <div class="header">
@@ -447,7 +523,6 @@
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
-
         <div class="dashboard-content">
             <div class="stats-grid">
                 <div class="stat-card">
@@ -467,26 +542,22 @@
                     <div class="stat-label">Cost Savings</div>
                 </div>
             </div>
-
             <div class="actions-grid">
                 <div class="action-card" onclick="showRouteOptimizer()">
                     <div class="action-icon">🗺️</div>
                     <div class="action-title">AI Route Optimizer</div>
                     <div class="action-desc">Find optimal shipping routes with AI-powered cost and time analysis</div>
                 </div>
-
                 <div class="action-card" onclick="showAggregatedTracker()">
                     <div class="action-icon">📡</div>
                     <div class="action-title">Aggregated Tracker</div>
                     <div class="action-desc">One dashboard for all carriers - Live data from APIs, AIS, and terminals</div>
                 </div>
-
                 <div class="action-card" onclick="showNotification('Booking System', 'Direct booking with major carriers would open here')">
                     <div class="action-icon">📋</div>
                     <div class="action-title">Container Booking</div>
                     <div class="action-desc">Book containers directly with MSC, Maersk, COSCO, and other major lines</div>
                 </div>
-
                 <div class="action-card" onclick="showNotification('Equipment Rental', 'Container equipment marketplace would open here')">
                     <div class="action-icon">📦</div>
                     <div class="action-title">Equipment Rental</div>
@@ -495,7 +566,6 @@
             </div>
         </div>
     </div>
-
     <!-- Route Optimizer -->
     <div class="route-optimizer" id="routeOptimizer">
         <div class="header">
@@ -504,7 +574,6 @@
                 <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
             </div>
         </div>
-
         <div class="optimizer-content">
             <div class="controls">
                 <h2 style="margin-bottom: 1.5rem;">Route Optimization Controls</h2>
@@ -546,20 +615,71 @@
                         </select>
                     </div>
                 </div>
-
                 <button class="optimize-btn" onclick="runOptimization()">🤖 Run AI Optimization</button>
             </div>
-
             <div class="results-section">
                 <div class="map-section">
                     <h3 style="margin-bottom: 1rem;">Global Shipping Routes</h3>
-                    <div class="map-placeholder">
-                        <div style="font-size: 4rem; margin-bottom: 1rem;">🗺️</div>
-                        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Interactive Route Map</div>
-                        <div style="font-size: 0.9rem;">Real-time route visualization with AI optimization</div>
+                    <div class="enhanced-map-container" style="position: relative; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%); border-radius: 16px; overflow: hidden; height: 400px;">
+                        <!-- Map Header -->
+                        <div style="position: absolute; top: 15px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
+                            <div style="background: rgba(0,0,0,0.8); padding: 8px 16px; border-radius: 20px; color: white; font-size: 0.85rem; font-weight: 600;">
+                                🌍 Global Shipping Routes
+                            </div>
+                            <div style="background: rgba(16, 185, 129, 0.9); padding: 6px 12px; border-radius: 15px; color: white; font-size: 0.8rem; font-weight: 600;">
+                                📡 Live Tracking: 18 Vessels
+                            </div>
+                        </div>
+
+                        <!-- Route Lines -->
+                        <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;">
+                            <!-- Trans-Pacific Route -->
+                            <path d="M 80 200 Q 200 150 320 180" stroke="#10b981" stroke-width="3" fill="none" stroke-dasharray="5,5" opacity="0.8">
+                                <animate attributeName="stroke-dashoffset" values="0;10" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Asia-Europe Route -->
+                            <path d="M 80 220 Q 180 180 280 200" stroke="#06b6d4" stroke-width="3" fill="none" stroke-dasharray="5,5" opacity="0.8">
+                                <animate attributeName="stroke-dashoffset" values="0;10" dur="3s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Alternative Route -->
+                            <path d="M 80 200 Q 150 250 320 200" stroke="#f59e0b" stroke-width="2" fill="none" stroke-dasharray="3,3" opacity="0.6">
+                                <animate attributeName="stroke-dashoffset" values="0;6" dur="4s" repeatCount="indefinite"/>
+                            </path>
+                        </svg>
+
+                        <!-- Port Markers -->
+                        <div style="position: absolute; bottom: 25%; left: 8%; color: white; text-align: center; z-index: 10;">
+                            <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%; margin: 0 auto 8px; box-shadow: 0 0 15px rgba(239, 68, 68, 0.8); animation: pulse 2s infinite;"></div>
+                            <div style="font-size: 0.9rem; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">🏭 Shanghai</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Origin Port</div>
+                        </div>
+
+                        <div style="position: absolute; bottom: 20%; right: 8%; color: white; text-align: center; z-index: 10;">
+                            <div style="width: 12px; height: 12px; background: #10b981; border-radius: 50%; margin: 0 auto 8px; box-shadow: 0 0 15px rgba(16, 185, 129, 0.8); animation: pulse 2s infinite;"></div>
+                            <div style="font-size: 0.9rem; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">🏭 Los Angeles</div>
+                            <div style="font-size: 0.75rem; opacity: 0.9;">Destination</div>
+                        </div>
+
+                        <!-- Moving Vessel -->
+                        <div id="movingVessel" style="position: absolute; top: 45%; left: 35%; z-index: 15; animation: moveVessel 10s linear infinite;">
+                            <div style="background: rgba(239, 68, 68, 0.9); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.3); white-space: nowrap;">
+                                🚢 Maersk Shanghai
+                            </div>
+                            <div style="background: rgba(0,0,0,0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; margin-top: 2px; text-align: center;">
+                                ETA: 3 days
+                            </div>
+                        </div>
+
+                        <!-- Bottom Info Panel -->
+                        <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); padding: 12px 20px; border-radius: 12px; color: white; text-align: center; z-index: 10;">
+                            <div style="font-size: 1rem; font-weight: 600; margin-bottom: 4px;">🤖 AI Route Analysis</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9;">Optimal route selected • $450 savings per container</div>
+                            <div style="font-size: 0.75rem; opacity: 0.7; margin-top: 4px;">📍 Real-time tracking via AIS satellite</div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="results-panel">
                     <h3 style="margin-bottom: 1rem;">Optimization Results</h3>
                     <div id="optimizationResults">
@@ -572,7 +692,6 @@
             </div>
         </div>
     </div>
-
     <!-- Aggregated Tracker -->
     <div class="aggregated-tracker" id="aggregatedTracker">
         <div class="header">
@@ -581,7 +700,6 @@
                 <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
             </div>
         </div>
-
         <div class="optimizer-content">
             <div class="controls">
                 <h2 style="margin-bottom: 1.5rem;">Live Data Sources - One Source of Truth</h2>
@@ -605,606 +723,3 @@
                     
                     <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Terminal APIs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Port operators & terminal systems</div>
-                    </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Customs & Docs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Customs clearance & documentation</div>
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <button class="optimize-btn" onclick="refreshAllData()">🔄 Refresh All Data Sources</button>
-                    <div style="color: #64748b; font-size: 0.875rem;">
-                        Last updated: <span id="lastUpdated">2 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
-                <h3 style="margin-bottom: 1rem;">Unified Tracking Dashboard</h3>
-                
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: #f8fafc;">
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Container/Vessel</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Customer</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Route</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Current Location</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Status</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">ETA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">MSKU7654321</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 Maersk Shanghai</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Apple Inc</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
-                                </td>
-                                <td style="padding: 1rem;">Shanghai → Los Angeles</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Pacific Ocean</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">📡 AIS: 34.2°N, 140.1°W</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Sea</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Dec 18</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">09:00 AM</div>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">COSCO9876543</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 COSCO Pacific</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Tesla Inc</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Auto Parts</div>
-                                </td>
-                                <td style="padding: 1rem;">Ningbo → Rotterdam</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Rotterdam Port</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🏗️ Terminal: ECT Delta</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Port</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Dec 16</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">14:30 PM</div>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">OOLU1234567</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚛 Truck BT-4792</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">IKEA</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Furniture</div>
-                                </td>
-                                <td style="padding: 1rem;">Port Botany → Parramatta</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">M4 Motorway</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">📍 GPS: 33.8°S, 151.0°E</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">In Transit</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Dec 16</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">16:30 PM</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">HLBU5678901</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 HMM Seoul</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Samsung</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
-                                </td>
-                                <td style="padding: 1rem;">Busan → Sydney</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Sydney Customs</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">📋 Doc review pending</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #fde68a; color: #d97706; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Customs</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600; color: #ef4444;">Delayed</div>
-                                    <div style="font-size: 0.75rem; color: #ef4444;">+2 days</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification"></div>
-
-    <script>
-        let currentCompany = '';
-class RealisticDemoData {
-    constructor() {
-        this.currentDate = new Date();
-        this.realTimeInterval = null;
-        this.demoScenarios = this.initializeDemoScenarios();
-        this.startRealisticUpdates();
-    }
-    
-    initializeDemoScenarios() {
-        return {
-            'apple': {
-                name: 'Apple Inc',
-                containers: ['APPL7654321', 'CUPERTINO567', 'IPHONE12345'],
-                routes: ['Shanghai → Cupertino', 'Shenzhen → Memphis'],
-                monthlyVolume: 1200,
-                savings: '$1.2M annually'
-            },
-            'tesla': {
-                name: 'Tesla Inc', 
-                containers: ['TSLA9876543', 'MODEL3PARTS', 'BATTERY789'],
-                routes: ['Shanghai → Fremont', 'Berlin → Austin'],
-                monthlyVolume: 800,
-                savings: '$800K annually'
-            },
-            'default': {
-                name: 'Demo Customer',
-                containers: ['DEMO7654321', 'CONTAINER567', 'SHIPMENT789'],
-                routes: ['Shanghai → Los Angeles', 'Ningbo → Rotterdam'],
-                monthlyVolume: 500,
-                savings: '$600K annually'
-            }
-        };
-    }
-    
-    generateRouteOptimization(origin, destination) {
-        const routes = [
-            {
-                name: `${origin} → ${destination} (Direct)`,
-                carrier: 'Maersk Line',
-                vessel: 'Maersk Shanghai',
-                cost: 2450 + Math.floor(Math.random() * 100 - 50),
-                transitDays: 16 + Math.floor(Math.random() * 2),
-                reliability: 94,
-                savings: null,
-                optimal: false
-            },
-            {
-                name: `${origin} → Busan → ${destination}`,
-                carrier: 'HMM',
-                vessel: 'HMM Seoul', 
-                cost: 2000 + Math.floor(Math.random() * 100 - 50),
-                transitDays: 17 + Math.floor(Math.random() * 2),
-                reliability: 91,
-                savings: 450,
-                optimal: true
-            },
-            {
-                name: `${origin} → Singapore → ${destination}`,
-                carrier: 'CMA CGM',
-                vessel: 'CMA CGM Marco Polo',
-                cost: 2200 + Math.floor(Math.random() * 100 - 50), 
-                transitDays: 19 + Math.floor(Math.random() * 2),
-                reliability: 88,
-                savings: 250,
-                optimal: false
-            }
-        ];
-        
-        routes.forEach(route => {
-            route.factors = [];
-            if (Math.random() > 0.7) {
-                route.factors.push('Fuel surcharge: +$' + Math.floor(Math.random() * 100));
-                route.cost += Math.floor(Math.random() * 100);
-            }
-            if (Math.random() > 0.9) {
-                route.factors.push('Weather delay: +1 day');
-                route.transitDays += 1;
-            }
-        });
-        
-        return {
-            routes: routes,
-            totalAnalyzed: 247 + Math.floor(Math.random() * 100),
-            processingTime: (1.5 + Math.random() * 2).toFixed(1) + ' seconds',
-            aiInsight: `Route via Busan saves $${routes[1].savings} per container with only ${routes[1].transitDays - routes[0].transitDays} additional day(s).`
-        };
-    }
-    
-    startRealisticUpdates() {
-        this.realTimeInterval = setInterval(() => {
-            this.updateLiveData();
-        }, 30000);
-    }
-    
-    updateLiveData() {
-        this.showUpdateFlash();
-        
-        const trackingRows = document.querySelectorAll('tbody tr');
-        trackingRows.forEach((row, index) => {
-            if (Math.random() > 0.7) {
-                row.style.background = '#f0fdf4';
-                row.style.transition = 'background-color 0.3s';
-                setTimeout(() => {
-                    row.style.background = 'white';
-                }, 2000);
-            }
-        });
-    }
-    
-    showUpdateFlash() {
-        const flash = document.createElement('div');
-        flash.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10b981;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            z-index: 10000;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        `;
-        flash.textContent = '📡 Live data updated';
-        document.body.appendChild(flash);
-        
-        setTimeout(() => {
-            flash.remove();
-        }, 3000);
-    }
-    
-    addDays(date, days) {
-        const result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result;
-    }
-    
-    addHours(date, hours) {
-        const result = new Date(date);
-        result.setHours(result.getHours() + hours);
-        return result;
-    }
-    
-    addMinutes(date, minutes) {
-        const result = new Date(date);
-        result.setMinutes(result.getMinutes() + minutes);
-        return result;
-    }
-    
-    formatDate(date) {
-        return date.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-    
-    getRelativeTime(date) {
-        const diff = Date.now() - date.getTime();
-        const minutes = Math.floor(diff / 60000);
-        
-        if (minutes < 1) return 'Just now';
-        if (minutes < 60) return `${minutes} min ago`;
-        
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24) return `${hours}h ago`;
-        
-        return `${Math.floor(hours / 24)}d ago`;
-    }
-}
-
-const enhancedDemo = new RealisticDemoData();
-        function loginDemo(companyName, companyType) {
-            currentCompany = companyName;
-            document.getElementById('companyName').textContent = companyName;
-            
-            // Hide login screen
-            document.getElementById('loginScreen').style.display = 'none';
-            document.body.style.background = 'none';
-            
-            // Show dashboard
-            document.getElementById('dashboard').style.display = 'block';
-            
-            showNotification('Welcome!', `Logged in as ${companyName}`);
-        }
-
-        function logout() {
-            // Hide all screens
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('routeOptimizer').style.display = 'none';
-            document.getElementById('aggregatedTracker').style.display = 'none';
-            
-            // Show login screen
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            document.body.style.display = 'flex';
-            document.body.style.alignItems = 'center';
-            document.body.style.justifyContent = 'center';
-        }
-
-        function showRouteOptimizer() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('routeOptimizer').style.display = 'block';
-            showNotification('Route Optimizer', 'AI-powered route optimization system loaded');
-        }
-
-        function showRouteOptimizerDirect() {
-            currentCompany = 'Demo User';
-            document.getElementById('loginScreen').style.display = 'none';
-            document.body.style.background = 'none';
-            document.body.style.display = 'block';
-            document.getElementById('routeOptimizer').style.display = 'block';
-            showNotification('Route Optimizer Demo', 'Direct access to AI route optimization');
-        }
-
-        function showAggregatedTracker() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('aggregatedTracker').style.display = 'block';
-            showNotification('Aggregated Tracker', 'One source of truth - All carriers, AIS, and terminals');
-        }
-
-        function showAggregatedTrackerDirect() {
-            currentCompany = 'Demo User';
-            document.getElementById('loginScreen').style.display = 'none';
-            document.body.style.background = 'none';
-            document.body.style.display = 'block';
-            document.getElementById('aggregatedTracker').style.display = 'block';
-            showNotification('Aggregated Tracker Demo', 'Direct access to unified tracking platform');
-        }
-
-        function backToDashboard() {
-            if (currentCompany === 'Demo User') {
-                logout();
-            } else {
-                document.getElementById('routeOptimizer').style.display = 'none';
-                document.getElementById('aggregatedTracker').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-            }
-        }
-
-        function runOptimization() {
-    const resultsDiv = document.getElementById('optimizationResults');
-    const originPort = document.getElementById('originPort').value;
-    const destinationPort = document.getElementById('destinationPort').value;
-    
-    // Show realistic loading
-    resultsDiv.innerHTML = `
-        <div class="loading">
-            <div class="spinner"></div>
-            <p><strong>AI Optimization Running...</strong></p>
-            <p style="font-size: 0.875rem; margin-top: 0.5rem;">
-                Analyzing ${247 + Math.floor(Math.random() * 100)} possible routes across ${8 + Math.floor(Math.random() * 5)} carriers...
-            </p>
-            <p style="font-size: 0.875rem; margin-top: 0.5rem; color: #64748b;">
-                Checking real-time rates, vessel schedules, and port conditions...
-            </p>
-        </div>
-    `;
-    
-    // Simulate realistic processing time
-    setTimeout(() => {
-        showEnhancedOptimizationResults(originPort, destinationPort);
-    }, 2000 + Math.random() * 2000); // 2-4 seconds
-}
-
-function showEnhancedOptimizationResults(origin, destination) {
-    const originNames = {
-        'shanghai': 'Shanghai',
-        'ningbo': 'Ningbo', 
-        'qingdao': 'Qingdao'
-    };
-    
-    const destNames = {
-        'losangeles': 'Los Angeles',
-        'sydney': 'Sydney',
-        'rotterdam': 'Rotterdam'
-    };
-    
-    const originName = originNames[origin] || 'Shanghai';
-    const destName = destNames[destination] || 'Los Angeles';
-    
-    const optimization = enhancedDemo.generateRouteOptimization(originName, destName);
-    
-    let resultsHTML = `
-        <div style="background: #eff6ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
-            <div style="font-weight: 600; color: #1e40af; margin-bottom: 0.5rem;">🤖 AI Analysis Complete</div>
-            <div style="font-size: 0.875rem;">${optimization.aiInsight}</div>
-            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">
-                Processed ${optimization.totalAnalyzed} routes in ${optimization.processingTime}
-            </div>
-        </div>
-    `;
-    
-    optimization.routes.forEach((route, index) => {
-        const badgeClass = route.optimal ? 'optimal' : 'alternative';
-        const badgeText = route.optimal ? 'AI Recommended' : 'Alternative';
-        
-        resultsHTML += `
-            <div class="route-option ${route.optimal ? 'optimal' : ''}">
-                <div class="route-header">
-                    <div class="route-name">${route.name}</div>
-                    <div class="badge ${badgeClass}">${badgeText}</div>
-                </div>
-                <div class="route-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Cost per Container</div>
-                        <div class="detail-value">$${route.cost.toLocaleString()}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Transit Time</div>
-                        <div class="detail-value">${route.transitDays} days</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Carrier</div>
-                        <div class="detail-value">${route.carrier}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">${route.savings ? 'Savings' : 'Premium'}</div>
-                        <div class="detail-value" style="color: ${route.savings ? '#10b981' : '#ef4444'};">
-                            ${route.savings ? '$' + route.savings + ' saved' : 'Standard rate'}
-                        </div>
-                    </div>
-                </div>
-                ${route.factors.length > 0 ? `
-                    <div style="margin: 1rem 0; padding: 0.5rem; background: #fef3c7; border-radius: 6px; font-size: 0.875rem;">
-                        <strong>Real-time factors:</strong> ${route.factors.join(', ')}
-                    </div>
-                ` : ''}
-                <button class="select-btn" onclick="selectRoute('${route.optimal ? 'optimal' : 'alternative'}', '${route.savings || 0}')">
-                    Select Route
-                </button>
-            </div>
-        `;
-    });
-    
-    document.getElementById('optimizationResults').innerHTML = resultsHTML;
-    showNotification('Optimization Complete', 'AI analysis found cost-saving opportunities');
-}
-
-        function showOptimizationResults() {
-            document.getElementById('optimizationResults').innerHTML = `
-                <div style="background: #eff6ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
-                    <div style="font-weight: 600; color: #1e40af; margin-bottom: 0.5rem;">🤖 AI Insights</div>
-                    <div style="font-size: 0.875rem;">Route via Busan saves $450 per container with only 1 day additional transit time.</div>
-                </div>
-                
-                <div class="route-option optimal">
-                    <div class="route-header">
-                        <div class="route-name">Shanghai → Busan → Los Angeles</div>
-                        <div class="badge optimal">AI Recommended</div>
-                    </div>
-                    <div class="route-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Cost per Container</div>
-                            <div class="detail-value">$2,000</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Transit Time</div>
-                            <div class="detail-value">17 days</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Carrier</div>
-                            <div class="detail-value">Maersk Line</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Savings</div>
-                            <div class="detail-value" style="color: #10b981;">$450 saved</div>
-                        </div>
-                    </div>
-                    <button class="select-btn" onclick="selectRoute('optimal')">Select Optimal Route</button>
-                </div>
-                
-                <div class="route-option">
-                    <div class="route-header">
-                        <div class="route-name">Shanghai → Los Angeles (Direct)</div>
-                        <div class="badge alternative">Alternative</div>
-                    </div>
-                    <div class="route-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Cost per Container</div>
-                            <div class="detail-value">$2,450</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Transit Time</div>
-                            <div class="detail-value">16 days</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Carrier</div>
-                            <div class="detail-value">COSCO Shipping</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Premium</div>
-                            <div class="detail-value" style="color: #ef4444;">+$450</div>
-                        </div>
-                    </div>
-                    <button class="select-btn" onclick="selectRoute('direct')">Select Route</button>
-                </div>
-                
-                <div class="route-option">
-                    <div class="route-header">
-                        <div class="route-name">Shanghai → Singapore → Los Angeles</div>
-                        <div class="badge alternative">Alternative</div>
-                    </div>
-                    <div class="route-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Cost per Container</div>
-                            <div class="detail-value">$2,200</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Transit Time</div>
-                            <div class="detail-value">19 days</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Carrier</div>
-                            <div class="detail-value">CMA CGM</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Savings</div>
-                            <div class="detail-value" style="color: #10b981;">$250 saved</div>
-                        </div>
-                    </div>
-                    <button class="select-btn" onclick="selectRoute('singapore')">Select Route</button>
-                </div>
-            `;
-            
-            showNotification('Optimization Complete', 'Found cost-saving routes with AI analysis');
-        }
-
-        function selectRoute(type) {
-            if (type === 'optimal') {
-                showNotification('Route Selected!', 'Optimal route selected - $450 savings per container');
-            } else if (type === 'singapore') {
-                showNotification('Route Selected!', 'Singapore route selected - $250 savings per container');
-            } else {
-                showNotification('Route Selected!', 'Direct route selected');
-            }
-        }
-
-        function refreshAllData() {
-            showNotification('Refreshing Data', 'Pulling latest data from all carriers, AIS, and terminal APIs');
-            
-            // Update timestamp
-            setTimeout(() => {
-                document.getElementById('lastUpdated').textContent = 'Just now';
-                showNotification('Data Updated', 'All tracking data refreshed from live sources');
-            }, 2000);
-        }
-
-        function showNotification(title, message) {
-            const notification = document.getElementById('notification');
-            notification.innerHTML = `
-                <div style="font-weight: 600; margin-bottom: 0.25rem;">${title}</div>
-                <div style="font-size: 0.875rem;">${message}</div>
-            `;
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        }
-    </script>
-</body>
-</html>
