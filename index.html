@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreightMate AU Dashboard</title>
+    <title>Global Container Link - Working Platform</title>
     <style>
         * {
             margin: 0;
@@ -12,739 +12,890 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .demo-section {
+            margin-bottom: 2rem;
+        }
+
+        .demo-section h3 {
+            color: #374151;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .demo-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        .demo-btn:hover {
+            background: #5a67d8;
+        }
+
+        .demo-btn.green {
+            background: #10b981;
+        }
+
+        .demo-btn.green:hover {
+            background: #059669;
+        }
+
+        .dashboard {
+            display: none;
             background: #f8fafc;
-            color: #1e293b;
-            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .route-optimizer {
+            display: none;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .aggregated-tracker {
+            display: none;
+            background: #f8fafc;
+            min-height: 100vh;
         }
 
         .header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .dashboard-content, .optimizer-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        .logo {
-            font-size: 1.5rem;
+        .stat-number {
+            font-size: 2.5rem;
             font-weight: bold;
-            color: #f39c12;
+            color: #667eea;
+            margin-bottom: 0.5rem;
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
         }
 
-        .user-role {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-desc {
+            color: #64748b;
+            line-height: 1.6;
         }
 
         .controls {
             background: white;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 300px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .search-box input:focus {
-            border-color: #3b82f6;
-        }
-
-        .filter-btn {
-            background: #f1f5f9;
-            border: 2px solid #e2e8f0;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover {
-            background: #e2e8f0;
-        }
-
-        .filter-btn.active {
-            background: #3b82f6;
-            color: white;
-            border-color: #3b82f6;
-        }
-
-        .main-content {
-            display: flex;
-            height: calc(100vh - 140px);
-            gap: 1rem;
-            padding: 1rem 2rem;
-        }
-
-        .map-container {
-            flex: 1;
-            background: white;
-            border-radius: 12px;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
         }
 
-        .map-header {
-            background: #f8fafc;
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-            font-weight: 600;
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .map-view {
-            height: calc(100% - 60px);
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .shipment-marker {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid white;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .shipment-marker:hover {
-            transform: scale(1.3);
-            z-index: 10;
-        }
-
-        .shipment-marker.on-time { background: #10b981; }
-        .shipment-marker.delayed { background: #f59e0b; }
-        .shipment-marker.critical { background: #ef4444; }
-        .shipment-marker.delivered { background: #6b7280; }
-
-        .route-line {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, #3b82f6, #10b981);
-            opacity: 0.6;
-            transform-origin: left;
-        }
-
-        .table-container {
-            flex: 1;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .table-header {
-            background: #f8fafc;
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
+        .form-group {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .table-title {
-            font-weight: 600;
-        }
-
-        .table-stats {
-            display: flex;
-            gap: 2rem;
-            font-size: 0.875rem;
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 0.5rem;
         }
 
-        .stat-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .table-wrapper {
-            overflow-y: auto;
-            height: calc(100% - 80px);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #f8fafc;
-            padding: 0.75rem;
-            text-align: left;
+        .form-group label {
             font-weight: 600;
-            font-size: 0.875rem;
-            color: #64748b;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky;
-            top: 0;
-            z-index: 5;
+            color: #374151;
         }
 
-        td {
+        .form-group select {
             padding: 0.75rem;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 0.875rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
         }
 
-        tr:hover {
-            background: #f8fafc;
+        .optimize-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
         }
 
-        tr.selected {
-            background: #eff6ff;
-            border-left: 4px solid #3b82f6;
+        .results-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .status-badge {
-            padding: 0.25rem 0.5rem;
+        .map-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-placeholder {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            border-radius: 12px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+        }
+
+        .results-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .route-option {
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .route-option.optimal {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .route-name {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
             border-radius: 12px;
             font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
+            font-weight: 600;
         }
 
-        .status-on-time {
+        .badge.optimal {
             background: #dcfce7;
             color: #166534;
         }
 
-        .status-delayed {
+        .badge.alternative {
             background: #fef3c7;
             color: #92400e;
         }
 
-        .status-critical {
-            background: #fee2e2;
-            color: #991b1b;
+        .route-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .status-delivered {
-            background: #f3f4f6;
+        .detail-item {
+            font-size: 0.875rem;
+        }
+
+        .detail-label {
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
             color: #374151;
         }
 
-        .carrier-logo {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            background: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
+        .select-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            z-index: 10000;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
             color: #64748b;
         }
 
-        .tooltip {
-            position: absolute;
-            background: #1f2937;
-            color: white;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            pointer-events: none;
-            z-index: 20;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.2s;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
         }
 
-        .tooltip.show {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @media (max-width: 1024px) {
-            .main-content {
-                flex-direction: column;
-                height: auto;
-                min-height: calc(100vh - 140px);
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 2rem;
             }
             
-            .map-container, .table-container {
-                min-height: 400px;
+            .results-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-content, .optimizer-content {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo">FreightMate AU</div>
-        <div class="user-info">
-            <div class="user-role">Logistics Coordinator</div>
-            <div>Emma Thompson</div>
+    <!-- Login Screen -->
+    <div class="container" id="loginScreen">
+        <div class="logo">
+            <h1>Global Container Link</h1>
+            <p>Enterprise Container Management Platform</p>
+        </div>
+
+        <div class="demo-section">
+            <h3>Quick Demo Access</h3>
+            <button class="demo-btn" onclick="loginDemo('Maersk Logistics', 'shipping-line')">
+                🚢 Maersk Logistics (Shipping Line)
+            </button>
+            <button class="demo-btn" onclick="loginDemo('Global Freight Inc', 'freight-forwarder')">
+                🚛 Global Freight Inc (Freight Forwarder)
+            </button>
+            <button class="demo-btn" onclick="loginDemo('Apple Inc', 'shipper')">
+                📦 Apple Inc (Shipper)
+            </button>
+        </div>
+
+        <div class="demo-section">
+            <h3>Core Features</h3>
+            <button class="demo-btn green" onclick="showRouteOptimizerDirect()">
+                🗺️ Route Optimizer Demo
+            </button>
+            <button class="demo-btn green" onclick="showAggregatedTrackerDirect()">
+                📡 Aggregated Tracker Demo
+            </button>
         </div>
     </div>
 
-    <div class="controls">
-        <div class="search-box">
-            <input type="text" placeholder="Search shipments by ID, customer, or destination...">
-        </div>
-        <button class="filter-btn active" data-filter="all">All Shipments</button>
-        <button class="filter-btn" data-filter="in-transit">In Transit</button>
-        <button class="filter-btn" data-filter="delayed">Delayed</button>
-        <button class="filter-btn" data-filter="critical">Critical</button>
-        <div style="border-left: 1px solid #e2e8f0; margin: 0 0.5rem; height: 2rem;"></div>
-        <button class="filter-btn" data-filter="nsw">NSW</button>
-        <button class="filter-btn" data-filter="vic">VIC</button>
-        <button class="filter-btn" data-filter="qld">QLD</button>
-        <button class="filter-btn" data-filter="wa">WA</button>
-        <button class="filter-btn" data-filter="sa">SA</button>
-        <button class="filter-btn" data-filter="tas">TAS</button>
-        <button class="filter-btn" data-filter="nt">NT</button>
-    </div>
-
-    <div class="main-content">
-        <div class="map-container">
-            <div class="map-header">
-                Shipment Locations
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="header">
+            <h1>Global Container Link</h1>
+            <div>
+                <span id="companyName">Company Name</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
-            <div class="map-view" id="mapView">
-                <!-- Route lines -->
-                <div class="route-line" style="top: 120px; left: 80px; width: 200px; transform: rotate(15deg);"></div>
-                <div class="route-line" style="top: 180px; left: 150px; width: 180px; transform: rotate(-10deg);"></div>
-                <div class="route-line" style="top: 250px; left: 100px; width: 220px; transform: rotate(25deg);"></div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">247</div>
+                    <div class="stat-label">Active Containers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Vessels Tracked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Routes Optimized</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$2.4M</div>
+                    <div class="stat-label">Cost Savings</div>
+                </div>
+            </div>
+
+            <div class="actions-grid">
+                <div class="action-card" onclick="showRouteOptimizer()">
+                    <div class="action-icon">🗺️</div>
+                    <div class="action-title">AI Route Optimizer</div>
+                    <div class="action-desc">Find optimal shipping routes with AI-powered cost and time analysis</div>
+                </div>
+
+                <div class="action-card" onclick="showAggregatedTracker()">
+                    <div class="action-icon">📡</div>
+                    <div class="action-title">Aggregated Tracker</div>
+                    <div class="action-desc">One dashboard for all carriers - Live data from APIs, AIS, and terminals</div>
+                </div>
+
+                <div class="action-card" onclick="showNotification('Booking System', 'Direct booking with major carriers would open here')">
+                    <div class="action-icon">📋</div>
+                    <div class="action-title">Container Booking</div>
+                    <div class="action-desc">Book containers directly with MSC, Maersk, COSCO, and other major lines</div>
+                </div>
+
+                <div class="action-card" onclick="showNotification('Equipment Rental', 'Container equipment marketplace would open here')">
+                    <div class="action-icon">📦</div>
+                    <div class="action-title">Equipment Rental</div>
+                    <div class="action-desc">Access global container inventory from leading leasing companies</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Route Optimizer -->
+    <div class="route-optimizer" id="routeOptimizer">
+        <div class="header">
+            <h1>🗺️ AI Route Optimizer</h1>
+            <div>
+                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <div class="optimizer-content">
+            <div class="controls">
+                <h2 style="margin-bottom: 1.5rem;">Route Optimization Controls</h2>
                 
-                <!-- Shipment markers -->
-                <div class="shipment-marker on-time" style="top: 130px; left: 90px;" data-shipment="SH001"></div>
-                <div class="shipment-marker delayed" style="top: 185px; left: 160px;" data-shipment="SH002"></div>
-                <div class="shipment-marker critical" style="top: 260px; left: 110px;" data-shipment="SH003"></div>
-                <div class="shipment-marker on-time" style="top: 200px; left: 280px;" data-shipment="SH004"></div>
-                <div class="shipment-marker delivered" style="top: 150px; left: 320px;" data-shipment="SH005"></div>
-                <div class="shipment-marker on-time" style="top: 300px; left: 200px;" data-shipment="SH006"></div>
-                <div class="shipment-marker delayed" style="top: 100px; left: 250px;" data-shipment="SH007"></div>
-            </div>
-        </div>
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label>Origin Port</label>
+                        <select id="originPort">
+                            <option value="shanghai">Shanghai, China</option>
+                            <option value="ningbo">Ningbo, China</option>
+                            <option value="qingdao">Qingdao, China</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Destination Port</label>
+                        <select id="destinationPort">
+                            <option value="losangeles">Los Angeles, USA</option>
+                            <option value="sydney">Sydney, Australia</option>
+                            <option value="rotterdam">Rotterdam, Netherlands</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Container Type</label>
+                        <select>
+                            <option value="40hc">40ft High Cube</option>
+                            <option value="20std">20ft Standard</option>
+                            <option value="40ref">40ft Reefer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select>
+                            <option value="cost">Lowest Cost</option>
+                            <option value="time">Fastest Transit</option>
+                            <option value="balanced">Balanced</option>
+                        </select>
+                    </div>
+                </div>
 
-        <div class="table-container">
-            <div class="table-header">
-                <div class="table-title">Active Shipments</div>
-                <div class="table-stats">
-                    <div class="stat">
-                        <div class="stat-dot" style="background: #10b981;"></div>
-                        <span>On Time (67)</span>
+                <button class="optimize-btn" onclick="runOptimization()">🤖 Run AI Optimization</button>
+            </div>
+
+            <div class="results-section">
+                <div class="map-section">
+                    <h3 style="margin-bottom: 1rem;">Global Shipping Routes</h3>
+                    <div class="map-placeholder">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🌍</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Interactive Route Map</div>
+                        <div style="font-size: 0.9rem;">Real-time route visualization with AI optimization</div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-dot" style="background: #f59e0b;"></div>
-                        <span>Delayed (15)</span>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-dot" style="background: #ef4444;"></div>
-                        <span>Critical (3)</span>
+                </div>
+
+                <div class="results-panel">
+                    <h3 style="margin-bottom: 1rem;">Optimization Results</h3>
+                    <div id="optimizationResults">
+                        <div class="loading">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                            <p>Click "Run AI Optimization" to analyze routes and find cost-saving opportunities</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Shipment ID</th>
-                            <th>Customer</th>
-                            <th>Origin → Destination</th>
-                            <th>Carrier</th>
-                            <th>Status</th>
-                            <th>ETA</th>
-                        </tr>
-                    </thead>
-                    <tbody id="shipmentTable">
-                        <tr data-shipment="SH001" data-origin="nsw" data-destination="vic" data-status="on-time">
-                            <td><strong>FM001</strong></td>
-                            <td>Woolworths Group</td>
-                            <td>Sydney → Melbourne</td>
-                            <td><div class="carrier-logo">TNT</div></td>
-                            <td><span class="status-badge status-on-time">On Time</span></td>
-                            <td>16 Dec, 2:30 PM</td>
-                        </tr>
-                        <tr data-shipment="SH002" data-origin="wa" data-destination="sa" data-status="delayed">
-                            <td><strong>FM002</strong></td>
-                            <td>Bunnings Warehouse</td>
-                            <td>Perth → Adelaide</td>
-                            <td><div class="carrier-logo">STX</div></td>
-                            <td><span class="status-badge status-delayed">Delayed</span></td>
-                            <td>17 Dec, 11:00 AM</td>
-                        </tr>
-                        <tr data-shipment="SH003" data-origin="nt" data-destination="qld" data-status="critical">
-                            <td><strong>FM003</strong></td>
-                            <td>BHP Billiton</td>
-                            <td>Darwin → Brisbane</td>
-                            <td><div class="carrier-logo">LNF</div></td>
-                            <td><span class="status-badge status-critical">Critical</span></td>
-                            <td>18 Dec, 9:45 AM</td>
-                        </tr>
-                        <tr data-shipment="SH004" data-origin="vic" data-destination="tas" data-status="on-time">
-                            <td><strong>FM004</strong></td>
-                            <td>Coles Supermarkets</td>
-                            <td>Melbourne → Hobart</td>
-                            <td><div class="carrier-logo">TNT</div></td>
-                            <td><span class="status-badge status-on-time">On Time</span></td>
-                            <td>16 Dec, 6:15 PM</td>
-                        </tr>
-                        <tr data-shipment="SH005" data-origin="qld" data-destination="qld" data-status="delivered">
-                            <td><strong>FM005</strong></td>
-                            <td>Harvey Norman</td>
-                            <td>Brisbane → Gold Coast</td>
-                            <td><div class="carrier-logo">APX</div></td>
-                            <td><span class="status-badge status-delivered">Delivered</span></td>
-                            <td>15 Dec, 3:20 PM</td>
-                        </tr>
-                        <tr data-shipment="SH006" data-origin="sa" data-destination="act" data-status="on-time">
-                            <td><strong>FM006</strong></td>
-                            <td>Wesfarmers</td>
-                            <td>Adelaide → Canberra</td>
-                            <td><div class="carrier-logo">STX</div></td>
-                            <td><span class="status-badge status-on-time">On Time</span></td>
-                            <td>17 Dec, 4:30 PM</td>
-                        </tr>
-                        <tr data-shipment="SH007" data-origin="nsw" data-destination="nsw" data-status="delayed">
-                            <td><strong>FM007</strong></td>
-                            <td>Telstra Corporation</td>
-                            <td>Sydney → Newcastle</td>
-                            <td><div class="carrier-logo">LNF</div></td>
-                            <td><span class="status-badge status-delayed">Delayed</span></td>
-                            <td>18 Dec, 1:15 PM</td>
-                        </tr>
-                    </tbody>
-                </table>
+        </div>
+    </div>
+
+    <!-- Aggregated Tracker -->
+    <div class="aggregated-tracker" id="aggregatedTracker">
+        <div class="header">
+            <h1>📡 Aggregated Tracking Platform</h1>
+            <div>
+                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+            </div>
+        </div>
+
+        <div class="optimizer-content">
+            <div class="controls">
+                <h2 style="margin-bottom: 1.5rem;">Live Data Sources - One Source of Truth</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Carrier APIs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">MSC, Maersk, COSCO, CMA CGM, ONE - Live</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>AIS Vessel Data</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Real-time vessel positions via satellite</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Terminal APIs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Port operators & terminal systems</div>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <strong>Customs & Docs</strong>
+                        </div>
+                        <div style="font-size: 0.875rem; color: #166534;">Customs clearance & documentation</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button class="optimize-btn" onclick="refreshAllData()">🔄 Refresh All Data Sources</button>
+                    <div style="color: #64748b; font-size: 0.875rem;">
+                        Last updated: <span id="lastUpdated">2 minutes ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Unified Tracking Dashboard</h3>
+                
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc;">
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Container/Vessel</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Customer</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Route</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Current Location</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Status</th>
+                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">ETA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">MSKU7654321</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 Maersk Shanghai</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Apple Inc</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
+                                </td>
+                                <td style="padding: 1rem;">Shanghai → Los Angeles</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Pacific Ocean</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">📡 AIS: 34.2°N, 140.1°W</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Sea</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Dec 18</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">09:00 AM</div>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">COSCO9876543</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 COSCO Pacific</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Tesla Inc</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Auto Parts</div>
+                                </td>
+                                <td style="padding: 1rem;">Ningbo → Rotterdam</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Rotterdam Port</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🏗️ Terminal: ECT Delta</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Port</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Dec 16</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">14:30 PM</div>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">OOLU1234567</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚛 Truck BT-4792</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">IKEA</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Furniture</div>
+                                </td>
+                                <td style="padding: 1rem;">Port Botany → Parramatta</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">M4 Motorway</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">📍 GPS: 33.8°S, 151.0°E</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">In Transit</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Dec 16</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">16:30 PM</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">HLBU5678901</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 HMM Seoul</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Samsung</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
+                                </td>
+                                <td style="padding: 1rem;">Busan → Sydney</td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600;">Sydney Customs</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">📋 Doc review pending</div>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <span style="background: #fde68a; color: #d97706; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Customs</span>
+                                </td>
+                                <td style="padding: 1rem;">
+                                    <div style="font-weight: 600; color: #ef4444;">Delayed</div>
+                                    <div style="font-size: 0.75rem; color: #ef4444;">+2 days</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="tooltip" id="tooltip"></div>
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
 
     <script>
-        // =============================================================================
-        // CARRIER ADAPTER INTEGRATION WITH DASHBOARD
-        // =============================================================================
+        let currentCompany = '';
 
-        // Mock carrier adapters for demo (in production, these would be real API calls)
-        class MockCarrierManager {
-            constructor() {
-                this.shipmentData = {
-                    'FM001': {
-                        shipmentId: 'FM001',
-                        carrier: 'startrack',
-                        status: 'in_transit',
-                        currentLocation: 'Goulburn, NSW',
-                        estimatedDelivery: '2024-12-16T14:30:00Z',
-                        events: [
-                            { timestamp: '2024-12-15T08:00:00Z', location: 'Sydney, NSW', description: 'Shipment picked up' },
-                            { timestamp: '2024-12-15T12:30:00Z', location: 'Goulburn, NSW', description: 'In transit' }
-                        ],
-                        lastUpdated: '2024-12-15T10:30:00Z'
-                    },
-                    'FM002': {
-                        shipmentId: 'FM002',
-                        carrier: 'startrack',
-                        status: 'delayed',
-                        currentLocation: 'Kalgoorlie, WA',
-                        estimatedDelivery: '2024-12-17T11:00:00Z',
-                        events: [
-                            { timestamp: '2024-12-14T09:00:00Z', location: 'Perth, WA', description: 'Shipment picked up' },
-                            { timestamp: '2024-12-15T15:45:00Z', location: 'Kalgoorlie, WA', description: 'Delayed due to vehicle breakdown' }
-                        ],
-                        lastUpdated: '2024-12-15T15:45:00Z'
-                    },
-                    'FM003': {
-                        shipmentId: 'FM003',
-                        carrier: 'tnt_fedex',
-                        status: 'critical_delay',
-                        currentLocation: 'Katherine, NT',
-                        estimatedDelivery: '2024-12-18T09:45:00Z',
-                        events: [
-                            { timestamp: '2024-12-13T10:00:00Z', location: 'Darwin, NT', description: 'Shipment collected' },
-                            { timestamp: '2024-12-15T08:00:00Z', location: 'Katherine, NT', description: 'Critical delay - road closure due to weather' }
-                        ],
-                        lastUpdated: '2024-12-15T08:00:00Z'
-                    }
-                };
-            }
+        function loginDemo(companyName, companyType) {
+            currentCompany = companyName;
+            document.getElementById('companyName').textContent = companyName;
+            
+            document.getElementById('loginScreen').style.display = 'none';
+            document.body.style.background = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            showNotification('Welcome!', 'Logged in as ' + companyName);
+        }
 
-            async getTrackingInfo(shipmentId) {
-                // Simulate API delay
-                await new Promise(resolve => setTimeout(resolve, 500));
-                return this.shipmentData[shipmentId] || null;
-            }
+        function logout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('routeOptimizer').style.display = 'none';
+            document.getElementById('aggregatedTracker').style.display = 'none';
+            
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            document.body.style.display = 'flex';
+            document.body.style.alignItems = 'center';
+            document.body.style.justifyContent = 'center';
+        }
 
-            async getBulkTrackingInfo(shipmentIds) {
-                const promises = shipmentIds.map(id => this.getTrackingInfo(id));
-                return await Promise.all(promises);
+        function showRouteOptimizer() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('routeOptimizer').style.display = 'block';
+            showNotification('Route Optimizer', 'AI-powered route optimization system loaded');
+        }
+
+        function showRouteOptimizerDirect() {
+            currentCompany = 'Demo User';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.body.style.background = 'none';
+            document.body.style.display = 'block';
+            document.getElementById('routeOptimizer').style.display = 'block';
+            showNotification('Route Optimizer Demo', 'Direct access to AI route optimization');
+        }
+
+        function showAggregatedTracker() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('aggregatedTracker').style.display = 'block';
+            showNotification('Aggregated Tracker', 'One source of truth - All carriers, AIS, and terminals');
+        }
+
+        function showAggregatedTrackerDirect() {
+            currentCompany = 'Demo User';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.body.style.background = 'none';
+            document.body.style.display = 'block';
+            document.getElementById('aggregatedTracker').style.display = 'block';
+            showNotification('Aggregated Tracker Demo', 'Direct access to unified tracking platform');
+        }
+
+        function backToDashboard() {
+            if (currentCompany === 'Demo User') {
+                logout();
+            } else {
+                document.getElementById('routeOptimizer').style.display = 'none';
+                document.getElementById('aggregatedTracker').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
             }
         }
 
-        // Initialize carrier manager
-        const carrierManager = new MockCarrierManager();
-
-        // Dashboard state
-        let allShipments = [];
-        let currentFilter = 'all';
-
-        // Interactive functionality
-        const tooltip = document.getElementById('tooltip');
-        const shipmentRows = document.querySelectorAll('tr[data-shipment]');
-        const shipmentMarkers = document.querySelectorAll('.shipment-marker');
-
-        // Enhanced shipment data with real-time info
-        const enhancedShipmentData = {
-            'SH001': { id: 'FM001', customer: 'Woolworths Group', route: 'Sydney → Melbourne', carrier: 'TNT', status: 'On Time', eta: '16 Dec, 2:30 PM' },
-            'SH002': { id: 'FM002', customer: 'Bunnings Warehouse', route: 'Perth → Adelaide', carrier: 'StarTrack', status: 'Delayed', eta: '17 Dec, 11:00 AM' },
-            'SH003': { id: 'FM003', customer: 'BHP Billiton', route: 'Darwin → Brisbane', carrier: 'TNT/FedEx', status: 'Critical Delay', eta: '18 Dec, 9:45 AM' }
-        };
-
-        // Real-time data refresh
-        async function refreshShipmentData() {
-            console.log('🔄 Refreshing shipment data from carriers...');
+        function runOptimization() {
+            const resultsDiv = document.getElementById('optimizationResults');
             
-            try {
-                const shipmentIds = ['FM001', 'FM002', 'FM003'];
-                const trackingResults = await carrierManager.getBulkTrackingInfo(shipmentIds);
-                
-                // Update shipment data with real carrier information
-                trackingResults.forEach(result => {
-                    if (result) {
-                        updateShipmentInUI(result);
-                    }
-                });
-                
-                console.log('✅ Shipment data refreshed successfully');
-                updateLastRefreshTime();
-                
-            } catch (error) {
-                console.error('❌ Failed to refresh shipment data:', error);
-                showNotification('Failed to refresh data from carriers', 'error');
-            }
-        }
-
-        // Update individual shipment in the UI
-        function updateShipmentInUI(carrierData) {
-            const row = document.querySelector(`tr[data-shipment="SH00${carrierData.shipmentId.slice(-1)}"]`);
-            if (!row) return;
-
-            // Update status based on carrier data
-            const statusCell = row.querySelector('.status-badge');
-            const locationInfo = row.cells[2]; // Origin → Destination column
+            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div><p><strong>AI Optimization Running...</strong></p><p style="font-size: 0.875rem; margin-top: 0.5rem;">Analyzing 247 possible routes</p></div>';
             
-            // Update status badge
-            statusCell.className = 'status-badge';
-            switch (carrierData.status) {
-                case 'in_transit':
-                    statusCell.classList.add('status-on-time');
-                    statusCell.textContent = 'In Transit';
-                    break;
-                case 'delayed':
-                    statusCell.classList.add('status-delayed');
-                    statusCell.textContent = 'Delayed';
-                    break;
-                case 'critical_delay':
-                    statusCell.classList.add('status-critical');
-                    statusCell.textContent = 'Critical';
-                    break;
-                case 'delivered':
-                    statusCell.classList.add('status-delivered');
-                    statusCell.textContent = 'Delivered';
-                    break;
-                default:
-                    statusCell.textContent = 'Unknown';
-            }
-
-            // Update ETA if changed
-            const etaCell = row.cells[5];
-            if (carrierData.estimatedDelivery) {
-                const etaDate = new Date(carrierData.estimatedDelivery);
-                etaCell.textContent = etaDate.toLocaleDateString('en-AU', { 
-                    day: 'numeric', 
-                    month: 'short', 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-            }
-
-            // Add visual indicator for recent updates
-            row.style.backgroundColor = '#f0f9ff';
-            setTimeout(() => {
-                row.style.backgroundColor = '';
-            }, 2000);
-
-            // Store carrier data for tooltip
-            const shipmentKey = row.dataset.shipment;
-            if (enhancedShipmentData[shipmentKey]) {
-                enhancedShipmentData[shipmentKey].carrierData = carrierData;
-            }
-        }
-
-        // Show notification to user
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'error' ? '#ef4444' : '#10b981'};
-                color: white;
-                padding: 1rem;
-                border-radius: 8px;
-                z-index: 1000;
-                transition: all 0.3s ease;
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
+            setTimeout(function() {
+                showOptimizationResults();
             }, 3000);
         }
 
-        // Update last refresh time indicator
-        function updateLastRefreshTime() {
-            let refreshIndicator = document.getElementById('refreshIndicator');
-            if (!refreshIndicator) {
-                refreshIndicator = document.createElement('div');
-                refreshIndicator.id = 'refreshIndicator';
-                refreshIndicator.style.cssText = `
-                    position: absolute;
-                    top: 1rem;
-                    right: 1rem;
-                    font-size: 0.75rem;
-                    color: #64748b;
-                    background: rgba(255,255,255,0.9);
-                    padding: 0.5rem;
-                    border-radius: 4px;
-                `;
-                document.querySelector('.map-container').appendChild(refreshIndicator);
-            }
-            
-            const now = new Date();
-            refreshIndicator.textContent = `Last updated: ${now.toLocaleTimeString('en-AU')}`;
+        function showOptimizationResults() {
+            document.getElementById('optimizationResults').innerHTML = 
+                '<div style="background: #eff6ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">' +
+                '<div style="font-weight: 600; color: #1e40af; margin-bottom: 0.5rem;">🤖 AI Insights</div>' +
+                '<div style="font-size: 0.875rem;">Route via Busan saves $450 per container with only 1 day additional transit time.</div>' +
+                '</div>' +
+                
+                '<div class="route-option optimal">' +
+                '<div class="route-header">' +
+                '<div class="route-name">Shanghai → Busan → Los Angeles</div>' +
+                '<div class="badge optimal">AI Recommended</div>' +
+                '</div>' +
+                '<div class="route-details">' +
+                '<div class="detail-item"><div class="detail-label">Cost per Container</div><div class="detail-value">$2,000</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Transit Time</div><div class="detail-value">17 days</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Carrier</div><div class="detail-value">Maersk Line</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Savings</div><div class="detail-value" style="color: #10b981;">$450 saved</div></div>' +
+                '</div>' +
+                '<button class="select-btn" onclick="selectRoute(\'optimal\')">Select Optimal Route</button>' +
+                '</div>' +
+                
+                '<div class="route-option">' +
+                '<div class="route-header">' +
+                '<div class="route-name">Shanghai → Los Angeles (Direct)</div>' +
+                '<div class="badge alternative">Alternative</div>' +
+                '</div>' +
+                '<div class="route-details">' +
+                '<div class="detail-item"><div class="detail-label">Cost per Container</div><div class="detail-value">$2,450</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Transit Time</div><div class="detail-value">16 days</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Carrier</div><div class="detail-value">COSCO Shipping</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Premium</div><div class="detail-value" style="color: #ef4444;">+$450</div></div>' +
+                '</div>' +
+                '<button class="select-btn" onclick="selectRoute(\'direct\')">Select Route</button>' +
+                '</div>' +
+                
+                '<div class="route-option">' +
+                '<div class="route-header">' +
+                '<div class="route-name">Shanghai → Singapore → Los Angeles</div>' +
+                '<div class="badge alternative">Alternative</div>' +
+                '</div>' +
+                '<div class="route-details">' +
+                '<div class="detail-item"><div class="detail-label">Cost per Container</div><div class="detail-value">$2,200</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Transit Time</div><div class="detail-value">19 days</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Carrier</div><div class="detail-value">CMA CGM</div></div>' +
+                '<div class="detail-item"><div class="detail-label">Savings</div><div class="detail-value" style="color: #10b981;">$250 saved</div></div>' +
+                '</div>' +
+                '<button class="select-btn" onclick="selectRoute(\'singapore\')">Select Route</button>' +
+                '</div>';
+                
+            showNotification('Optimization Complete', 'Found cost-saving routes with AI analysis');
         }
 
-        // Enhanced tooltip with carrier data
-        function showEnhancedTooltip(e, shipmentKey) {
-            const baseData = enhancedShipmentData[shipmentKey];
-            const carrierData = baseData?.carrierData;
-            
-            let tooltipContent = `
-                <div style="font-weight: bold; margin-bottom: 0.5rem;">${baseData?.id || shipmentKey}</div>
-                <div style="margin-bottom: 0.25rem;"><strong>Customer:</strong> ${baseData?.customer || 'Unknown'}</div>
-                <div style="margin-bottom: 0.25rem;"><strong>Route:</strong> ${baseData?.route || 'Unknown'}</div>
-                <div style="margin-bottom: 0.25rem;"><strong>Carrier:</strong> ${baseData?.carrier || 'Unknown'}</div>
-                <div style="margin-bottom: 0.25rem;"><strong>Status:</strong> ${baseData?.status || 'Unknown'}</div>
-            `;
-            
-            if (carrierData) {
-                tooltipContent += `
-                    <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #374151;">
-                    <div style="margin-bottom: 0.25rem;"><strong>Current Location:</strong> ${carrierData.currentLocation}</div>
-                    <div style="margin-bottom: 0.25rem;"><strong>Last Event:</strong> ${carrierData.events[carrierData.events.length - 1]?.description || 'No events'}</div>
-                    <div><strong>Last Updated:</strong> ${new Date(carrierData.lastUpdated).toLocaleString('en-AU')}</div>
-                    </div>
-                `;
+        function selectRoute(type) {
+            if (type === 'optimal') {
+                showNotification('Route Selected!', 'Optimal route selected - $450 savings per container');
+            } else if (type === 'singapore') {
+                showNotification('Route Selected!', 'Singapore route selected - $250 savings per container');
+            } else {
+                showNotification('Route Selected!', 'Direct route selected');
             }
-            
-            tooltip.innerHTML = tooltipContent;
-            tooltip.style.left = e.pageX + 15 + 'px';
-            tooltip.style.top = e.pageY - 10 + 'px';
-            tooltip.classList.add('show');
         }
 
-        // Handle row clicks
-        shipmentRows.forEach(row => {
-            row.addEventListener('click', function() {
-                shipmentRows.forEach(r => r.classList.remove('selected'));
-                this.classList.add('selected');
-                
-                const shipmentId = this.dataset.shipment;
-                shipmentMarkers.forEach(marker => {
-                    marker.style.transform = marker.dataset.shipment === shipmentId ? 'scale(1.5)' : 'scale(1)';
-                    marker.style.zIndex = marker.dataset.shipment === shipmentId ? '15' : '5';
-                });
-            });
-        });
-
-        // Enhanced marker hover with carrier data
-        shipmentMarkers.forEach(marker => {
-            marker.addEventListener('mouseenter', function(e) {
-                const shipmentKey = this.dataset.shipment;
-                showEnhancedTooltip(e, shipmentKey);
-            });
+        function refreshAllData() {
+            showNotification('Refreshing Data', 'Pulling latest data from all carriers, AIS, and terminal APIs');
             
-            marker.addEventListener('mouseleave', function() {
-                tooltip.classList.remove('show');
-            });
+            setTimeout(function() {
+                document.getElementById('lastUpdated').textContent = 'Just now';
+                showNotification('Data Updated', 'All tracking data refreshed from live sources');
+            }, 2000);
+        }
+
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            notification.innerHTML = '<div style="font-weight: 600; margin-bottom: 0.25rem;">' + title + '</div><div style="font-size: 0.875rem;">' + message + '</div>';
+            notification.style.display = 'block';
             
-            marker.addEventListener('click', function() {
-                const shipmentId = this.dataset.shipment;
-                shipmentRows.forEach(row => {
-                    row.classList.remove('selected');
-                    if (row.dataset.shipment === shipmentId) {
-                        row.classList.add('selected');
-                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                });
-            });
-        });
-
-        // Filter functionality with carrier integration
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                filterButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filterType = this.dataset.filter;
-                currentFilter = filterType;
-                applyFilter(filterType);
-            });
-        });
-
-        function applyFilter(filterType) {
-            shipmentRows.forEach(row => {
-                let shouldShow = true;
-                
-                if (filterType === 'all') {
-                    shouldShow = true;
-                } else if (filterType === 'in-transit') {
-                    shouldShow = row.dataset.status === 'on-time';
-                } else if (filterType === 'delayed') {
-                    shouldShow = row.dataset.status === 'delayed';
-                } else if (filterType === 'critical') {
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
