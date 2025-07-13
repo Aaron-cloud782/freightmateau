@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Container Links - Australia's First Container Intelligence Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --accent-blue: #60a5fa;
+            --dark-navy: #0f172a;
+            --light-gray: #f8fafc;
+            --medium-gray: #64748b;
+            --container-orange: #f97316;
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-navy);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-navy);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-blue);
+        }
+
+        .cta-button {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 8rem 0 6rem;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="container" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="80" height="60" x="10" y="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></pattern></defs><rect width="100%" height="100%" fill="url(%23container)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .dashboard-mockup {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transform: perspective(1000px) rotateY(-15deg) rotateX(10deg);
+        }
+
+        .mockup-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mockup-dot:nth-child(1) { background: #ff5f56; }
+        .mockup-dot:nth-child(2) { background: #ffbd2e; }
+        .mockup-dot:nth-child(3) { background: #27ca3f; }
+
+        .mockup-content {
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .mockup-chart {
+            background: var(--primary-blue);
+            height: 120px;
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: end;
+            padding: 0.5rem;
+            gap: 0.25rem;
+        }
+
+        .chart-bar {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 0.125rem;
+            flex: 1;
+        }
+
+        .chart-bar:nth-child(1) { height: 60%; }
+        .chart-bar:nth-child(2) { height: 85%; }
+        .chart-bar:nth-child(3) { height: 45%; }
+        .chart-bar:nth-child(4) { height: 95%; }
+        .chart-bar:nth-child(5) { height: 70%; }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: var(--light-gray);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .feature-description {
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 6rem 0;
+        }
+
+        .benefits-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefit-icon {
+            background: var(--success-green);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+
+        .benefit-text {
+            font-weight: 500;
+        }
+
+        .benefits-visual {
+            background: linear-gradient(135deg, var(--accent-blue), var(--container-orange));
+            border-radius: 1rem;
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .benefits-stat {
+            margin-bottom: 2rem;
+        }
+
+        .benefits-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .benefits-stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 0;
+            background: var(--light-gray);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.popular {
+            border: 3px solid var(--container-orange);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            background: var(--container-orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-navy);
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: var(--medium-gray);
+        }
+
+        .plan-feature::before {
+            content: '✓';
+            color: var(--success-green);
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-navy) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button-secondary:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-navy);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Demo Highlight */
+        .demo-highlight {
+            background: var(--container-orange);
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .benefits-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dashboard-mockup {
+                transform: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll animations will be added via JavaScript */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-animate.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">🚢 Global Container Links</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="app.html" class="cta-button demo-highlight">Live Demo</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Australia's First Container Intelligence Platform</h1>
+                    <p class="subtitle">Transform your freight forwarding with real-time container visibility, AI-powered route optimization, and unified tracking across all carriers.</p>
+                    
+                    <div class="cta-buttons">
+                        <a href="app.html" class="cta-button demo-highlight">Try Live Demo</a>
+                        <a href="#features" class="cta-button-secondary">Learn More</a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">99.5%</div>
+                            <div class="stat-label">Platform Uptime</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">75%</div>
+                            <div class="stat-label">Cost Savings</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">30 Days</div>
+                            <div class="stat-label">Implementation</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="dashboard-mockup">
+                        <div class="mockup-header">
+                            <div class="mockup-dot"></div>
+                            <div class="mockup-dot"></div>
+                            <div class="mockup-dot"></div>
+                        </div>
+                        <div class="mockup-content">
+                            <h3>Port Melbourne - Live Analytics</h3>
+                            <div class="mockup-chart">
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                            </div>
+                            <p><strong>247 containers</strong> tracked in real-time</p>
+                            <p><strong>Port Congestion:</strong> <span style="color: #10b981;">Low</span></p>
+                            <p><strong>Avg. Dwell Time:</strong> 3.2 days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header scroll-animate">
+                <h2 class="section-title">Powerful Container Intelligence Features</h2>
+                <p class="section-subtitle">Everything you need to optimize your container operations and stay ahead of disruptions in the Australian market.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">🗺️</div>
+                    <h3 class="feature-title">AI Route Optimizer</h3>
+                    <p class="feature-description">Find optimal shipping routes with AI-powered cost and time analysis. Compare multiple carriers and routes to save money on every shipment.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">📡</div>
+                    <h3 class="feature-title">Aggregated Tracking Platform</h3>
+                    <p class="feature-description">One dashboard for all carriers - Live data from APIs, AIS vessel tracking, and terminal systems. Real-time container visibility across your entire supply chain.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Real-Time Port Analytics</h3>
+                    <p class="feature-description">Live congestion monitoring and predictive analytics for Melbourne, Sydney, and Brisbane ports. Know exactly when to schedule pickups to avoid delays and demurrage.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered Predictions</h3>
+                    <p class="feature-description">Machine learning algorithms predict container arrival times, potential delays, and optimal pickup windows based on historical Australian port data.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Instant Alerts & Notifications</h3>
+                    <p class="feature-description">Proactive notifications for container availability, customs clearance, delays, and demurrage risks. Stay informed before issues impact your operations.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Performance Analytics</h3>
+                    <p class="feature-description">Comprehensive reporting on carrier performance, port efficiency, and supply chain KPIs. Make data-driven decisions to optimize your operations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <div class="benefits-content">
+                <div>
+                    <h2 class="section-title scroll-animate">Why Australian Freight Forwarders Choose GCL</h2>
+                    <ul class="benefits-list scroll-animate">
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Reduce demurrage costs by up to 40% with predictive pickup timing</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Cut customer inquiries by 60% with proactive status updates</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Improve on-time delivery rates with accurate ETA predictions</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Save 5+ hours per week on manual container tracking</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Gain competitive advantage with superior customer visibility</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Australian-specific port intelligence and trade corridor expertise</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="benefits-visual scroll-animate">
+                    <div class="benefits-stat">
+                        <span class="benefits-stat-number">40%</span>
+                        <span class="benefits-stat-label">Reduction in Demurrage Costs</span>
+                    </div>
+                    <div class="benefits-stat">
+                        <span class="benefits-stat-number">99.2%</span>
+                        <span class="benefits-stat-label">Container Tracking Accuracy</span>
+                    </div>
+                    <div class="benefits-stat">
+                        <span class="benefits-stat-number">30 Days</span>
+                        <span class="benefits-stat-label">Average Implementation Time</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header scroll-animate">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your business size. No hidden fees, no long-term contracts required.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card scroll-animate">
+                    <h3 class="plan-name">Starter</h3>
+                    <div class="plan-price">$299</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li class="plan-feature">Up to 100 containers/month</li>
+                        <li class="plan-feature">Real-time tracking & alerts</li>
+                        <li class="plan-feature">Basic port intelligence</li>
+                        <li class="plan-feature">Email support</li>
+                        <li class="plan-feature">Standard reporting</li>
+                    </ul>
+                    <a href="app.html" class="cta-button" style="width: 100%; text-align: center; display: block;">Try Free Demo</a>
+                </div>
+                
+                <div class="pricing-card popular scroll-animate">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 class="plan-name">Professional</h3>
+                    <div class="plan-price">$699</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li class="plan-feature">Up to 500 containers/month</li>
+                        <li class="plan-feature">Advanced port analytics</li>
+                        <li class="plan-feature">AI-powered predictions</li>
+                        <li class="plan-feature">Priority phone support</li>
+                        <li class="plan-feature">Custom reporting</li>
+                        <li class="plan-feature">API access</li>
+                    </ul>
+                    <a href="app.html" class="cta-button" style="width: 100%; text-align: center; display: block;">Try Free Demo</a>
+                </div>
+                
+                <div class="pricing-card scroll-animate">
+                    <h3 class="plan-name">Enterprise</h3>
+                    <div class="plan-price">$1,999</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li class="plan-feature">Unlimited containers</li>
+                        <li class="plan-feature">White-label solutions</li>
+                        <li class="plan-feature">Dedicated account manager</li>
+                        <li class="plan-feature">Custom integrations</li>
+                        <li class="plan-feature">Advanced analytics</li>
+                        <li class="plan-feature">24/7 support</li>
+                    </ul>
+                    <a href="app.html" class="cta-button" style="width: 100%; text-align: center; display: block;">Try Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content scroll-animate">
+                <h2>Ready to Transform Your Container Operations?</h2>
+                <p>Join leading Australian freight forwarders who are already saving time and money with intelligent container tracking.</p>
+                <div class="cta-buttons">
+                    <a href="app.html" class="cta-button demo-highlight">Try Live Demo Now</a>
+                    <a href="#contact" class="cta-button-secondary">Schedule a Call</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🚢 Global Container Links</h3>
+                    <p>Australia's first container intelligence platform, transforming freight forwarding with real-time visibility and predictive analytics.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <a href="#features">Features</a>
+                    <a href="#benefits">Benefits</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="app.html">Live Demo</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <a href="#about">About Us</a>
+                    <a href="#careers">Careers</a>
+                    <a href="#press">Press</a>
+                    <a href="#partners">Partners</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <a href="mailto:hello@globalcontainerlinks.com">hello@globalcontainerlinks.com</a>
+                    <a href="tel:+61-1300-GCL-NOW">1300 GCL NOW</a>
+                    <p>Melbourne | Sydney | Brisbane</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Global Container Links. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-animate elements
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some initial animation to hero
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroText = document.querySelector('.hero-text');
+            const heroVisual = document.querySelector('.hero-visual');
+            
+            if (heroText) heroText.classList.add('animate-fade-in');
+            if (heroVisual) {
+                setTimeout(() => {
+                    heroVisual.classList.add('animate-fade-in');
+                }, 200);
+            }
+        });
+    </script>
+</body>
+</html>
