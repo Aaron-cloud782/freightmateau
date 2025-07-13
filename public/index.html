@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Container Link - Working Platform</title>
-    
-    <!-- Leaflet Map CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    
+    <title>Global Container Links - Australia's First Container Intelligence Platform</title>
     <style>
         * {
             margin: 0;
@@ -15,1208 +11,903 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --accent-blue: #60a5fa;
+            --dark-navy: #0f172a;
+            --light-gray: #f8fafc;
+            --medium-gray: #64748b;
+            --container-orange: #f97316;
+            --success-green: #10b981;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-navy);
+            overflow-x: hidden;
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .logo h1 {
-            font-size: 2rem;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .logo p {
-            color: #64748b;
-            font-size: 1rem;
-        }
-
-        .demo-section {
-            margin-bottom: 2rem;
-        }
-
-        .demo-section h3 {
-            color: #374151;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .demo-btn {
-            width: 100%;
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 0.75rem;
-            transition: background 0.2s;
-        }
-
-        .demo-btn:hover {
-            background: #5a67d8;
-        }
-
-        .demo-btn.green {
-            background: #10b981;
-        }
-
-        .demo-btn.green:hover {
-            background: #059669;
-        }
-
-        .dashboard {
-            display: none;
-            background: #f8fafc;
-            min-height: 100vh;
-        }
-
-        .route-optimizer {
-            display: none;
-            background: #f8fafc;
-            min-height: 100vh;
-        }
-
-        .aggregated-tracker {
-            display: none;
-            background: #f8fafc;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 2rem;
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 1rem 0;
         }
 
-        .header h1 {
+        .logo {
             font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
         }
 
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .dashboard-content, .optimizer-content {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .action-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .action-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .action-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .action-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        .action-desc {
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        .controls {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
+        .nav-links {
             display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            list-style: none;
+            gap: 2rem;
         }
 
-        .form-group label {
-            font-weight: 600;
-            color: #374151;
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-navy);
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
 
-        .form-group select {
-            padding: 0.75rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1rem;
+        .nav-links a:hover {
+            color: var(--secondary-blue);
         }
 
-        .optimize-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        .cta-button {
+            background: var(--primary-blue);
             color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
             font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
             cursor: pointer;
         }
 
-        .results-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .cta-button:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-2px);
         }
 
-        .map-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .map-placeholder {
-            background: #f8fafc;
-            border-radius: 12px;
-            height: 400px;
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 8rem 0 6rem;
+            margin-top: 80px;
             position: relative;
             overflow: hidden;
         }
 
-        #map {
-            height: 100%;
-            width: 100%;
-            border-radius: 12px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="container" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="80" height="60" x="10" y="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></pattern></defs><rect width="100%" height="100%" fill="url(%23container)"/></svg>');
+            opacity: 0.1;
         }
 
-        .vessel-popup {
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
             text-align: center;
-            font-weight: 600;
         }
 
-        .port-popup {
-            text-align: center;
-            max-width: 200px;
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
         }
 
-        .route-line {
-            stroke: #10b981;
-            stroke-width: 3;
-            stroke-opacity: 0.8;
-            fill: none;
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
 
-        .vessel-marker {
-            background: #ef4444;
-            border: 2px solid white;
-            border-radius: 50%;
+        .hero-visual {
+            position: relative;
+        }
+
+        .dashboard-mockup {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transform: perspective(1000px) rotateY(-15deg) rotateX(10deg);
+        }
+
+        .mockup-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mockup-dot {
             width: 12px;
             height: 12px;
+            border-radius: 50%;
+        }
+
+        .mockup-dot:nth-child(1) { background: #ff5f56; }
+        .mockup-dot:nth-child(2) { background: #ffbd2e; }
+        .mockup-dot:nth-child(3) { background: #27ca3f; }
+
+        .mockup-content {
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .mockup-chart {
+            background: var(--primary-blue);
+            height: 120px;
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: end;
+            padding: 0.5rem;
+            gap: 0.25rem;
+        }
+
+        .chart-bar {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 0.125rem;
+            flex: 1;
+        }
+
+        .chart-bar:nth-child(1) { height: 60%; }
+        .chart-bar:nth-child(2) { height: 85%; }
+        .chart-bar:nth-child(3) { height: 45%; }
+        .chart-bar:nth-child(4) { height: 95%; }
+        .chart-bar:nth-child(5) { height: 70%; }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: var(--light-gray);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .feature-description {
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 6rem 0;
+        }
+
+        .benefits-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefit-icon {
+            background: var(--success-green);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+
+        .benefit-text {
+            font-weight: 500;
+        }
+
+        .benefits-visual {
+            background: linear-gradient(135deg, var(--accent-blue), var(--container-orange));
+            border-radius: 1rem;
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .benefits-stat {
+            margin-bottom: 2rem;
+        }
+
+        .benefits-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .benefits-stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 0;
+            background: var(--light-gray);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.popular {
+            border: 3px solid var(--container-orange);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            background: var(--container-orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-navy);
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: var(--medium-gray);
+        }
+
+        .plan-feature::before {
+            content: '✓';
+            color: var(--success-green);
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-navy) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button-secondary:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-navy);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Demo Highlight */
+        .demo-highlight {
+            background: var(--container-orange);
             animation: pulse 2s infinite;
         }
 
-        .results-panel {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .benefits-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dashboard-mockup {
+                transform: none;
+            }
         }
 
-        .route-option {
-            background: #f8fafc;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .route-option.optimal {
-            border-color: #10b981;
-            background: #f0fdf4;
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
         }
 
-        .route-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
+        /* Scroll animations will be added via JavaScript */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
 
-        .route-name {
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .badge.optimal {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge.alternative {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .route-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .detail-item {
-            font-size: 0.875rem;
-        }
-
-        .detail-label {
-            color: #64748b;
-            margin-bottom: 0.25rem;
-        }
-
-        .detail-value {
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .select-btn {
-            width: 100%;
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10b981;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-            z-index: 10000;
-            display: none;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #64748b;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e5e7eb;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .scroll-animate.in-view {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 1rem;
-                padding: 2rem;
-            }
-            
-            .results-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .controls-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .dashboard-content, .optimizer-content {
-                padding: 1rem;
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="container" id="loginScreen">
-        <div class="logo">
-            <h1>Global Container Link</h1>
-            <p>Enterprise Container Management Platform</p>
-        </div>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">🚢 Global Container Links</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="app.html" class="cta-button demo-highlight">Live Demo</a>
+        </nav>
+    </header>
 
-        <div class="demo-section">
-            <h3>Quick Demo Access</h3>
-            <button class="demo-btn" onclick="loginDemo('Maersk Logistics', 'shipping-line')">
-                🚢 Maersk Logistics (Shipping Line)
-            </button>
-            <button class="demo-btn" onclick="loginDemo('Global Freight Inc', 'freight-forwarder')">
-                🚛 Global Freight Inc (Freight Forwarder)
-            </button>
-            <button class="demo-btn" onclick="loginDemo('Apple Inc', 'shipper')">
-                📦 Apple Inc (Shipper)
-            </button>
-        </div>
-
-        <div class="demo-section">
-            <h3>Core Features</h3>
-            <button class="demo-btn green" onclick="showRouteOptimizerDirect()">
-                🗺️ Route Optimizer Demo
-            </button>
-            <button class="demo-btn green" onclick="showAggregatedTrackerDirect()">
-                📡 Aggregated Tracker Demo
-            </button>
-        </div>
-    </div>
-
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard">
-        <div class="header">
-            <h1>Global Container Link</h1>
-            <div>
-                <span id="companyName">Company Name</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-
-        <div class="dashboard-content">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">247</div>
-                    <div class="stat-label">Active Containers</div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Australia's First Container Intelligence Platform</h1>
+                    <p class="subtitle">Transform your freight forwarding with real-time container visibility, AI-powered route optimization, and unified tracking across all carriers.</p>
+                    
+                    <div class="cta-buttons">
+                        <a href="app.html" class="cta-button demo-highlight">Try Live Demo</a>
+                        <a href="#features" class="cta-button-secondary">Learn More</a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">99.5%</div>
+                            <div class="stat-label">Platform Uptime</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">75%</div>
+                            <div class="stat-label">Cost Savings</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">30 Days</div>
+                            <div class="stat-label">Implementation</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">18</div>
-                    <div class="stat-label">Vessels Tracked</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">156</div>
-                    <div class="stat-label">Routes Optimized</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">$2.4M</div>
-                    <div class="stat-label">Cost Savings</div>
-                </div>
-            </div>
-
-            <div class="actions-grid">
-                <div class="action-card" onclick="showRouteOptimizer()">
-                    <div class="action-icon">🗺️</div>
-                    <div class="action-title">AI Route Optimizer</div>
-                    <div class="action-desc">Find optimal shipping routes with AI-powered cost and time analysis</div>
-                </div>
-
-                <div class="action-card" onclick="showAggregatedTracker()">
-                    <div class="action-icon">📡</div>
-                    <div class="action-title">Aggregated Tracker</div>
-                    <div class="action-desc">One dashboard for all carriers - Live data from APIs, AIS, and terminals</div>
-                </div>
-
-                <div class="action-card" onclick="showNotification('Booking System', 'Direct booking with major carriers would open here')">
-                    <div class="action-icon">📋</div>
-                    <div class="action-title">Container Booking</div>
-                    <div class="action-desc">Book containers directly with MSC, Maersk, COSCO, and other major lines</div>
-                </div>
-
-                <div class="action-card" onclick="showNotification('Equipment Rental', 'Container equipment marketplace would open here')">
-                    <div class="action-icon">📦</div>
-                    <div class="action-title">Equipment Rental</div>
-                    <div class="action-desc">Access global container inventory from leading leasing companies</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Route Optimizer -->
-    <div class="route-optimizer" id="routeOptimizer">
-        <div class="header">
-            <h1>🗺️ AI Route Optimizer</h1>
-            <div>
-                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
-            </div>
-        </div>
-
-        <div class="optimizer-content">
-            <div class="controls">
-                <h2 style="margin-bottom: 1.5rem;">Route Optimization Controls</h2>
                 
-                <div class="controls-grid">
-                    <div class="form-group">
-                        <label>Origin Port</label>
-                        <select id="originPort">
-                            <option value="shanghai">Shanghai, China</option>
-                            <option value="ningbo">Ningbo, China</option>
-                            <option value="qingdao">Qingdao, China</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Destination Port</label>
-                        <select id="destinationPort">
-                            <option value="losangeles">Los Angeles, USA</option>
-                            <option value="sydney">Sydney, Australia</option>
-                            <option value="rotterdam">Rotterdam, Netherlands</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Container Type</label>
-                        <select>
-                            <option value="40hc">40ft High Cube</option>
-                            <option value="20std">20ft Standard</option>
-                            <option value="40ref">40ft Reefer</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Priority</label>
-                        <select>
-                            <option value="cost">Lowest Cost</option>
-                            <option value="time">Fastest Transit</option>
-                            <option value="balanced">Balanced</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button class="optimize-btn" onclick="runOptimization()">🤖 Run AI Optimization</button>
-            </div>
-
-            <div class="results-section">
-                <div class="map-section">
-                    <h3 style="margin-bottom: 1rem;">Global Shipping Routes</h3>
-                    <div class="map-placeholder">
-                        <div id="map" style="height: 100%; width: 100%; position: relative;">
-                            <!-- Fallback content while map loads -->
-                            <div id="mapFallback" style="height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; border-radius: 12px;">
-                                <div style="font-size: 2rem; margin-bottom: 1rem;">🌍</div>
-                                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Loading Interactive Map...</div>
-                                <div style="font-size: 0.9rem;">Real-time vessel tracking and route visualization</div>
+                <div class="hero-visual">
+                    <div class="dashboard-mockup">
+                        <div class="mockup-header">
+                            <div class="mockup-dot"></div>
+                            <div class="mockup-dot"></div>
+                            <div class="mockup-dot"></div>
+                        </div>
+                        <div class="mockup-content">
+                            <h3>Port Melbourne - Live Analytics</h3>
+                            <div class="mockup-chart">
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="results-panel">
-                    <h3 style="margin-bottom: 1rem;">Optimization Results</h3>
-                    <div id="optimizationResults">
-                        <div class="loading">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
-                            <p>Click "Run AI Optimization" to analyze routes and find cost-saving opportunities</p>
+                            <p><strong>247 containers</strong> tracked in real-time</p>
+                            <p><strong>Port Congestion:</strong> <span style="color: #10b981;">Low</span></p>
+                            <p><strong>Avg. Dwell Time:</strong> 3.2 days</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Aggregated Tracker -->
-    <div class="aggregated-tracker" id="aggregatedTracker">
-        <div class="header">
-            <h1>📡 Aggregated Tracking Platform</h1>
-            <div>
-                <button class="logout-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header scroll-animate">
+                <h2 class="section-title">Powerful Container Intelligence Features</h2>
+                <p class="section-subtitle">Everything you need to optimize your container operations and stay ahead of disruptions in the Australian market.</p>
             </div>
-        </div>
-
-        <div class="optimizer-content">
-            <div class="controls">
-                <h2 style="margin-bottom: 1.5rem;">Live Data Sources - One Source of Truth</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">🗺️</div>
+                    <h3 class="feature-title">AI Route Optimizer</h3>
+                    <p class="feature-description">Find optimal shipping routes with AI-powered cost and time analysis. Compare multiple carriers and routes to save money on every shipment.</p>
+                </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Carrier APIs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">MSC, Maersk, COSCO, CMA CGM, ONE - Live</div>
-                    </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>AIS Vessel Data</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Real-time vessel positions via satellite</div>
-                    </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Terminal APIs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Port operators & terminal systems</div>
-                    </div>
-                    
-                    <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                            <strong>Customs & Docs</strong>
-                        </div>
-                        <div style="font-size: 0.875rem; color: #166534;">Customs clearance & documentation</div>
-                    </div>
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">📡</div>
+                    <h3 class="feature-title">Aggregated Tracking Platform</h3>
+                    <p class="feature-description">One dashboard for all carriers - Live data from APIs, AIS vessel tracking, and terminal systems. Real-time container visibility across your entire supply chain.</p>
                 </div>
-
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <button class="optimize-btn" onclick="refreshAllData()">🔄 Refresh All Data Sources</button>
-                    <div style="color: #64748b; font-size: 0.875rem;">
-                        Last updated: <span id="lastUpdated">2 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
-                <h3 style="margin-bottom: 1rem;">Unified Tracking Dashboard</h3>
                 
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: #f8fafc;">
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Container/Vessel</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Customer</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Route</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Current Location</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">Status</th>
-                                <th style="padding: 1rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 1px solid #e2e8f0;">ETA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">MSKU7654321</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 Maersk Shanghai</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Apple Inc</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
-                                </td>
-                                <td style="padding: 1rem;">Shanghai → Los Angeles</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Pacific Ocean</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">📡 AIS: 34.2°N, 140.1°W</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Sea</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Dec 18</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">09:00 AM</div>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">COSCO9876543</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 COSCO Pacific</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Tesla Inc</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Auto Parts</div>
-                                </td>
-                                <td style="padding: 1rem;">Ningbo → Rotterdam</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Rotterdam Port</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🏗️ Terminal: ECT Delta</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">At Port</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Dec 16</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">14:30 PM</div>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">OOLU1234567</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚛 Truck BT-4792</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">IKEA</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Furniture</div>
-                                </td>
-                                <td style="padding: 1rem;">Port Botany → Parramatta</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">M4 Motorway</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">📍 GPS: 33.8°S, 151.0°E</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">In Transit</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Dec 16</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">16:30 PM</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">HLBU5678901</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">🚢 HMM Seoul</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Samsung</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">Electronics</div>
-                                </td>
-                                <td style="padding: 1rem;">Busan → Sydney</td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600;">Sydney Customs</div>
-                                    <div style="font-size: 0.75rem; color: #64748b;">📋 Doc review pending</div>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <span style="background: #fde68a; color: #d97706; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Customs</span>
-                                </td>
-                                <td style="padding: 1rem;">
-                                    <div style="font-weight: 600; color: #ef4444;">Delayed</div>
-                                    <div style="font-size: 0.75rem; color: #ef4444;">+2 days</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Real-Time Port Analytics</h3>
+                    <p class="feature-description">Live congestion monitoring and predictive analytics for Melbourne, Sydney, and Brisbane ports. Know exactly when to schedule pickups to avoid delays and demurrage.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered Predictions</h3>
+                    <p class="feature-description">Machine learning algorithms predict container arrival times, potential delays, and optimal pickup windows based on historical Australian port data.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Instant Alerts & Notifications</h3>
+                    <p class="feature-description">Proactive notifications for container availability, customs clearance, delays, and demurrage risks. Stay informed before issues impact your operations.</p>
+                </div>
+                
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Performance Analytics</h3>
+                    <p class="feature-description">Comprehensive reporting on carrier performance, port efficiency, and supply chain KPIs. Make data-driven decisions to optimize your operations.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Notification -->
-    <div class="notification" id="notification"></div>
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <div class="benefits-content">
+                <div>
+                    <h2 class="section-title scroll-animate">Why Australian Freight Forwarders Choose GCL</h2>
+                    <ul class="benefits-list scroll-animate">
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Reduce demurrage costs by up to 40% with predictive pickup timing</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Cut customer inquiries by 60% with proactive status updates</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Improve on-time delivery rates with accurate ETA predictions</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Save 5+ hours per week on manual container tracking</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Gain competitive advantage with superior customer visibility</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text">Australian-specific port intelligence and trade corridor expertise</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="benefits-visual scroll-animate">
+                    <div class="benefits-stat">
+                        <span class="benefits-stat-number">40%</span>
+                        <span class="benefits-stat-label">Reduction in Demurrage Costs</span>
+                    </div>
+                    <div class="benefits-stat">
+                        <span class="benefits-stat-number">99.2%</span>
+                        <span class="benefits-stat-label">Container Tracking Accuracy</span>
+                    </div>
+                    <div class="benefits-stat">
+                        <span class="benefits-stat-number">30 Days</span>
+                        <span class="benefits-stat-label">Average Implementation Time</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header scroll-animate">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your business size. No hidden fees, no long-term contracts required.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card scroll-animate">
+                    <h3 class="plan-name">Starter</h3>
+                    <div class="plan-price">$299</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li class="plan-feature">Up to 100 containers/month</li>
+                        <li class="plan-feature">Real-time tracking & alerts</li>
+                        <li class="plan-feature">Basic port intelligence</li>
+                        <li class="plan-feature">Email support</li>
+                        <li class="plan-feature">Standard reporting</li>
+                    </ul>
+                    <a href="app.html" class="cta-button" style="width: 100%; text-align: center; display: block;">Try Free Demo</a>
+                </div>
+                
+                <div class="pricing-card popular scroll-animate">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 class="plan-name">Professional</h3>
+                    <div class="plan-price">$699</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li class="plan-feature">Up to 500 containers/month</li>
+                        <li class="plan-feature">Advanced port analytics</li>
+                        <li class="plan-feature">AI-powered predictions</li>
+                        <li class="plan-feature">Priority phone support</li>
+                        <li class="plan-feature">Custom reporting</li>
+                        <li class="plan-feature">API access</li>
+                    </ul>
+                    <a href="app.html" class="cta-button" style="width: 100%; text-align: center; display: block;">Try Free Demo</a>
+                </div>
+                
+                <div class="pricing-card scroll-animate">
+                    <h3 class="plan-name">Enterprise</h3>
+                    <div class="plan-price">$1,999</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li class="plan-feature">Unlimited containers</li>
+                        <li class="plan-feature">White-label solutions</li>
+                        <li class="plan-feature">Dedicated account manager</li>
+                        <li class="plan-feature">Custom integrations</li>
+                        <li class="plan-feature">Advanced analytics</li>
+                        <li class="plan-feature">24/7 support</li>
+                    </ul>
+                    <a href="app.html" class="cta-button" style="width: 100%; text-align: center; display: block;">Try Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content scroll-animate">
+                <h2>Ready to Transform Your Container Operations?</h2>
+                <p>Join leading Australian freight forwarders who are already saving time and money with intelligent container tracking.</p>
+                <div class="cta-buttons">
+                    <a href="app.html" class="cta-button demo-highlight">Try Live Demo Now</a>
+                    <a href="#contact" class="cta-button-secondary">Schedule a Call</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🚢 Global Container Links</h3>
+                    <p>Australia's first container intelligence platform, transforming freight forwarding with real-time visibility and predictive analytics.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <a href="#features">Features</a>
+                    <a href="#benefits">Benefits</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="app.html">Live Demo</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <a href="#about">About Us</a>
+                    <a href="#careers">Careers</a>
+                    <a href="#press">Press</a>
+                    <a href="#partners">Partners</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <a href="mailto:hello@globalcontainerlinks.com">hello@globalcontainerlinks.com</a>
+                    <a href="tel:+61-1300-GCL-NOW">1300 GCL NOW</a>
+                    <p>Melbourne | Sydney | Brisbane</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Global Container Links. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        let currentCompany = '';
-        let map;
-        let vesselsLayer;
-        let routesLayer;
-
-        // Initialize map when route optimizer is shown
-        function initializeMap() {
-            if (map) return; // Already initialized
-
-            try {
-                // Hide fallback content
-                const fallback = document.getElementById('mapFallback');
-                if (fallback) fallback.style.display = 'none';
-
-                // Create map centered on Pacific Ocean
-                map = L.map('map', {
-                    center: [20, -150],
-                    zoom: 3,
-                    zoomControl: true
-                });
-
-                // Add OpenStreetMap tiles
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors',
-                    maxZoom: 19
-                }).addTo(map);
-
-                // Create layer groups
-                vesselsLayer = L.layerGroup().addTo(map);
-                routesLayer = L.layerGroup().addTo(map);
-
-                // Add major ports
-                addPorts();
-                
-                showNotification('Map Loaded', 'Real-world shipping map initialized');
-                
-                // Force map to resize/refresh
-                setTimeout(function() {
-                    map.invalidateSize();
-                }, 100);
-                
-            } catch (error) {
-                console.log('Map initialization failed, using fallback');
-                showFallbackMap();
-            }
-        }
-
-        function showFallbackMap() {
-            // Show a professional fallback map if Leaflet fails
-            const mapContainer = document.getElementById('map');
-            mapContainer.innerHTML = `
-                <div style="height: 100%; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 12px; position: relative; overflow: hidden;">
-                    <!-- World Map Background -->
-                    <div style="position: absolute; inset: 0; background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500"><defs><style>.land{fill:%23ffffff22;}.water{fill:transparent;}</style></defs><rect class="water" width="1000" height="500"/><path class="land" d="M200,100 Q300,80 400,120 L500,100 Q600,90 700,130 L800,120 Q850,100 900,140 L950,130 L950,200 Q900,180 850,190 L800,180 Q750,170 700,180 L600,170 Q550,160 500,170 L400,160 Q350,150 300,160 L200,150 Z"/></svg>'); background-size: cover; background-position: center; opacity: 0.3;"></div>
-                    
-                    <!-- Port Markers -->
-                    <div style="position: absolute; left: 15%; top: 40%; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid white; animation: pulse 2s infinite;"></div>
-                    <div style="position: absolute; left: 15%; top: 30%; color: white; font-size: 0.8rem; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">🏭 Shanghai</div>
-                    
-                    <div style="position: absolute; right: 15%; top: 50%; width: 12px; height: 12px; background: #10b981; border-radius: 50%; border: 2px solid white; animation: pulse 2s infinite;"></div>
-                    <div style="position: absolute; right: 15%; top: 40%; color: white; font-size: 0.8rem; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">🏭 Los Angeles</div>
-                    
-                    <div style="position: absolute; left: 35%; top: 25%; width: 10px; height: 10px; background: #f59e0b; border-radius: 50%; border: 2px solid white; animation: pulse 2s infinite;"></div>
-                    <div style="position: absolute; left: 35%; top: 15%; color: white; font-size: 0.8rem; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">🏭 Busan</div>
-                    
-                    <!-- Route Lines -->
-                    <div id="route1" style="position: absolute; left: 17%; top: 41%; width: 68%; height: 3px; background: linear-gradient(90deg, #ef4444, #10b981); border-radius: 2px; transform: rotate(2deg); opacity: 0; transition: opacity 0.5s;"></div>
-                    <div id="route2" style="position: absolute; left: 17%; top: 41%; width: 30%; height: 3px; background: linear-gradient(90deg, #ef4444, #f59e0b); border-radius: 2px; transform: rotate(-12deg); opacity: 0; transition: opacity 0.5s;"></div>
-                    <div id="route3" style="position: absolute; left: 37%; top: 26%; width: 48%; height: 3px; background: linear-gradient(90deg, #f59e0b, #10b981); border-radius: 2px; transform: rotate(18deg); opacity: 0; transition: opacity 0.5s;"></div>
-                    
-                    <!-- Moving Vessel -->
-                    <div id="vessel" style="position: absolute; left: 15%; top: 40%; color: white; font-size: 1rem; z-index: 10; opacity: 0; transition: all 0.5s;">🚢</div>
-                    
-                    <!-- Map Info -->
-                    <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.8rem; text-align: center;">
-                        <div style="font-weight: 600; margin-bottom: 4px;">🌍 Professional Shipping Map</div>
-                        <div style="opacity: 0.9;">Real-time route visualization with AI optimization</div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function addPorts() {
-            const ports = [
-                {
-                    name: 'Shanghai',
-                    coords: [31.2304, 121.4737],
-                    info: 'World\'s largest container port<br>47M TEU annually<br>🏭 Major manufacturing hub'
-                },
-                {
-                    name: 'Los Angeles',
-                    coords: [33.7364, -118.2441],
-                    info: 'Busiest US container port<br>10M TEU annually<br>🇺🇸 Gateway to America'
-                },
-                {
-                    name: 'Singapore',
-                    coords: [1.3521, 103.8198],
-                    info: 'World\'s busiest transshipment port<br>37M TEU annually<br>🌏 Southeast Asia hub'
-                },
-                {
-                    name: 'Rotterdam',
-                    coords: [51.9225, 4.4792],
-                    info: 'Europe\'s largest port<br>15M TEU annually<br>🇪🇺 European gateway'
-                },
-                {
-                    name: 'Busan',
-                    coords: [35.1796, 129.0756],
-                    info: 'Major Asian transshipment hub<br>22M TEU annually<br>🇰🇷 Korean logistics center'
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-            ];
-
-            ports.forEach(port => {
-                const marker = L.circleMarker(port.coords, {
-                    radius: 8,
-                    fillColor: port.name === 'Shanghai' ? '#ef4444' : 
-                               port.name === 'Los Angeles' ? '#10b981' : '#3b82f6',
-                    color: 'white',
-                    weight: 2,
-                    fillOpacity: 0.8
-                }).addTo(map);
-
-                marker.bindPopup(`
-                    <div class="port-popup">
-                        <h4>🏭 ${port.name} Port</h4>
-                        <p>${port.info}</p>
-                    </div>
-                `);
-
-                // Add port label
-                L.marker(port.coords, {
-                    icon: L.divIcon({
-                        className: 'port-label',
-                        html: `<div style="background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">${port.name}</div>`,
-                        iconSize: [60, 20],
-                        iconAnchor: [30, -10]
-                    })
-                }).addTo(map);
             });
-        }
+        });
 
-        function showShippingRoutes() {
-            if (map && routesLayer) {
-                // Clear existing routes
-                routesLayer.clearLayers();
-                vesselsLayer.clearLayers();
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-                // Use Leaflet map
-                // ... existing Leaflet code ...
-            } else {
-                // Use fallback map animation
-                showFallbackRoutes();
-            }
-        }
-
-        function showFallbackRoutes() {
-            // Animate routes on fallback map
-            setTimeout(() => {
-                const route1 = document.getElementById('route1');
-                if (route1) route1.style.opacity = '1';
-            }, 500);
-            
-            setTimeout(() => {
-                const route2 = document.getElementById('route2');
-                if (route2) route2.style.opacity = '1';
-            }, 1000);
-            
-            setTimeout(() => {
-                const route3 = document.getElementById('route3');
-                if (route3) route3.style.opacity = '1';
-            }, 1500);
-            
-            setTimeout(() => {
-                const vessel = document.getElementById('vessel');
-                if (vessel) {
-                    vessel.style.opacity = '1';
-                    // Animate vessel movement
-                    vessel.style.left = '85%';
-                    vessel.style.top = '45%';
-                    vessel.style.transition = 'all 8s linear';
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
                 }
-            }, 2000);
-        }
-
-        function addMovingVessel(routePath) {
-            let currentPoint = 0;
-            const totalPoints = routePath.length;
-            
-            const vesselIcon = L.divIcon({
-                className: 'vessel-marker',
-                html: '🚢',
-                iconSize: [20, 20],
-                iconAnchor: [10, 10]
             });
+        }, observerOptions);
 
-            const vessel = L.marker(routePath[0], { icon: vesselIcon }).addTo(vesselsLayer);
+        // Observe all scroll-animate elements
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some initial animation to hero
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroText = document.querySelector('.hero-text');
+            const heroVisual = document.querySelector('.hero-visual');
             
-            vessel.bindPopup(`
-                <div class="vessel-popup">
-                    <h4>🚢 Maersk Shanghai</h4>
-                    <p><strong>Route:</strong> Shanghai → Busan → Los Angeles</p>
-                    <p><strong>ETA:</strong> 17 days</p>
-                    <p><strong>Status:</strong> At Sea</p>
-                    <p><strong>Speed:</strong> 18.5 knots</p>
-                </div>
-            `);
-
-            // Animate vessel movement
-            function moveVessel() {
-                if (currentPoint < totalPoints - 1) {
-                    currentPoint++;
-                    vessel.setLatLng(routePath[currentPoint]);
-                    setTimeout(moveVessel, 2000);
-                }
+            if (heroText) heroText.classList.add('animate-fade-in');
+            if (heroVisual) {
+                setTimeout(() => {
+                    heroVisual.classList.add('animate-fade-in');
+                }, 200);
             }
-
-            setTimeout(moveVessel, 1000);
-        }
-
-        function addLiveVessels() {
-            // Add some random vessels for demo
-            const liveVessels = [
-                { coords: [25.7617, -80.1918], name: 'COSCO Pacific', route: 'Miami → Shanghai' },
-                { coords: [51.5074, -0.1278], name: 'Ever Given', route: 'London → Rotterdam' },
-                { coords: [-33.8688, 151.2093], name: 'OOCL Sydney', route: 'Sydney → Singapore' }
-            ];
-
-            liveVessels.forEach(vessel => {
-                const vesselIcon = L.divIcon({
-                    className: 'vessel-marker',
-                    html: '🚢',
-                    iconSize: [16, 16],
-                    iconAnchor: [8, 8]
-                });
-
-                const marker = L.marker(vessel.coords, { icon: vesselIcon }).addTo(vesselsLayer);
-                
-                marker.bindPopup(`
-                    <div class="vessel-popup">
-                        <h4>🚢 ${vessel.name}</h4>
-                        <p><strong>Route:</strong> ${vessel.route}</p>
-                        <p><strong>Status:</strong> In Transit</p>
-                    </div>
-                `);
-            });
-        }
-
-        function loginDemo(companyName, companyType) {
-            currentCompany = companyName;
-            document.getElementById('companyName').textContent = companyName;
-            
-            document.getElementById('loginScreen').style.display = 'none';
-            document.body.style.background = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            
-            showNotification('Welcome!', 'Logged in as ' + companyName);
-        }
-
-        function logout() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('routeOptimizer').style.display = 'none';
-            document.getElementById('aggregatedTracker').style.display = 'none';
-            
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            document.body.style.display = 'flex';
-            document.body.style.alignItems = 'center';
-            document.body.style.justifyContent = 'center';
-        }
-
-        function showRouteOptimizer() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('routeOptimizer').style.display = 'block';
-            showNotification('Route Optimizer', 'AI-powered route optimization system loaded');
-        }
-
-        function showRouteOptimizerDirect() {
-            currentCompany = 'Demo User';
-            document.getElementById('loginScreen').style.display = 'none';
-            document.body.style.background = 'none';
-            document.body.style.display = 'block';
-            document.getElementById('routeOptimizer').style.display = 'block';
-            showNotification('Route Optimizer Demo', 'Direct access to AI route optimization');
-        }
-
-        function showAggregatedTracker() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('aggregatedTracker').style.display = 'block';
-            showNotification('Aggregated Tracker', 'One source of truth - All carriers, AIS, and terminals');
-        }
-
-        function showAggregatedTrackerDirect() {
-            currentCompany = 'Demo User';
-            document.getElementById('loginScreen').style.display = 'none';
-            document.body.style.background = 'none';
-            document.body.style.display = 'block';
-            document.getElementById('aggregatedTracker').style.display = 'block';
-            showNotification('Aggregated Tracker Demo', 'Direct access to unified tracking platform');
-        }
-
-        function backToDashboard() {
-            if (currentCompany === 'Demo User') {
-                logout();
-            } else {
-                document.getElementById('routeOptimizer').style.display = 'none';
-                document.getElementById('aggregatedTracker').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-            }
-        }
-
-        function runOptimization() {
-            const resultsDiv = document.getElementById('optimizationResults');
-            
-            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div><p><strong>AI Optimization Running...</strong></p><p style="font-size: 0.875rem; margin-top: 0.5rem;">Analyzing 247 possible routes</p></div>';
-            
-            // Show route animation on map
-            showRouteAnimation();
-            
-            setTimeout(function() {
-                showOptimizationResults();
-            }, 3000);
-        }
-
-        function showRouteAnimation() {
-            // This function is now handled by showShippingRoutes()
-        }
-
-        function updateMapInfo(message) {
-            // Map info is now handled by popups
-        }
-
-        function showPortInfo(portName) {
-            // Port info is now handled by map popups
-        }
-
-        function zoomIn() {
-            if (map) {
-                map.zoomIn();
-                showNotification('Map Zoom', 'Zoomed in');
-            }
-        }
-
-        function zoomOut() {
-            if (map) {
-                map.zoomOut();
-                showNotification('Map Zoom', 'Zoomed out');
-            }
-        }
-
-        function resetView() {
-            if (map) {
-                map.setView([20, -150], 3);
-                showNotification('Map Reset', 'View reset to default');
-            }
-        }
-
-        function showOptimizationResults() {
-            document.getElementById('optimizationResults').innerHTML = 
-                '<div style="background: #eff6ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">' +
-                '<div style="font-weight: 600; color: #1e40af; margin-bottom: 0.5rem;">🤖 AI Insights</div>' +
-                '<div style="font-size: 0.875rem;">Route via Busan saves $450 per container with only 1 day additional transit time.</div>' +
-                '</div>' +
-                
-                '<div class="route-option optimal">' +
-                '<div class="route-header">' +
-                '<div class="route-name">Shanghai → Busan → Los Angeles</div>' +
-                '<div class="badge optimal">AI Recommended</div>' +
-                '</div>' +
-                '<div class="route-details">' +
-                '<div class="detail-item"><div class="detail-label">Cost per Container</div><div class="detail-value">$2,000</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Transit Time</div><div class="detail-value">17 days</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Carrier</div><div class="detail-value">Maersk Line</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Savings</div><div class="detail-value" style="color: #10b981;">$450 saved</div></div>' +
-                '</div>' +
-                '<button class="select-btn" onclick="selectRoute(\'optimal\')">Select Optimal Route</button>' +
-                '</div>' +
-                
-                '<div class="route-option">' +
-                '<div class="route-header">' +
-                '<div class="route-name">Shanghai → Los Angeles (Direct)</div>' +
-                '<div class="badge alternative">Alternative</div>' +
-                '</div>' +
-                '<div class="route-details">' +
-                '<div class="detail-item"><div class="detail-label">Cost per Container</div><div class="detail-value">$2,450</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Transit Time</div><div class="detail-value">16 days</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Carrier</div><div class="detail-value">COSCO Shipping</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Premium</div><div class="detail-value" style="color: #ef4444;">+$450</div></div>' +
-                '</div>' +
-                '<button class="select-btn" onclick="selectRoute(\'direct\')">Select Route</button>' +
-                '</div>' +
-                
-                '<div class="route-option">' +
-                '<div class="route-header">' +
-                '<div class="route-name">Shanghai → Singapore → Los Angeles</div>' +
-                '<div class="badge alternative">Alternative</div>' +
-                '</div>' +
-                '<div class="route-details">' +
-                '<div class="detail-item"><div class="detail-label">Cost per Container</div><div class="detail-value">$2,200</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Transit Time</div><div class="detail-value">19 days</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Carrier</div><div class="detail-value">CMA CGM</div></div>' +
-                '<div class="detail-item"><div class="detail-label">Savings</div><div class="detail-value" style="color: #10b981;">$250 saved</div></div>' +
-                '</div>' +
-                '<button class="select-btn" onclick="selectRoute(\'singapore\')">Select Route</button>' +
-                '</div>';
-                
-            showNotification('Optimization Complete', 'Found cost-saving routes with AI analysis');
-        }
-
-        function selectRoute(type) {
-            if (type === 'optimal') {
-                showNotification('Route Selected!', 'Optimal route selected - $450 savings per container');
-            } else if (type === 'singapore') {
-                showNotification('Route Selected!', 'Singapore route selected - $250 savings per container');
-            } else {
-                showNotification('Route Selected!', 'Direct route selected');
-            }
-        }
-
-        function refreshAllData() {
-            showNotification('Refreshing Data', 'Pulling latest data from all carriers, AIS, and terminal APIs');
-            
-            setTimeout(function() {
-                document.getElementById('lastUpdated').textContent = 'Just now';
-                showNotification('Data Updated', 'All tracking data refreshed from live sources');
-            }, 2000);
-        }
-
-        function showNotification(title, message) {
-            const notification = document.getElementById('notification');
-            notification.innerHTML = '<div style="font-weight: 600; margin-bottom: 0.25rem;">' + title + '</div><div style="font-size: 0.875rem;">' + message + '</div>';
-            notification.style.display = 'block';
-            
-            setTimeout(function() {
-                notification.style.display = 'none';
-            }, 3000);
-        }
+        });
     </script>
 </body>
 </html>
